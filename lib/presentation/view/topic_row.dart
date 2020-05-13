@@ -117,7 +117,7 @@ class _TopicRowState extends State<TopicRow> {
                     : Colors.black,
                 size: 40,
               ),
-              onPressed: () async {
+              onPressed: topicViewModel.topic.isDownloaded ? null : () async {
                 showDownloadDialog();
               },
             ),
@@ -160,9 +160,6 @@ class _TopicRowState extends State<TopicRow> {
   }
 
   void showDownloadDialog() {
-    //  Dialog errorDialog =
-    // topicViewModel.downloadTopic(errorDialog.close)
-
     ChangeNotifierProvider dialog = ChangeNotifierProvider<
         TopicDownloadDialogViewModel>(
       create: (context) => TopicDownloadDialogViewModel(),
