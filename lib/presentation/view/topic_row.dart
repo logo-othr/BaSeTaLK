@@ -3,6 +3,7 @@ import 'dart:developer' as logger;
 import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/colors.dart';
 import 'package:basetalk/presentation/view/topic_download_dialog.dart';
+import 'package:basetalk/presentation/viewmodel/topic_download_dialog_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
@@ -161,7 +162,12 @@ class _TopicRowState extends State<TopicRow> {
   void showDownloadDialog() {
     //  Dialog errorDialog =
     // topicViewModel.downloadTopic(errorDialog.close)
-    var dialog = TopicDownloadDialog(topicViewModel);
+
+    ChangeNotifierProvider dialog = ChangeNotifierProvider<
+        TopicDownloadDialogViewModel>(
+      create: (context) => TopicDownloadDialogViewModel(),
+      child: TopicDownloadDialog(topicViewModel),
+    );
     showDialog(context: context, builder: (BuildContext context) => dialog);
   }
 }
