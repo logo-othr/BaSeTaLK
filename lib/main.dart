@@ -20,6 +20,8 @@ import 'package:basetalk/persistance/repositorys/topic_repository.dart';
 import 'package:basetalk/persistance/sftp_auth.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/screens/home_screen.dart';
+import 'package:basetalk/presentation/view/screens/settings_screen.dart';
+import 'package:basetalk/presentation/view/screens/subpage.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -129,6 +131,10 @@ class MyApp extends StatelessWidget {
         title: _AppName,
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
+            case SettingsScreen.routeName:
+              return CustomRoute(builder: (_) => SettingsScreen("Settings"));
+            case SubPage.routeName:
+              return CustomRoute(builder: (_) => SubPage());
             default:
               return new CustomRoute(
                   builder: (_) => new HomeScreen('Startseite'));

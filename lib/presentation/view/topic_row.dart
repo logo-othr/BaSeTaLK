@@ -1,7 +1,9 @@
 import 'dart:developer' as logger;
 
+import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/colors.dart';
+import 'package:basetalk/presentation/view/screens/subpage.dart';
 import 'package:basetalk/presentation/view/topic_download_dialog.dart';
 import 'package:basetalk/presentation/viewmodel/topic_download_dialog_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
@@ -46,6 +48,13 @@ class _TopicRowState extends State<TopicRow> {
       ),
     );
 
+    Widget createTags() {
+      List<Widget> v = [];
+      for (String tag in topicViewModel.topic.tags)
+        v.add(Text("#$tag "));
+      return Row(children: v);
+    }
+
     final middleSection = new Container(
       width: 400,
       padding: new EdgeInsets.only(left: 8.0),
@@ -63,13 +72,7 @@ class _TopicRowState extends State<TopicRow> {
           ),
           new Container(
             padding: new EdgeInsets.only(top: 8.0),
-            child: new Row(
-              children: <Widget>[
-                new Text("Test"),
-                new Text("Test"),
-                new Text("Test"),
-              ],
-            ),
+            child: createTags(),
           )
         ],
       ),
@@ -117,7 +120,9 @@ class _TopicRowState extends State<TopicRow> {
                     : Colors.black,
                 size: 40,
               ),
-              onPressed: topicViewModel.topic.isDownloaded ? null : () async {
+              onPressed: topicViewModel.topic.isDownloaded
+                  ? null
+                  : () async {
                 showDownloadDialog();
               },
             ),
@@ -126,20 +131,26 @@ class _TopicRowState extends State<TopicRow> {
       ),
     );
 
-    return Card(
-        elevation: 8.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(color: Color.fromRGBO(255, 255, 255, .9)),
-          child: Row(
-            children: <Widget>[
-              leftSection,
-              middleSection,
-              Spacer(),
-              rightSection
-            ],
-          ),
-        ));
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushReplacementNamed(SubPage.routeName,
+            arguments: SubPageParams(topicViewModel.topic.id, PageNumber.one));
+      },
+      child: Card(
+          elevation: 8.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            decoration: BoxDecoration(color: Color.fromRGBO(255, 255, 255, .9)),
+            child: Row(
+              children: <Widget>[
+                leftSection,
+                middleSection,
+                Spacer(),
+                rightSection
+              ],
+            ),
+          )),
+    );
   }
 
   @override
@@ -160,8 +171,8 @@ class _TopicRowState extends State<TopicRow> {
   }
 
   void showDownloadDialog() {
-    ChangeNotifierProvider dialog = ChangeNotifierProvider<
-        TopicDownloadDialogViewModel>(
+    ChangeNotifierProvider dialog =
+    ChangeNotifierProvider<TopicDownloadDialogViewModel>(
       create: (context) => TopicDownloadDialogViewModel(),
       child: TopicDownloadDialog(topicViewModel),
     );

@@ -1,5 +1,6 @@
 import 'package:basetalk/presentation/view/screens/home_screen.dart';
 import 'package:basetalk/presentation/view/screens/settings_screen.dart';
+import 'package:basetalk/presentation/view/screens/subpage.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -28,6 +29,9 @@ class MainDrawer extends StatelessWidget {
         }),
         buildListTile("Settings", Icons.restaurant, () {
           Navigator.of(context).pushReplacementNamed(SettingsScreen.routeName);
+        }),
+        buildListTile("Subpage", Icons.info, () {
+          Navigator.of(context).pushReplacementNamed(SubPage.routeName);
         }),
         AboutListTile(
           icon: Icon(

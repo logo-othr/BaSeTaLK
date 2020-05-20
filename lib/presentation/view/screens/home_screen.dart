@@ -19,13 +19,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController editingController = TextEditingController();
+  TopicListViewModel topicListViewModel;
 
   Widget searchBar() {
     return TextField(
       maxLines: 1,
       minLines: 1,
       style: TextStyle(fontSize: 20.0, height: 1.0, color: Colors.black),
-      onChanged: (value) {},
+      onChanged: (value) {
+        topicListViewModel.setFilter(value);
+      },
       controller: editingController,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 0),
@@ -47,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final topicListViewModel = Provider.of<TopicListViewModel>(context);
+    topicListViewModel = Provider.of<TopicListViewModel>(context);
+    final filteredViewModels = topicListViewModel.filteredList();
     return new Scaffold(
       drawer: MainDrawer(),
       appBar: new MainAppbar(new Text(widget._screenTitle)),
@@ -87,12 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, position) {
-                    var topicViewModel =
-                        topicListViewModel.topicViewModels[position];
-                    return ChangeNotifierProvider<TopicViewModel>.value(
-                        value: topicViewModel, child: TopicRow());
+                    var topicViewModel = filteredViewModels[position];
+                    var row = ChangeNotifierProvider<TopicViewModel>.value(
+                      value: topicViewModel,
+                      child: TopicRow(),
+                    );
+                    return row;
                   },
-                  itemCount: topicListViewModel.topicViewModels.length,
+                  itemCount: filteredViewModels.length,
                 ),
               ),
             ],

@@ -18,6 +18,8 @@ class TopicListViewModel extends ChangeNotifier {
   final TopicsToViewModelsUseCase _topicsToViewModels;
   final DownloadTopicDataUseCase _downloadTopicData;
 
+  String _filter;
+
   List<TopicViewModel> topicViewModels = new List();
 
   TopicListViewModel(
@@ -31,6 +33,28 @@ class TopicListViewModel extends ChangeNotifier {
 
   init() async {
     await _refreshStates();
+  }
+
+  List<TopicViewModel> filteredList() {
+    // ToDo: Move functionality in a UseCase class
+    if (_filter == null || _filter.isEmpty) return topicViewModels;
+    List<String> filters = _filter.split(",");
+    List<TopicViewModel> filteredList = new List();
+    for (TopicViewModel topicViewModel in topicViewModels) {
+      for (String tag in filters) {
+        if (topicViewModel.topic.tags.contains(tag))
+          filteredList.add(topicViewModel);
+        break;
+      }
+    }
+    return filteredList;
+  }
+
+  TopicViewModel getTopicViewModelById(int topicId) {
+    TopicViewModel result;
+    for (TopicViewModel topicViewModel in topicViewModels)
+      if (topicViewModel.topic.id == topicId) result = topicViewModel;
+    return result;
   }
 
   void moveTopicToTop(Topic topic) {
@@ -49,6 +73,11 @@ class TopicListViewModel extends ChangeNotifier {
     topicViewModels = _topicsToViewModels(params);
     topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
     await _getTopicThumbnails(topics);
+    notifyListeners();
+  }
+
+  void setFilter(String value) {
+    this._filter = value;
     notifyListeners();
   }
 }
