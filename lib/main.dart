@@ -22,7 +22,9 @@ import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/screens/home_screen.dart';
 import 'package:basetalk/presentation/view/screens/settings_screen.dart';
 import 'package:basetalk/presentation/view/screens/subpage.dart';
+import 'package:basetalk/presentation/viewmodel/sub_page_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -134,7 +136,18 @@ class MyApp extends StatelessWidget {
             case SettingsScreen.routeName:
               return CustomRoute(builder: (_) => SettingsScreen("Settings"));
             case SubPage.routeName:
-              return CustomRoute(builder: (_) => SubPage());
+              final SubPageParams params = settings.arguments;
+              TopicViewModel pageTopicViewModel =
+              topicViewModel.getTopicViewModelById(params.topicId);
+              return CustomRoute(builder: (_) =>
+                  MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider<TopicViewModel>.value(
+                            value: pageTopicViewModel),
+                        ChangeNotifierProvider<SubPageViewModel>(
+                            create: (_) => SubPageViewModel())
+                      ],
+                      child: SubPage()));
             default:
               return new CustomRoute(
                   builder: (_) => new HomeScreen('Startseite'));
