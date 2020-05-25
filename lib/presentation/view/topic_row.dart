@@ -3,6 +3,7 @@ import 'dart:developer' as logger;
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/colors.dart';
+import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
 import 'package:basetalk/presentation/view/screens/subpage.dart';
 import 'package:basetalk/presentation/view/topic_download_dialog.dart';
 import 'package:basetalk/presentation/viewmodel/topic_download_dialog_view_model.dart';
@@ -133,7 +134,7 @@ class _TopicRowState extends State<TopicRow> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushReplacementNamed(SubPage.routeName,
+        Navigator.of(context).pushReplacementNamed(BasicTopicPage.routeName,
             arguments: SubPageParams(topicViewModel.topic.id, PageNumber.one));
       },
       child: Card(

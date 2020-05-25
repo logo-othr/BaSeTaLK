@@ -19,6 +19,7 @@ import 'package:basetalk/persistance/repositorys/media_repository.dart';
 import 'package:basetalk/persistance/repositorys/topic_repository.dart';
 import 'package:basetalk/persistance/sftp_auth.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
+import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
 import 'package:basetalk/presentation/view/screens/home_screen.dart';
 import 'package:basetalk/presentation/view/screens/settings_screen.dart';
 import 'package:basetalk/presentation/view/screens/subpage.dart';
@@ -117,16 +118,17 @@ class CustomRoute<T> extends MaterialPageRoute<T> {
 }
 
 class MyApp extends StatelessWidget {
-  final TopicListViewModel topicViewModel;
+  final TopicListViewModel topicListViewModel;
   final TopicPathProvider topicPathProvider;
 
-  MyApp(this.topicViewModel, this.topicPathProvider);
+  MyApp(this.topicListViewModel, this.topicPathProvider);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TopicListViewModel>.value(value: topicViewModel),
+        ChangeNotifierProvider<TopicListViewModel>.value(
+            value: topicListViewModel),
         Provider<TopicPathProvider>.value(value: topicPathProvider)
       ],
       child: MaterialApp(
@@ -135,19 +137,43 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case SettingsScreen.routeName:
               return CustomRoute(builder: (_) => SettingsScreen("Settings"));
-            case SubPage.routeName:
+            /*  case SubPage.routeName:
               final SubPageParams params = settings.arguments;
-              TopicViewModel pageTopicViewModel =
-              topicViewModel.getTopicViewModelById(params.topicId);
               return CustomRoute(builder: (_) =>
                   MultiProvider(
                       providers: [
                         ChangeNotifierProvider<TopicViewModel>.value(
-                            value: pageTopicViewModel),
+                            value:  topicListViewModel.getTopicViewModelById(params.topicId)),
                         ChangeNotifierProvider<SubPageViewModel>(
-                            create: (_) => SubPageViewModel())
+                            create: (_) => SubPageViewModel(params.pageNumber))
                       ],
-                      child: SubPage()));
+                      child: SubPage()));*/
+            case BasicTopicPage.routeName:
+              final SubPageParams params = settings.arguments;
+              return new CustomRoute(
+                builder: (_) =>
+                new MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider<TopicViewModel>.value(
+                        value: topicListViewModel
+                            .getTopicViewModelById(params.topicId)),
+                    ChangeNotifierProvider<SubPageViewModel>(
+                        create: (_) => SubPageViewModel(params.pageNumber))
+                  ],
+                  child: new BasicTopicPage(
+                    child: SubPage(),
+                  ),
+                ),
+              );
+          /* case BasicPage.routeName:
+                final int topicId = settings.arguments;
+                return CustomRoute(builder: (_) =>
+                   /* MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider<TopicViewModel>.value(
+                              value: topicListViewModel.getTopicViewModelById(topicId)),
+                        ],
+                        child: */ BasicPage());*/
             default:
               return new CustomRoute(
                   builder: (_) => new HomeScreen('Startseite'));
