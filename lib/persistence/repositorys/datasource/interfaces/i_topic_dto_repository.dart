@@ -1,4 +1,4 @@
-import 'package:basetalk/persistance/dto/topic_dto.dart';
+import 'package:basetalk/persistence/dto/topic_dto.dart';
 
 abstract class ITopicDTORepository {
   Future<List<TopicDTO>> getAllTopicDTOs({requestRefresh = false});

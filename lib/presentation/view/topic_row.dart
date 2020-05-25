@@ -2,7 +2,7 @@ import 'dart:developer' as logger;
 
 import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
-import 'package:basetalk/persistance/topic_path_provider.dart';
+import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/colors.dart';
 import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
 import 'package:basetalk/presentation/view/screens/subpage.dart';

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:basetalk/persistance/dto/topic_dto.dart';
-import 'package:basetalk/persistance/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
-import 'package:basetalk/persistance/topic_path_provider.dart';
+import 'package:basetalk/persistence/dto/topic_dto.dart';
+import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
+import 'package:basetalk/persistence/topic_path_provider.dart';
 
 class TopicDTOLocalFileRepository implements ITopicDTOCacheRepository {
   TopicPathProvider _topicPathProvider;

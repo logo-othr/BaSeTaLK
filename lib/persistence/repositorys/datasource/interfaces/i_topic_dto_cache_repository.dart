@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:basetalk/persistance/dto/topic_dto.dart';
+import 'package:basetalk/persistence/dto/topic_dto.dart';
 
 abstract class ITopicDTOCacheRepository {
   FutureOr<void> addTopicDTOToCache(TopicDTO topic);

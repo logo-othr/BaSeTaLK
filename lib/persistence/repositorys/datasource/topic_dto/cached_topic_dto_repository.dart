@@ -1,6 +1,6 @@
-import 'package:basetalk/persistance/dto/topic_dto.dart';
-import 'package:basetalk/persistance/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
-import 'package:basetalk/persistance/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
+import 'package:basetalk/persistence/dto/topic_dto.dart';
+import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
+import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
 
 class CachedTopicDTORepository implements ITopicDTORepository {
   final ITopicDTORepository remoteRepository;

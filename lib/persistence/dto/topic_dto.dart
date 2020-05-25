@@ -1,5 +1,5 @@
-import 'package:basetalk/persistance/dto/information_content_dto.dart';
-import 'package:basetalk/persistance/dto/page_content_dto.dart';
+import 'package:basetalk/persistence/dto/information_content_dto.dart';
+import 'package:basetalk/persistence/dto/page_content_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'topic_dto.g.dart';

@@ -1,6 +1,6 @@
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/repositorys/i_media_repository.dart';
-import 'package:basetalk/persistance/helper/sftp_helper.dart';
+import 'package:basetalk/persistence/helper/sftp_helper.dart';
 import 'package:ssh/ssh.dart';
 
 class MediaRemoteSFTPRepository implements IMediaRepository {

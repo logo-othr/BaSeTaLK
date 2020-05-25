@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:basetalk/persistance/helper/file_helper.dart';
+import 'package:basetalk/persistence/helper/file_helper.dart';
 import 'package:path_provider/path_provider.dart';
 
 class TopicPathProvider {

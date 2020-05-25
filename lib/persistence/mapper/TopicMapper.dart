@@ -3,12 +3,12 @@ import 'package:basetalk/domain/entities/impulse.dart';
 import 'package:basetalk/domain/entities/information_content.dart';
 import 'package:basetalk/domain/entities/page_content.dart';
 import 'package:basetalk/domain/entities/topic.dart';
-import 'package:basetalk/persistance/dto/information_content_dto.dart';
-import 'package:basetalk/persistance/dto/page_content_dto.dart';
-import 'package:basetalk/persistance/dto/page_feature_dto.dart';
-import 'package:basetalk/persistance/dto/page_impulse_dto.dart';
-import 'package:basetalk/persistance/dto/topic_dto.dart';
-import 'package:basetalk/persistance/mapper/i_mapper.dart';
+import 'package:basetalk/persistence/dto/information_content_dto.dart';
+import 'package:basetalk/persistence/dto/page_content_dto.dart';
+import 'package:basetalk/persistence/dto/page_feature_dto.dart';
+import 'package:basetalk/persistence/dto/page_impulse_dto.dart';
+import 'package:basetalk/persistence/dto/topic_dto.dart';
+import 'package:basetalk/persistence/mapper/i_mapper.dart';
 
 class TopicMapper implements IMapper<Topic, TopicDTO> {
   @override

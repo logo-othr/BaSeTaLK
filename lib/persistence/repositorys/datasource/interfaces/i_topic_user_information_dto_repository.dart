@@ -1,4 +1,4 @@
-import 'package:basetalk/persistance/dto/topic_user_information_dto.dart';
+import 'package:basetalk/persistence/dto/topic_user_information_dto.dart';
 
 abstract class ITopicUserInformationDTORepository {
   Future<TopicUserInformationDTO> getTopicUserInformationDTOByTopicId(

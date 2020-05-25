@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:basetalk/persistance/dto/topic_dto.dart';
-import 'package:basetalk/persistance/helper/sftp_helper.dart';
-import 'package:basetalk/persistance/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
-import 'package:basetalk/persistance/topic_path_provider.dart';
+import 'package:basetalk/persistence/dto/topic_dto.dart';
+import 'package:basetalk/persistence/helper/sftp_helper.dart';
+import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
+import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:ssh/ssh.dart';
 
 class TopicDTORemoteSFTPRepository implements ITopicDTORepository {
