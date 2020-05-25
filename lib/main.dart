@@ -19,13 +19,8 @@ import 'package:basetalk/persistance/repositorys/media_repository.dart';
 import 'package:basetalk/persistance/repositorys/topic_repository.dart';
 import 'package:basetalk/persistance/sftp_auth.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
-import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
-import 'package:basetalk/presentation/view/screens/home_screen.dart';
-import 'package:basetalk/presentation/view/screens/settings_screen.dart';
-import 'package:basetalk/presentation/view/screens/subpage.dart';
-import 'package:basetalk/presentation/viewmodel/sub_page_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/route_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -105,17 +100,7 @@ Future<String> loadSFTPAuth() async {
   return await rootBundle.loadString('assets/sftp_auth.json');
 }
 
-class CustomRoute<T> extends MaterialPageRoute<T> {
-  CustomRoute({WidgetBuilder builder, RouteSettings settings})
-      : super(builder: builder, settings: settings);
 
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    if (settings.name == '\\') return child;
-    return new FadeTransition(opacity: animation, child: child);
-  }
-}
 
 class MyApp extends StatelessWidget {
   final TopicListViewModel topicListViewModel;
@@ -125,6 +110,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RouteService routeService = RouteService(topicListViewModel);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TopicListViewModel>.value(
@@ -133,52 +119,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: _AppName,
-        onGenerateRoute: (RouteSettings settings) {
-          switch (settings.name) {
-            case SettingsScreen.routeName:
-              return CustomRoute(builder: (_) => SettingsScreen("Settings"));
-            /*  case SubPage.routeName:
-              final SubPageParams params = settings.arguments;
-              return CustomRoute(builder: (_) =>
-                  MultiProvider(
-                      providers: [
-                        ChangeNotifierProvider<TopicViewModel>.value(
-                            value:  topicListViewModel.getTopicViewModelById(params.topicId)),
-                        ChangeNotifierProvider<SubPageViewModel>(
-                            create: (_) => SubPageViewModel(params.pageNumber))
-                      ],
-                      child: SubPage()));*/
-            case BasicTopicPage.routeName:
-              final SubPageParams params = settings.arguments;
-              return new CustomRoute(
-                builder: (_) =>
-                new MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider<TopicViewModel>.value(
-                        value: topicListViewModel
-                            .getTopicViewModelById(params.topicId)),
-                    ChangeNotifierProvider<SubPageViewModel>(
-                        create: (_) => SubPageViewModel(params.pageNumber))
-                  ],
-                  child: new BasicTopicPage(
-                    child: SubPage(),
-                  ),
-                ),
-              );
-          /* case BasicPage.routeName:
-                final int topicId = settings.arguments;
-                return CustomRoute(builder: (_) =>
-                   /* MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider<TopicViewModel>.value(
-                              value: topicListViewModel.getTopicViewModelById(topicId)),
-                        ],
-                        child: */ BasicPage());*/
-            default:
-              return new CustomRoute(
-                  builder: (_) => new HomeScreen('Startseite'));
-          }
-        },
+        onGenerateRoute: routeService.generateRoute,
         theme: new ThemeData(
           primarySwatch: primary_green, // You
         ),
