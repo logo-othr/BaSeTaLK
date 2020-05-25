@@ -5,11 +5,10 @@ import 'package:ssh/ssh.dart';
 
 class MediaRemoteSFTPRepository implements IMediaRepository {
   final SSHClient _sshClient;
-  final String _remoteFolderPath;
+  final String _remoteFolderPath = "ftp/files/";
   final String _localFolderPath;
 
-  MediaRemoteSFTPRepository(
-      this._sshClient, this._remoteFolderPath, this._localFolderPath);
+  MediaRemoteSFTPRepository(this._sshClient, this._localFolderPath);
 
   @override
   Future<Media> getMediaFile(String filename) async {

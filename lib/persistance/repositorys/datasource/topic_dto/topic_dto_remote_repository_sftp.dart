@@ -10,11 +10,10 @@ import 'package:ssh/ssh.dart';
 
 class TopicDTORemoteSFTPRepository implements ITopicDTORepository {
   final SSHClient _sshClient;
-  final String _remotePath;
+  final String _remotePath = "ftp/files/";
   final TopicPathProvider _topicPathProvider;
 
-  TopicDTORemoteSFTPRepository(
-      this._sshClient, this._remotePath, this._topicPathProvider);
+  TopicDTORemoteSFTPRepository(this._sshClient, this._topicPathProvider);
 
   @override
   Future<List<TopicDTO>> getAllTopicDTOs({requestRefresh = false}) async {

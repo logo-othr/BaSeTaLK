@@ -1,22 +1,7 @@
 import 'dart:async' show Future;
 import 'dart:convert';
 
-import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
-import 'package:basetalk/domain/usecases/getListOfAllTopics.dart';
-import 'package:basetalk/domain/usecases/get_topic_thumbnails_usecase.dart';
-import 'package:basetalk/domain/usecases/sort_topic_list_to_fav_first.dart';
-import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
-import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';
-import 'package:basetalk/domain/usecases/topics_to_viewmodels.dart';
-import 'package:basetalk/persistance/mapper/TopicMapper.dart';
-import 'package:basetalk/persistance/repositorys/datasource/media/media_local_repository_file.dart';
-import 'package:basetalk/persistance/repositorys/datasource/media/media_remote_repository_sftp.dart';
-import 'package:basetalk/persistance/repositorys/datasource/topic_dto/cached_topic_dto_repository.dart';
-import 'package:basetalk/persistance/repositorys/datasource/topic_dto/topic_dto_local_repository_file.dart';
-import 'package:basetalk/persistance/repositorys/datasource/topic_dto/topic_dto_remote_repository_sftp.dart';
-import 'package:basetalk/persistance/repositorys/datasource/topic_userinformation/topic_user_information_dto_repository.dart';
-import 'package:basetalk/persistance/repositorys/media_repository.dart';
-import 'package:basetalk/persistance/repositorys/topic_repository.dart';
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/persistance/sftp_auth.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
@@ -37,49 +22,9 @@ void main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) async {
-    var sshClient = await setUpSFTP();
-    String remotePath = "ftp/files/";
-    var topicPathProvider = new TopicPathProvider();
-    await topicPathProvider.init();
-
-    var remoteTopicRepository = new TopicDTORemoteSFTPRepository(
-        sshClient, remotePath, topicPathProvider);
-    var localTopicRepository =
-        new TopicDTOLocalFileRepository(topicPathProvider);
-    var cachedTopicRepository = new CachedTopicDTORepository(
-        remoteTopicRepository, localTopicRepository);
-
-    var localTopicUserInformationRepository =
-        new TopicUserInformationDTORepository();
-
-    var topicMapper = new TopicMapper();
-    var topicRepository = new TopicRepository(
-        topicDTORepository: cachedTopicRepository,
-        topicUserInformationDTORepository: localTopicUserInformationRepository,
-        topicMapper: topicMapper);
-    var getAllTopics = new GetListOfAllTopicsUseCase(topicRepository);
-    var sortTopicListToFavFirst = new SortTopicListToFavFirstUseCase();
-    var mediaRemoteRepository = new MediaRemoteSFTPRepository(
-        sshClient, remotePath, topicPathProvider.topicMediaRootPath);
-    var mediaCacheRepository = new MediaLocalFileRepository();
-    var mediaRepository =
-        new MediaRepository(mediaRemoteRepository, mediaCacheRepository);
-    var getTopicThumbnails = new GetTopicThumbnailsUseCase(mediaRepository);
-    var toggleTopicVisited = new ToggleTopicVisitedUseCase(topicRepository);
-    var toggleTopicFavorite = new ToggleTopicFavoriteUsecase(topicRepository);
-    var topicsToViewModels = new TopicsToViewModelsUseCase();
-    var downloadTopicData =
-        new DownloadTopicDataUseCase(mediaRepository, topicRepository);
-    var topicListViewModel = new TopicListViewModel(
-        getAllTopics,
-        sortTopicListToFavFirst,
-        getTopicThumbnails,
-        toggleTopicVisited,
-        toggleTopicFavorite,
-        topicsToViewModels,
-        downloadTopicData);
-    await topicListViewModel.init();
-    runApp(new MyApp(topicListViewModel, topicPathProvider));
+    await init();
+    runApp(new MyApp(serviceLocator.get<TopicListViewModel>(),
+        serviceLocator.get<TopicPathProvider>()));
   });
 }
 
@@ -99,8 +44,6 @@ Future<SSHClient> setUpSFTP() async {
 Future<String> loadSFTPAuth() async {
   return await rootBundle.loadString('assets/sftp_auth.json');
 }
-
-
 
 class MyApp extends StatelessWidget {
   final TopicListViewModel topicListViewModel;

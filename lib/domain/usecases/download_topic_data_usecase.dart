@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:basetalk/domain/entities/topic.dart';
+import 'package:basetalk/domain/repositorys/i_media_repository.dart';
+import 'package:basetalk/domain/repositorys/i_topic_repository.dart';
 import 'package:basetalk/domain/usecases/base_usecase.dart';
-import 'package:basetalk/persistance/repositorys/media_repository.dart';
-import 'package:basetalk/persistance/repositorys/topic_repository.dart';
 
 class DownloadTopicDataUseCase
     extends BaseUseCase<void, DownloadTopicDataUseCaseParams> {
-  final MediaRepository _mediaRepository;
-  final TopicRepository _topicRepository;
+  final IMediaRepository _mediaRepository;
+  final ITopicRepository _topicRepository;
 
   DownloadTopicDataUseCase(this._mediaRepository, this._topicRepository);
 
