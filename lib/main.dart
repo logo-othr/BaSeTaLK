@@ -1,16 +1,9 @@
-import 'dart:async' show Future;
-import 'dart:convert';
-
 import 'package:basetalk/dependency_setup.dart';
-import 'package:basetalk/persistance/sftp_auth.dart';
-import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/route_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
-import 'package:ssh/ssh.dart';
 
 import 'presentation/view/colors.dart';
 
@@ -23,46 +16,21 @@ void main() async {
     DeviceOrientation.landscapeRight,
   ]).then((_) async {
     await init();
-    runApp(new MyApp(serviceLocator.get<TopicListViewModel>(),
-        serviceLocator.get<TopicPathProvider>()));
+    runApp(MyApp());
   });
 }
 
-Future<SSHClient> setUpSFTP() async {
-  String jsonString = await loadSFTPAuth();
-  var map = jsonDecode(jsonString);
-  SFTPAuth sftpAuth = SFTPAuth.fromJson(map);
-  var sshClient = new SSHClient(
-    host: sftpAuth.host,
-    port: int.parse(sftpAuth.port),
-    username: sftpAuth.username,
-    passwordOrKey: sftpAuth.passwordOrKey,
-  );
-  return sshClient;
-}
-
-Future<String> loadSFTPAuth() async {
-  return await rootBundle.loadString('assets/sftp_auth.json');
-}
-
 class MyApp extends StatelessWidget {
-  final TopicListViewModel topicListViewModel;
-  final TopicPathProvider topicPathProvider;
-
-  MyApp(this.topicListViewModel, this.topicPathProvider);
-
   @override
   Widget build(BuildContext context) {
-    RouteService routeService = RouteService(topicListViewModel);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<TopicListViewModel>.value(
-            value: topicListViewModel),
-        Provider<TopicPathProvider>.value(value: topicPathProvider)
+            value: serviceLocator.get<TopicListViewModel>()),
       ],
       child: MaterialApp(
         title: _AppName,
-        onGenerateRoute: routeService.generateRoute,
+        onGenerateRoute: RouteService.generateRoute,
         theme: new ThemeData(
           primarySwatch: primary_green, // You
         ),

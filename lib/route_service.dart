@@ -1,3 +1,4 @@
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
 import 'package:basetalk/presentation/view/screens/home_screen.dart';
 import 'package:basetalk/presentation/view/screens/subpage.dart';
@@ -8,11 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RouteService {
-  final TopicListViewModel topicListViewModel;
-
-  RouteService(this.topicListViewModel);
-
-  Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case BasicTopicPage.routeName:
         final SubPageParams params = settings.arguments;
@@ -21,7 +18,8 @@ class RouteService {
             providers: [
               ChangeNotifierProvider<TopicViewModel>.value(
                   value:
-                      topicListViewModel.getTopicViewModelById(params.topicId)),
+                  serviceLocator.get<TopicListViewModel>()
+                      .getTopicViewModelById(params.topicId)),
               ChangeNotifierProvider<SubPageViewModel>(
                   create: (_) => SubPageViewModel(params.pageNumber))
             ],

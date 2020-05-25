@@ -1,5 +1,6 @@
 import 'dart:developer' as logger;
 
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/persistance/topic_path_provider.dart';
 import 'package:basetalk/presentation/view/colors.dart';
@@ -25,7 +26,6 @@ class _TopicRowState extends State<TopicRow> {
   @override
   Widget build(BuildContext context) {
     topicListViewModel = Provider.of<TopicListViewModel>(context);
-    topicPathProvider = Provider.of<TopicPathProvider>(context);
     topicViewModel = Provider.of<TopicViewModel>(context);
 
     final baseTextStyle = const TextStyle(fontFamily: 'Poppins');
@@ -44,15 +44,16 @@ class _TopicRowState extends State<TopicRow> {
         width: 200,
         height: 100,
         image: FileImage(
-          topicPathProvider.getTopicMediaFile(topicViewModel.topic.thumbnail),
+          serviceLocator
+              .get<TopicPathProvider>()
+              .getTopicMediaFile(topicViewModel.topic.thumbnail),
         ),
       ),
     );
 
     Widget createTags() {
       List<Widget> v = [];
-      for (String tag in topicViewModel.topic.tags)
-        v.add(Text("#$tag "));
+      for (String tag in topicViewModel.topic.tags) v.add(Text("#$tag "));
       return Row(children: v);
     }
 
