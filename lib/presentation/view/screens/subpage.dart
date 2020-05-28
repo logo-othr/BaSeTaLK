@@ -19,15 +19,9 @@ class _SubPageState extends State<SubPage> {
   double rowDividerHeight;
   double iconSize;
   double audioButtonSize;
-  bool visibility = true;
 
-  void _showImpulse(bool visible, String field) {
-    setState(() {
-      if (field == "pulse") {
-        visibility = visible;
-      }
-    });
-  }
+  TopicViewModel topicViewModel;
+  SubPageViewModel subPageViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +30,9 @@ class _SubPageState extends State<SubPage> {
     iconSize = 17 * heightFactor;
     audioButtonSize = 12 * heightFactor;
     rowDividerHeight = 5 * heightFactor;
+    topicViewModel = Provider.of<TopicViewModel>(context);
+    subPageViewModel = Provider.of<SubPageViewModel>(context);
 
-    TopicViewModel topicViewModel = Provider.of<TopicViewModel>(context);
-    SubPageViewModel subPageViewModel = Provider.of<SubPageViewModel>(context);
     return Container(
       color: Colors.black,
       child: Column(
@@ -63,7 +57,7 @@ class _SubPageState extends State<SubPage> {
     );
   }
 
-  impulseBarVisible() {
+  showImpulseBar() {
     return Container(
       color: primary_green,
       child: Row(
@@ -76,7 +70,7 @@ class _SubPageState extends State<SubPage> {
               icon: Icon(Icons.close),
               iconSize: 100,
               onPressed: () {
-                _showImpulse(false, "pulse");
+                subPageViewModel.toggleImpulseBarVisible();
               },
             ),
           ),
@@ -116,7 +110,7 @@ class _SubPageState extends State<SubPage> {
                 icon: Icon(Icons.chat),
                 iconSize: iconSize,
                 onPressed: () {
-                  _showImpulse(false, "pulse");
+                  // Audio-Output
                 },
               ),
             ),
@@ -126,7 +120,7 @@ class _SubPageState extends State<SubPage> {
     );
   }
 
-  Widget impulseBarInvisible() {
+  Widget showImpulseBarButton() {
     return Container(
       child: Card(
         elevation: 0,
@@ -139,14 +133,14 @@ class _SubPageState extends State<SubPage> {
           icon: Icon(Icons.chat),
           iconSize: iconSize,
           onPressed: () {
-            _showImpulse(true, "pulse");
+            subPageViewModel.toggleImpulseBarVisible();
           },
         ),
       ),
     );
   }
 
-  Widget leftButton() {
+  Widget featureButton() {
     return Container(
       child: Card(
         margin: EdgeInsets.all(0),
@@ -219,8 +213,10 @@ class _SubPageState extends State<SubPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              leftButton(),
-              visibility ? impulseBarVisible() : impulseBarInvisible()
+              featureButton(),
+              subPageViewModel.isImpulseBarVisible
+                  ? showImpulseBar()
+                  : showImpulseBarButton()
             ],
           ),
         ],

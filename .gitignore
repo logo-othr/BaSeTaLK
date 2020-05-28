@@ -117,3 +117,4 @@ app.*.symbols
 /assets/sftp_auth.json
 *.g.dart
 /assets/img/logo.png
+/assets/img/example_no_vc.jpg

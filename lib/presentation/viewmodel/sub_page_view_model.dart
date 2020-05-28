@@ -2,14 +2,33 @@ import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:flutter/material.dart';
 
 class SubPageViewModel extends ChangeNotifier {
-  bool isInfoDialogVisible = false;
+  bool _isInfoDialogVisible = false;
+  bool _isFeatureVisible = false;
+  bool _isImpulseBarVisible = false;
 
   final PageNumber pageNumber;
 
   SubPageViewModel(this.pageNumber);
 
+  bool get isInfoDialogVisible => _isInfoDialogVisible;
+
+  bool get isFeatureVisible => _isFeatureVisible;
+
+  bool get isImpulseBarVisible => _isImpulseBarVisible;
+
   toggleInfoDialogVisible() {
-    isInfoDialogVisible = !isInfoDialogVisible;
+    _isInfoDialogVisible = !_isInfoDialogVisible;
+    notifyListeners();
+  }
+
+  toggleFeatureVisible() {
+    _isFeatureVisible = !_isFeatureVisible;
+    notifyListeners();
+  }
+
+  toggleImpulseBarVisible() {
+    _isImpulseBarVisible = !_isImpulseBarVisible;
+    print(_isImpulseBarVisible);
     notifyListeners();
   }
 }
