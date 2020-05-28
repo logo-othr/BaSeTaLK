@@ -1,3 +1,5 @@
+import 'package:basetalk/domain/entities/feature.dart';
+import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/topic.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
@@ -26,8 +28,10 @@ class TopicViewModel extends ChangeNotifier {
 
   Future<void> downloadTopic(Function callback) async {
     DownloadTopicDataUseCaseParams params =
-        DownloadTopicDataUseCaseParams(this.topic, callback);
+    DownloadTopicDataUseCaseParams(this.topic, callback);
     await _downloadTopicDataUseCase(params);
     notifyListeners();
   }
+
+  PageFeature getPageFeature(PageNumber pageNumber) {}
 }
