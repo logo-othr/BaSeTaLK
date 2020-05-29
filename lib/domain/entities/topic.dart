@@ -1,6 +1,7 @@
 import 'package:basetalk/domain/entities/impulse.dart';
 import 'package:basetalk/domain/entities/information_content.dart';
 import 'package:basetalk/domain/entities/page_content.dart';
+import 'package:basetalk/domain/entities/page_number.dart';
 
 class Topic {
   int id;
@@ -34,6 +35,22 @@ class Topic {
 
   void toggleVisited() {
     this.isVisited = !this.isVisited;
+  }
+
+  Impulse getImpulse(PageNumber pageNumber, int index) {
+    Impulse result;
+    for (PageContent pageContent in this.pageContents)
+      if (pageContent.pageNumber == pageNumber)
+        result = pageContent.pageImpluses[index];
+    return result;
+  }
+
+  int getImpulseCount(PageNumber pageNumber) {
+    int result = 0;
+    for (PageContent pageContent in this.pageContents)
+      if (pageContent.pageNumber == pageNumber)
+        result = pageContent.pageImpluses.length;
+    return result;
   }
 
   List<String> getMediaFileNames() {

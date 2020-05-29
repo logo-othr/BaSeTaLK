@@ -1,4 +1,5 @@
 import 'package:basetalk/domain/entities/feature.dart';
+import 'package:basetalk/domain/entities/impulse.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/topic.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
@@ -34,4 +35,12 @@ class TopicViewModel extends ChangeNotifier {
   }
 
   PageFeature getPageFeature(PageNumber pageNumber) {}
+
+  Impulse getImpulse(PageNumber pageNumber, int index) {
+    return topic.getImpulse(pageNumber, index);
+  }
+
+  int getImpulseCount(PageNumber pageNumber) {
+    return topic.getImpulseCount(pageNumber);
+  }
 }

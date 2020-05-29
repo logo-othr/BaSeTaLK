@@ -32,6 +32,8 @@ class _SubPageState extends State<SubPage> {
     rowDividerHeight = 5 * heightFactor;
     topicViewModel = Provider.of<TopicViewModel>(context);
     subPageViewModel = Provider.of<SubPageViewModel>(context);
+    subPageViewModel.pageImpulseCount =
+        topicViewModel.getImpulseCount(subPageViewModel.pageNumber);
 
     return Container(
       color: Colors.black,
@@ -42,8 +44,10 @@ class _SubPageState extends State<SubPage> {
           SizedBox(
             height: rowDividerHeight,
           ),
-          featureRow(
-              topicViewModel.getPageFeature(subPageViewModel.pageNumber)),
+          subPageViewModel.isFeatureVisible
+              ? featureRow(
+                  topicViewModel.getPageFeature(subPageViewModel.pageNumber))
+              : Container(),
           // Spacer(),
           SizedBox(
             height: rowDividerHeight,
@@ -79,7 +83,10 @@ class _SubPageState extends State<SubPage> {
             child: Container(
               width: 510,
               child: Text(
-                '''Erinnern Sie sich an Ereignisse aus Ihrem Leben, an dem Sie vor lauter Freude gejubelt haben?''',
+                topicViewModel
+                    .getImpulse(subPageViewModel.pageNumber,
+                    subPageViewModel.getImpulseIndex())
+                    .text,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 27,
@@ -91,7 +98,9 @@ class _SubPageState extends State<SubPage> {
             height: 50,
             child: RaisedButton(
               color: Colors.black,
-              onPressed: () {},
+              onPressed: () {
+                subPageViewModel.incrementImpulseIndex();
+              },
               child: Text(
                 'Weiter',
                 style: TextStyle(fontSize: 27, color: Colors.white),
@@ -152,7 +161,7 @@ class _SubPageState extends State<SubPage> {
           icon: Icon(Icons.card_giftcard),
           iconSize: iconSize,
           onPressed: () {
-            print("Hier befindet sich das Page Feature");
+            subPageViewModel.toggleFeatureVisible();
           },
         ),
       ),
@@ -209,7 +218,9 @@ class _SubPageState extends State<SubPage> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Center(child: buttonRow()),
+          Center(child: subPageViewModel.isFeatureVisible
+              ? buttonRow()
+              : Container(),),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

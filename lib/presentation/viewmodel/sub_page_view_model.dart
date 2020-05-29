@@ -5,6 +5,8 @@ class SubPageViewModel extends ChangeNotifier {
   bool _isInfoDialogVisible = false;
   bool _isFeatureVisible = false;
   bool _isImpulseBarVisible = false;
+  int pageImpulseCount = 0;
+  int pageImpulseIndex = 0;
 
   final PageNumber pageNumber;
 
@@ -30,5 +32,17 @@ class SubPageViewModel extends ChangeNotifier {
     _isImpulseBarVisible = !_isImpulseBarVisible;
     print(_isImpulseBarVisible);
     notifyListeners();
+  }
+
+  incrementImpulseIndex() {
+    if (pageImpulseIndex >= pageImpulseCount - 1)
+      pageImpulseIndex = 0;
+    else
+      pageImpulseIndex++;
+    notifyListeners();
+  }
+
+  int getImpulseIndex() {
+    return pageImpulseIndex;
   }
 }
