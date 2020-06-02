@@ -28,7 +28,6 @@ class SubPageViewModel extends ChangeNotifier {
 
   toggleImpulseBarVisible() {
     _isImpulseBarVisible = !_isImpulseBarVisible;
-    print(_isImpulseBarVisible);
     notifyListeners();
   }
 

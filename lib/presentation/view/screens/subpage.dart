@@ -68,8 +68,10 @@ class _SubPageState extends State<SubPage> {
   showImpulseBar() {
     return ChangeNotifierProvider<ImpulseBarViewModel>.value(
       value: impulseBarViewModel,
-      child: ImpulseBar(onClose: subPageViewModel.toggleImpulseBarVisible(),
-        audioIconSize: iconSize,),
+      child: ImpulseBar(
+        onClose: subPageViewModel.toggleImpulseBarVisible,
+        audioIconSize: iconSize,
+      ),
     );
   }
 
