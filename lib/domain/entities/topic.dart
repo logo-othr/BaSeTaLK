@@ -45,11 +45,11 @@ class Topic {
     return result;
   }
 
-  int getImpulseCount(PageNumber pageNumber) {
-    int result = 0;
+  List<Impulse> getImpulses(PageNumber pageNumber) {
+    List<Impulse> result;
     for (PageContent pageContent in this.pageContents)
       if (pageContent.pageNumber == pageNumber)
-        result = pageContent.pageImpluses.length;
+        result = pageContent.pageImpluses;
     return result;
   }
 

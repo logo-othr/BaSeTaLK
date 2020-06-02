@@ -40,7 +40,7 @@ class TopicViewModel extends ChangeNotifier {
     return topic.getImpulse(pageNumber, index);
   }
 
-  int getImpulseCount(PageNumber pageNumber) {
-    return topic.getImpulseCount(pageNumber);
+  List<Impulse> getImpulses(PageNumber pageNumber) {
+    return topic.getImpulses(pageNumber);
   }
 }

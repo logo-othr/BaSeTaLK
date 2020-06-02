@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
+import 'package:basetalk/presentation/impulse_bar.dart';
 import 'package:basetalk/presentation/view/colors.dart';
+import 'package:basetalk/presentation/viewmodel/impulse_bar_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/sub_page_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
@@ -22,110 +24,52 @@ class _SubPageState extends State<SubPage> {
 
   TopicViewModel topicViewModel;
   SubPageViewModel subPageViewModel;
+  ImpulseBarViewModel impulseBarViewModel;
 
-  @override
-  Widget build(BuildContext context) {
+  initLayoutSizes() {
     double deviceHeight = MediaQuery.of(context).size.height;
     double heightFactor = deviceHeight / 100;
     iconSize = 17 * heightFactor;
     audioButtonSize = 12 * heightFactor;
     rowDividerHeight = 5 * heightFactor;
+  }
+
+  initProviders(BuildContext context) {
     topicViewModel = Provider.of<TopicViewModel>(context);
     subPageViewModel = Provider.of<SubPageViewModel>(context);
-    subPageViewModel.pageImpulseCount =
-        topicViewModel.getImpulseCount(subPageViewModel.pageNumber);
+    var pageNumber = subPageViewModel.pageNumber;
+    var impulses = topicViewModel.getImpulses(pageNumber);
+    impulseBarViewModel = ImpulseBarViewModel(impulses);
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    initLayoutSizes();
+    initProviders(context);
     return Container(
-      color: Colors.black,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           // Spacer(),
-          SizedBox(
-            height: rowDividerHeight,
-          ),
+          SizedBox(height: rowDividerHeight),
           subPageViewModel.isFeatureVisible
               ? featureRow(
                   topicViewModel.getPageFeature(subPageViewModel.pageNumber))
               : Container(),
           // Spacer(),
-          SizedBox(
-            height: rowDividerHeight,
-          ),
+          SizedBox(height: rowDividerHeight),
           featureImpulseRow(),
-          SizedBox(
-            height: rowDividerHeight,
-          )
+          SizedBox(height: rowDividerHeight)
         ],
       ),
     );
   }
 
   showImpulseBar() {
-    return Container(
-      color: primary_green,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Card(
-            elevation: 0,
-            color: primary_green,
-            child: IconButton(
-              icon: Icon(Icons.close),
-              iconSize: 100,
-              onPressed: () {
-                subPageViewModel.toggleImpulseBarVisible();
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 0, 40.0, 0),
-            child: Container(
-              width: 510,
-              child: Text(
-                topicViewModel
-                    .getImpulse(subPageViewModel.pageNumber,
-                    subPageViewModel.getImpulseIndex())
-                    .text,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 27,
-                ),
-              ),
-            ),
-          ),
-          ButtonTheme(
-            height: 50,
-            child: RaisedButton(
-              color: Colors.black,
-              onPressed: () {
-                subPageViewModel.incrementImpulseIndex();
-              },
-              child: Text(
-                'Weiter',
-                style: TextStyle(fontSize: 27, color: Colors.white),
-              ),
-            ),
-          ),
-          Container(
-            child: Card(
-              elevation: 0,
-              margin: EdgeInsets.all(0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0.0),
-              ),
-              color: primary_green,
-              child: IconButton(
-                icon: Icon(Icons.chat),
-                iconSize: iconSize,
-                onPressed: () {
-                  // Audio-Output
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+    return ChangeNotifierProvider<ImpulseBarViewModel>.value(
+      value: impulseBarViewModel,
+      child: ImpulseBar(onClose: subPageViewModel.toggleImpulseBarVisible(),
+        audioIconSize: iconSize,),
     );
   }
 
@@ -141,9 +85,8 @@ class _SubPageState extends State<SubPage> {
         child: IconButton(
           icon: Icon(Icons.chat),
           iconSize: iconSize,
-          onPressed: () {
-            subPageViewModel.toggleImpulseBarVisible();
-          },
+          onPressed: () => subPageViewModel.toggleImpulseBarVisible()
+          ,
         ),
       ),
     );
@@ -170,7 +113,6 @@ class _SubPageState extends State<SubPage> {
 
   Widget buttonRow() {
     return Container(
-      color: Colors.white,
       child: Center(child: audioButtonBar()),
     );
   }
@@ -218,9 +160,10 @@ class _SubPageState extends State<SubPage> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Center(child: subPageViewModel.isFeatureVisible
-              ? buttonRow()
-              : Container(),),
+          Center(
+            child:
+            subPageViewModel.isFeatureVisible ? buttonRow() : Container(),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
