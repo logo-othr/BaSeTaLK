@@ -1,11 +1,10 @@
+import 'package:basetalk/presentation/view/drawer.dart';
+import 'package:basetalk/presentation/view/main_appbar.dart';
 import 'package:basetalk/presentation/view/topic_row.dart';
+import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../viewmodel/topic_list_view_model.dart';
-import '../drawer.dart';
-import '../main_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/homepage";

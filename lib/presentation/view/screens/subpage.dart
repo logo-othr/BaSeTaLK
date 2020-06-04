@@ -10,14 +10,14 @@ import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SubPage extends StatefulWidget {
-  static const routeName = "/subpage";
+class TopicPage extends StatefulWidget {
+  static const routeName = "/topicPage";
 
   @override
-  _SubPageState createState() => _SubPageState();
+  _TopicPageState createState() => _TopicPageState();
 }
 
-class _SubPageState extends State<SubPage> {
+class _TopicPageState extends State<TopicPage> {
   double rowDividerHeight;
   double iconSize;
   double audioButtonSize;

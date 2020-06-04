@@ -1,12 +1,13 @@
 import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
-import 'package:basetalk/presentation/view/screens/home_screen.dart';
 import 'package:basetalk/presentation/view/screens/subpage.dart';
 import 'package:basetalk/presentation/viewmodel/sub_page_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///A:/basetalk/lib/presentation/view/homepage/home_screen.dart';
 
 class RouteService {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -24,7 +25,7 @@ class RouteService {
                   create: (_) => SubPageViewModel(params.pageNumber))
             ],
             child: new BasicTopicPage(
-              child: SubPage(),
+              child: TopicPage(),
             ),
           ),
         );
