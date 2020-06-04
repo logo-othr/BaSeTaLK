@@ -1,3 +1,4 @@
+import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'page_feature_dto.g.dart';
@@ -5,9 +6,10 @@ part 'page_feature_dto.g.dart';
 @JsonSerializable(explicitToJson: true)
 class PageFeatureDTO {
   int id;
+  FeatureType featureType;
   String featureFileName;
 
-  PageFeatureDTO(this.id, this.featureFileName);
+  PageFeatureDTO(this.id, this.featureType, this.featureFileName);
 
   factory PageFeatureDTO.fromJson(Map<String, dynamic> json) =>
       _$PageFeatureDTOFromJson(json);

@@ -28,7 +28,9 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
           pageContentDto.id,
           pageContentDto.topicId,
           pageContentDto.pageNumber,
-          new PageFeature(pageContentDto.pageFeature.id,
+          new PageFeature(
+              pageContentDto.pageFeature.id,
+              pageContentDto.pageFeature.featureType,
               pageContentDto.pageFeature.featureFileName),
           impulses,
           new InformationContent(pageContentDto.informationContent.heading,
@@ -68,8 +70,9 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
           pageContent.id,
           pageContent.topicId,
           pageContent.pageNumber,
-          new PageFeatureDTO(pageContent.pageFeature.id,
-              pageContent.pageFeature.featureFileName),
+          new PageFeatureDTO(
+              pageContent.pageFeature.id, pageContent.pageFeature.type,
+              pageContent.pageFeature.filename),
           pageImpulseDTOs,
           new InformationContentDTO(pageContent.informationContent.heading,
               pageContent.informationContent.content),

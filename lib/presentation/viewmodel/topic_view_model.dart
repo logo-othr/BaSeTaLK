@@ -1,5 +1,6 @@
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/impulse.dart';
+import 'package:basetalk/domain/entities/page_content.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/topic.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
@@ -29,12 +30,22 @@ class TopicViewModel extends ChangeNotifier {
 
   Future<void> downloadTopic(Function callback) async {
     DownloadTopicDataUseCaseParams params =
-    DownloadTopicDataUseCaseParams(this.topic, callback);
+        DownloadTopicDataUseCaseParams(this.topic, callback);
     await _downloadTopicDataUseCase(params);
     notifyListeners();
   }
 
-  PageFeature getPageFeature(PageNumber pageNumber) {}
+  PageContent getPageContent(PageNumber pageNumber) {
+    var result;
+    for (PageContent pageContent in topic.pageContents)
+      if (pageContent.pageNumber == pageNumber) result = pageContent;
+    return result;
+  }
+
+  PageFeature getPageFeature(PageNumber pageNumber) {
+    var pageContent = getPageContent(pageNumber);
+    return pageContent.pageFeature;
+  }
 
   Impulse getImpulse(PageNumber pageNumber, int index) {
     return topic.getImpulse(pageNumber, index);

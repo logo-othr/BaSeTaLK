@@ -1,3 +1,4 @@
+import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,7 @@ class SubPageViewModel extends ChangeNotifier {
   bool _isInfoDialogVisible = false;
   bool _isFeatureVisible = false;
   bool _isImpulseBarVisible = false;
+  PageFeature pageFeature;
 
   final PageNumber pageNumber;
 

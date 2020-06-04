@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:basetalk/domain/entities/feature.dart';
+import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/impulse_bar.dart';
 import 'package:basetalk/presentation/view/colors.dart';
@@ -40,23 +40,20 @@ class _SubPageState extends State<SubPage> {
     var pageNumber = subPageViewModel.pageNumber;
     var impulses = topicViewModel.getImpulses(pageNumber);
     impulseBarViewModel = ImpulseBarViewModel(impulses);
+    subPageViewModel.pageFeature = topicViewModel.getPageFeature(pageNumber);
   }
 
   @override
   Widget build(BuildContext context) {
     initLayoutSizes();
     initProviders(context);
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          // Spacer(),
           SizedBox(height: rowDividerHeight),
-          subPageViewModel.isFeatureVisible
-              ? featureRow(
-                  topicViewModel.getPageFeature(subPageViewModel.pageNumber))
-              : Container(),
-          // Spacer(),
+          subPageViewModel.isFeatureVisible ? featureRow() : Container(),
           SizedBox(height: rowDividerHeight),
           featureImpulseRow(),
           SizedBox(height: rowDividerHeight)
@@ -80,16 +77,12 @@ class _SubPageState extends State<SubPage> {
       child: Card(
         elevation: 0,
         margin: EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0.0),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         color: primary_green,
         child: IconButton(
-          icon: Icon(Icons.chat),
-          iconSize: iconSize,
-          onPressed: () => subPageViewModel.toggleImpulseBarVisible()
-          ,
-        ),
+            icon: Icon(Icons.chat),
+            iconSize: iconSize,
+            onPressed: () => subPageViewModel.toggleImpulseBarVisible()),
       ),
     );
   }
@@ -98,9 +91,7 @@ class _SubPageState extends State<SubPage> {
     return Container(
       child: Card(
         margin: EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0.0),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         color: primary_green,
         child: IconButton(
           icon: Icon(Icons.card_giftcard),
@@ -114,9 +105,14 @@ class _SubPageState extends State<SubPage> {
   }
 
   Widget buttonRow() {
-    return Container(
-      child: Center(child: audioButtonBar()),
-    );
+    Widget child;
+    var type = subPageViewModel.pageFeature.type;
+    if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
+      child = audioButtonBar();
+    else
+      child = Container();
+
+    return Container(child: Center(child: child));
   }
 
   Widget audioButtonBar() {
@@ -180,12 +176,19 @@ class _SubPageState extends State<SubPage> {
     );
   }
 
-  Widget featureRow(PageFeature pageFeature) {
+  Widget featureRow() {
+    Widget child = Container();
+    var type = subPageViewModel.pageFeature.type;
+    if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
+      child = Container();
+    else if (type == FeatureType.IMAGE)
+      child = imageFeature();
+    else if (type == FeatureType.QUIZ) child = Container();
+
     return Expanded(
       child: Container(
         color: Colors.white,
-        child: imageFeature(),
-        // ToDo: Create child depending on pageFeature
+        child: child,
       ),
     );
   }

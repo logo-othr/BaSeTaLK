@@ -1,1 +1,1 @@
-class FeatureType {}
+enum FeatureType { AUDIO, AUDIOIMAGE, IMAGE, QUIZ }
