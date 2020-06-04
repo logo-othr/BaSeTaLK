@@ -29,7 +29,11 @@ class RouteService {
           ),
         );
       default:
-        return new _CustomRoute(builder: (_) => new HomeScreen('Startseite'));
+        return new _CustomRoute(
+            builder: (_) => ChangeNotifierProvider<TopicListViewModel>.value(
+                  value: serviceLocator.get<TopicListViewModel>(),
+                  child: new HomeScreen('Startseite'),
+                ));
     }
   }
 }
