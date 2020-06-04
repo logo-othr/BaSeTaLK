@@ -40,7 +40,6 @@ class _SubPageState extends State<SubPage> {
     var pageNumber = subPageViewModel.pageNumber;
     var impulses = topicViewModel.getImpulses(pageNumber);
     impulseBarViewModel = ImpulseBarViewModel(impulses);
-    subPageViewModel.pageFeature = topicViewModel.getPageFeature(pageNumber);
   }
 
   @override
@@ -61,6 +60,46 @@ class _SubPageState extends State<SubPage> {
       ),
     );
   }
+
+  Widget featureRow() {
+    Widget child = Container();
+    var type = topicViewModel
+        .getPageFeature(subPageViewModel.pageNumber)
+        .type;
+    if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
+      child = audioFeature();
+    else if (type == FeatureType.IMAGE)
+      child = imageFeature();
+    else if (type == FeatureType.QUIZ) child = quizFeature();
+
+    return Expanded(
+      child: Container(
+        child: child,
+      ),
+    );
+  }
+
+  Widget quizFeature() {
+    return Container(
+      child: Text("Quiz Feature"),
+    );
+  }
+
+  Widget audioFeature() {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Container(
+        child: Icon(Icons.volume_down, size: 200,),
+      ),
+    );
+  }
+
+  Widget imageFeature() {
+    return Image(
+      image: AssetImage("assets/img/example_no_vc.jpg"),
+    );
+  }
+
 
   showImpulseBar() {
     return ChangeNotifierProvider<ImpulseBarViewModel>.value(
@@ -96,9 +135,7 @@ class _SubPageState extends State<SubPage> {
         child: IconButton(
           icon: Icon(Icons.card_giftcard),
           iconSize: iconSize,
-          onPressed: () {
-            subPageViewModel.toggleFeatureVisible();
-          },
+            onPressed: () => subPageViewModel.toggleFeatureVisible()
         ),
       ),
     );
@@ -106,12 +143,13 @@ class _SubPageState extends State<SubPage> {
 
   Widget buttonRow() {
     Widget child;
-    var type = subPageViewModel.pageFeature.type;
+    var type = topicViewModel
+        .getPageFeature(subPageViewModel.pageNumber)
+        .type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
       child = audioButtonBar();
     else
       child = Container();
-
     return Container(child: Center(child: child));
   }
 
@@ -176,28 +214,8 @@ class _SubPageState extends State<SubPage> {
     );
   }
 
-  Widget featureRow() {
-    Widget child = Container();
-    var type = subPageViewModel.pageFeature.type;
-    if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
-      child = Container();
-    else if (type == FeatureType.IMAGE)
-      child = imageFeature();
-    else if (type == FeatureType.QUIZ) child = Container();
 
-    return Expanded(
-      child: Container(
-        color: Colors.white,
-        child: child,
-      ),
-    );
-  }
 
-  Widget imageFeature() {
-    return Image(
-      image: AssetImage("assets/img/example_no_vc.jpg"),
-    );
-  }
 }
 
 class SubPageParams {
