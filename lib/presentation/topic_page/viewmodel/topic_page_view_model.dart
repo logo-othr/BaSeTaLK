@@ -1,14 +1,14 @@
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:flutter/material.dart';
 
-class SubPageViewModel extends ChangeNotifier {
+class TopicPageViewModel extends ChangeNotifier {
   bool _isInfoDialogVisible = false;
   bool _isFeatureVisible = false;
   bool _isImpulseBarVisible = false;
 
   final PageNumber pageNumber;
 
-  SubPageViewModel(this.pageNumber);
+  TopicPageViewModel(this.pageNumber);
 
   bool get isInfoDialogVisible => _isInfoDialogVisible;
 

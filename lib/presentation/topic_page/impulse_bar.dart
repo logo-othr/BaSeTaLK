@@ -1,5 +1,5 @@
-import 'package:basetalk/presentation/view/colors.dart';
-import 'package:basetalk/presentation/viewmodel/impulse_bar_view_model.dart';
+import 'package:basetalk/presentation/colors.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

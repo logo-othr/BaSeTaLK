@@ -1,1 +1,1 @@
-enum PageNumber { one, two, three }
+enum PageNumber { blitzlicht, zero, one, two, three, rating }

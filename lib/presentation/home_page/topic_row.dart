@@ -1,15 +1,13 @@
 import 'dart:developer' as logger;
 
 import 'package:basetalk/dependency_setup.dart';
-import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
-import 'package:basetalk/presentation/view/colors.dart';
-import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
-import 'package:basetalk/presentation/view/screens/subpage.dart';
-import 'package:basetalk/presentation/view/topic_download_dialog.dart';
-import 'package:basetalk/presentation/viewmodel/topic_download_dialog_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/presentation/blitzlicht_page/blitzlicht_page.dart';
+import 'package:basetalk/presentation/colors.dart';
+import 'package:basetalk/presentation/home_page/topic_download_dialog.dart';
+import 'package:basetalk/presentation/home_page/viewmodel/topic_download_dialog_view_model.dart';
+import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -135,8 +133,8 @@ class _TopicRowState extends State<TopicRow> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushReplacementNamed(BasicTopicPage.routeName,
-            arguments: SubPageParams(topicViewModel.topic.id, PageNumber.one));
+        Navigator.of(context).pushReplacementNamed(BlitzLicht.routeName,
+            arguments: topicViewModel.topic.id);
       },
       child: Card(
           elevation: 8.0,

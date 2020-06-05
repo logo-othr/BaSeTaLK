@@ -23,7 +23,7 @@ import 'package:basetalk/persistence/repositorys/media_repository.dart';
 import 'package:basetalk/persistence/repositorys/topic_repository.dart';
 import 'package:basetalk/persistence/sftp_auth.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
-import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:ssh/ssh.dart';

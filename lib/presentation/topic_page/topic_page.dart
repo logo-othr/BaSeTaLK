@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
-import 'package:basetalk/presentation/impulse_bar.dart';
-import 'package:basetalk/presentation/view/colors.dart';
-import 'package:basetalk/presentation/viewmodel/impulse_bar_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/sub_page_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/presentation/colors.dart';
+import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class _TopicPageState extends State<TopicPage> {
   double audioButtonSize;
 
   TopicViewModel topicViewModel;
-  SubPageViewModel subPageViewModel;
+  TopicPageViewModel subPageViewModel;
   ImpulseBarViewModel impulseBarViewModel;
 
   initLayoutSizes() {
@@ -36,7 +36,7 @@ class _TopicPageState extends State<TopicPage> {
 
   initProviders(BuildContext context) {
     topicViewModel = Provider.of<TopicViewModel>(context);
-    subPageViewModel = Provider.of<SubPageViewModel>(context);
+    subPageViewModel = Provider.of<TopicPageViewModel>(context);
     var pageNumber = subPageViewModel.pageNumber;
     var impulses = topicViewModel.getImpulses(pageNumber);
     impulseBarViewModel = ImpulseBarViewModel(impulses);
@@ -218,9 +218,9 @@ class _TopicPageState extends State<TopicPage> {
 
 }
 
-class SubPageParams {
+class TopicPageParams {
   final int topicId;
   final PageNumber pageNumber;
 
-  SubPageParams(this.topicId, this.pageNumber);
+  TopicPageParams(this.topicId, this.pageNumber);
 }

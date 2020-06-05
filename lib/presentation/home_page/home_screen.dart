@@ -1,8 +1,8 @@
-import 'package:basetalk/presentation/view/drawer.dart';
-import 'package:basetalk/presentation/view/main_appbar.dart';
-import 'package:basetalk/presentation/view/topic_row.dart';
-import 'package:basetalk/presentation/viewmodel/topic_list_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/presentation/drawer.dart';
+import 'package:basetalk/presentation/home_page/topic_row.dart';
+import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/main_appbar.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

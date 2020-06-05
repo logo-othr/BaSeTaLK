@@ -1,10 +1,9 @@
 import 'package:basetalk/domain/entities/page_number.dart';
-import 'package:basetalk/presentation/view/screens/basic_topic_page.dart';
-import 'package:basetalk/presentation/view/screens/settings_screen.dart';
-import 'package:basetalk/presentation/view/screens/subpage.dart';
+import 'package:basetalk/presentation/home_page/home_screen.dart';
+import 'package:basetalk/presentation/settings_page/settings_screen.dart';
+import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
+import 'package:basetalk/presentation/topic_page/topic_page.dart';
 import 'package:flutter/material.dart';
-
-import 'file:///A:/basetalk/lib/presentation/view/homepage/home_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -38,7 +37,7 @@ class MainDrawer extends StatelessWidget {
         }),
         buildListTile("Blitzlicht", Icons.lightbulb_outline, () {
           Navigator.of(context).pushReplacementNamed(BasicTopicPage.routeName,
-              arguments: SubPageParams(1, PageNumber.one));
+              arguments: TopicPageParams(1, PageNumber.one));
         }),
         AboutListTile(
           icon: Icon(

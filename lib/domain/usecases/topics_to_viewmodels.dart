@@ -3,7 +3,7 @@ import 'package:basetalk/domain/usecases/base_usecase.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 
 class TopicsToViewModelsUseCase
     extends BaseUseCase<List<TopicViewModel>, TopicsToViewModelsUseCaseParams> {

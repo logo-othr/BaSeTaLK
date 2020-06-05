@@ -1,6 +1,6 @@
-import 'package:basetalk/presentation/view/colors.dart';
-import 'package:basetalk/presentation/viewmodel/topic_download_dialog_view_model.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/presentation/colors.dart';
+import 'package:basetalk/presentation/home_page/viewmodel/topic_download_dialog_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

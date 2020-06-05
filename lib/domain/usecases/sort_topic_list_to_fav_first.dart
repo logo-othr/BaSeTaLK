@@ -1,5 +1,5 @@
 import 'package:basetalk/domain/usecases/base_usecase.dart';
-import 'package:basetalk/presentation/viewmodel/topic_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 
 class SortTopicListToFavFirstUseCase
     extends BaseUseCase<List<TopicViewModel>, List<TopicViewModel>> {
