@@ -25,9 +25,11 @@ class MediaRepository implements IMediaRepository {
       else
         results.add(result);
     }
-    List<Media> fetched =
-        await _remoteRepository.getMediaFilesByName(filenames);
-    results.addAll(fetched);
+    if (fetchFromRemote != null) {
+      List<Media> fetched =
+          await _remoteRepository.getMediaFilesByName(fetchFromRemote);
+      results.addAll(fetched);
+    }
     return results;
   }
 }

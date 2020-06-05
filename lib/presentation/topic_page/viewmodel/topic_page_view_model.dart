@@ -1,4 +1,7 @@
+import 'package:basetalk/dependency_setup.dart';
+import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
+import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:flutter/material.dart';
 
 class TopicPageViewModel extends ChangeNotifier {
@@ -31,5 +34,8 @@ class TopicPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
+  Future<Media> getBackgroundImage(backgroundImageFileName) async {
+    IMediaRepository mediaRepository = serviceLocator.get<IMediaRepository>();
+    return await mediaRepository.getMediaFile(backgroundImageFileName);
+  }
 }

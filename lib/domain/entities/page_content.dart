@@ -13,5 +13,5 @@ class PageContent {
   String backgroundImage;
 
   PageContent(this.id, this.topicId, this.pageNumber, this.pageFeature,
-      this.pageImpluses, this.informationContent, backgroundImage);
+      this.pageImpluses, this.informationContent, this.backgroundImage);
 }

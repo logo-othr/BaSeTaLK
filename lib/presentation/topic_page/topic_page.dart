@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:basetalk/domain/entities/feature_type.dart';
+import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
@@ -23,7 +24,7 @@ class _TopicPageState extends State<TopicPage> {
   double audioButtonSize;
 
   TopicViewModel topicViewModel;
-  TopicPageViewModel subPageViewModel;
+  TopicPageViewModel topicPageViewModel;
   ImpulseBarViewModel impulseBarViewModel;
 
   initLayoutSizes() {
@@ -36,10 +37,18 @@ class _TopicPageState extends State<TopicPage> {
 
   initProviders(BuildContext context) {
     topicViewModel = Provider.of<TopicViewModel>(context);
-    subPageViewModel = Provider.of<TopicPageViewModel>(context);
-    var pageNumber = subPageViewModel.pageNumber;
+    topicPageViewModel = Provider.of<TopicPageViewModel>(context);
+    var pageNumber = topicPageViewModel.pageNumber;
     var impulses = topicViewModel.getImpulses(pageNumber);
     impulseBarViewModel = ImpulseBarViewModel(impulses);
+  }
+
+  Future<FileImage> loadBackgroundImage() async {
+    String backgroundImagefileName = topicViewModel
+        .getBackgroundImageFileName(topicPageViewModel.pageNumber);
+    Media backgroundMedia =
+        await topicPageViewModel.getBackgroundImage(backgroundImagefileName);
+    return FileImage(backgroundMedia.file);
   }
 
   @override
@@ -47,25 +56,42 @@ class _TopicPageState extends State<TopicPage> {
     initLayoutSizes();
     initProviders(context);
 
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          SizedBox(height: rowDividerHeight),
-          subPageViewModel.isFeatureVisible ? featureRow() : Container(),
-          SizedBox(height: rowDividerHeight),
-          featureImpulseRow(),
-          SizedBox(height: rowDividerHeight)
-        ],
-      ),
+    return FutureBuilder(
+      future: loadBackgroundImage(),
+      builder: (BuildContext context, AsyncSnapshot<FileImage> image) {
+        if (image.hasData) {
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: image.data,
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                SizedBox(height: rowDividerHeight),
+                topicPageViewModel.isFeatureVisible
+                    ? featureRow()
+                    : Container(),
+                SizedBox(height: rowDividerHeight),
+                featureImpulseRow(),
+                SizedBox(height: rowDividerHeight)
+              ],
+            ),
+          );
+        } else
+          return Container();
+      },
     );
   }
 
   Widget featureRow() {
     Widget child = Container();
-    var type = topicViewModel
-        .getPageFeature(subPageViewModel.pageNumber)
-        .type;
+    var type =
+        topicViewModel
+            .getPageFeature(topicPageViewModel.pageNumber)
+            .type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
       child = audioFeature();
     else if (type == FeatureType.IMAGE)
@@ -89,7 +115,10 @@ class _TopicPageState extends State<TopicPage> {
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Container(
-        child: Icon(Icons.volume_down, size: 200,),
+        child: Icon(
+          Icons.volume_down,
+          size: 200,
+        ),
       ),
     );
   }
@@ -100,12 +129,11 @@ class _TopicPageState extends State<TopicPage> {
     );
   }
 
-
   showImpulseBar() {
     return ChangeNotifierProvider<ImpulseBarViewModel>.value(
       value: impulseBarViewModel,
       child: ImpulseBar(
-        onClose: subPageViewModel.toggleImpulseBarVisible,
+        onClose: topicPageViewModel.toggleImpulseBarVisible,
         audioIconSize: iconSize,
       ),
     );
@@ -121,7 +149,7 @@ class _TopicPageState extends State<TopicPage> {
         child: IconButton(
             icon: Icon(Icons.chat),
             iconSize: iconSize,
-            onPressed: () => subPageViewModel.toggleImpulseBarVisible()),
+            onPressed: () => topicPageViewModel.toggleImpulseBarVisible()),
       ),
     );
   }
@@ -133,19 +161,19 @@ class _TopicPageState extends State<TopicPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
         color: primary_green,
         child: IconButton(
-          icon: Icon(Icons.card_giftcard),
-          iconSize: iconSize,
-            onPressed: () => subPageViewModel.toggleFeatureVisible()
-        ),
+            icon: Icon(Icons.card_giftcard),
+            iconSize: iconSize,
+            onPressed: () => topicPageViewModel.toggleFeatureVisible()),
       ),
     );
   }
 
   Widget buttonRow() {
     Widget child;
-    var type = topicViewModel
-        .getPageFeature(subPageViewModel.pageNumber)
-        .type;
+    var type =
+        topicViewModel
+            .getPageFeature(topicPageViewModel.pageNumber)
+            .type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
       child = audioButtonBar();
     else
@@ -198,13 +226,13 @@ class _TopicPageState extends State<TopicPage> {
         children: <Widget>[
           Center(
             child:
-            subPageViewModel.isFeatureVisible ? buttonRow() : Container(),
+            topicPageViewModel.isFeatureVisible ? buttonRow() : Container(),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               featureButton(),
-              subPageViewModel.isImpulseBarVisible
+              topicPageViewModel.isImpulseBarVisible
                   ? showImpulseBar()
                   : showImpulseBarButton()
             ],
@@ -213,9 +241,6 @@ class _TopicPageState extends State<TopicPage> {
       ),
     );
   }
-
-
-
 }
 
 class TopicPageParams {

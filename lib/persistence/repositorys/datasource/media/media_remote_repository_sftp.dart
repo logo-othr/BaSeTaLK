@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:basetalk/persistence/helper/sftp_helper.dart';
+import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:ssh/ssh.dart';
 
 class MediaRemoteSFTPRepository implements IMediaRepository {
@@ -16,7 +20,11 @@ class MediaRemoteSFTPRepository implements IMediaRepository {
     filenames.add(filename);
     await downloadFromSFTP(
         _sshClient, filenames, _remoteFolderPath, _localFolderPath);
-    // ToDo: check and return media files
+    File mediaFile =
+        serviceLocator.get<TopicPathProvider>().getTopicMediaFile(filename);
+    if (!await mediaFile.exists())
+      throw ("Error while downloading the file $filename");
+    return Media(mediaFile);
   }
 
   @override
@@ -24,12 +32,14 @@ class MediaRemoteSFTPRepository implements IMediaRepository {
     List<Media> mediaFiles = new List();
     await downloadFromSFTP(
         _sshClient, filenames, _remoteFolderPath, _localFolderPath);
+
+    TopicPathProvider topicPathProvider =
+    serviceLocator.get<TopicPathProvider>();
     for (var filename in filenames) {
-      // ToDo: check if file has been downloaded and set the location
-      Media m = new Media();
-      m.name = filename;
-      // m.location = await
-      mediaFiles.add(m);
+      File mediaFile = topicPathProvider.getTopicMediaFile(filename);
+      if (!await mediaFile.exists())
+        throw ("Error while downloading the file $filename");
+      mediaFiles.add(new Media(mediaFile));
     }
     return mediaFiles;
   }
@@ -40,4 +50,5 @@ class MediaRemoteSFTPRepository implements IMediaRepository {
         _sshClient, filenames, _remoteFolderPath, _localFolderPath);
     // ToDo: check and return media files
   }
+
 }

@@ -36,10 +36,8 @@ class TopicViewModel extends ChangeNotifier {
   }
 
   PageContent getPageContent(PageNumber pageNumber) {
-    var result;
-    for (PageContent pageContent in topic.pageContents)
-      if (pageContent.pageNumber == pageNumber) result = pageContent;
-    return result;
+    return topic.pageContents
+        .firstWhere((element) => element.pageNumber == pageNumber);
   }
 
   PageFeature getPageFeature(PageNumber pageNumber) {
@@ -53,5 +51,11 @@ class TopicViewModel extends ChangeNotifier {
 
   List<Impulse> getImpulses(PageNumber pageNumber) {
     return topic.getImpulses(pageNumber);
+  }
+
+  getBackgroundImageFileName(PageNumber pageNumber) {
+    if (pageNumber == PageNumber.zero) return topic.frontPageImageName;
+    PageContent pageContent = getPageContent(pageNumber);
+    return pageContent.backgroundImage;
   }
 }

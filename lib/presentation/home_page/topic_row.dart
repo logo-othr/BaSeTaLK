@@ -26,7 +26,7 @@ class _TopicRowState extends State<TopicRow> {
     topicListViewModel = Provider.of<TopicListViewModel>(context);
     topicViewModel = Provider.of<TopicViewModel>(context);
 
-    final baseTextStyle = const TextStyle(fontFamily: 'Poppins');
+    final baseTextStyle = const TextStyle(fontFamily: 'Roboto');
     final regularTextStyle = baseTextStyle.copyWith(
         color: const Color(0xffb6b2df),
         fontSize: 9.0,
