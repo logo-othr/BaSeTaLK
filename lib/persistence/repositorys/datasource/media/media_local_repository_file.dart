@@ -10,9 +10,10 @@ class MediaLocalFileRepository implements IMediaRepository {
   Future<Media> getMediaFile(String filename) async {
     File mediaFile =
         serviceLocator.get<TopicPathProvider>().getTopicMediaFile(filename);
-    if (!await mediaFile.exists())
-      throw ("Error while downloading the file $filename");
-    return Media(mediaFile);
+    Media media;
+    if (await mediaFile.exists()) media = Media(mediaFile);
+
+    return media;
   }
 
   @override
