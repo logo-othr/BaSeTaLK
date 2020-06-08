@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
+import 'package:basetalk/domain/entities/quiz_answer.dart';
+import 'package:basetalk/domain/entities/quiz_data.dart';
+import 'package:basetalk/domain/entities/quiz_question.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
@@ -10,6 +13,8 @@ import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///A:/basetalk/lib/presentation/topic_page/quiz_feature.dart';
 
 class TopicPage extends StatefulWidget {
   static const routeName = "/topicPage";
@@ -89,9 +94,7 @@ class _TopicPageState extends State<TopicPage> {
   Widget featureRow() {
     Widget child = Container();
     var type =
-        topicViewModel
-            .getPageFeature(topicPageViewModel.pageNumber)
-            .type;
+        topicViewModel.getPageFeature(topicPageViewModel.pageNumber).type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
       child = audioFeature();
     else if (type == FeatureType.IMAGE)
@@ -105,9 +108,35 @@ class _TopicPageState extends State<TopicPage> {
     );
   }
 
+  QuizData mockQuizData() {
+    List<QuizAnswer> mockAnswersQuestions1 = List();
+    QuizAnswer correctAnswer1 = QuizAnswer(1, "Antwort 1 Frage 1");
+    mockAnswersQuestions1.add(correctAnswer1);
+    mockAnswersQuestions1.add(QuizAnswer(2, "Antwort 2 Frage 1"));
+    mockAnswersQuestions1.add(QuizAnswer(3, "Antwort 3 Frage 1"));
+    QuizQuestion question1 =
+        QuizQuestion("Frage 1", mockAnswersQuestions1, correctAnswer1, 1);
+
+    List<QuizAnswer> mockAnswersQuestions2 = List();
+    QuizAnswer correctAnswer2 = QuizAnswer(4, "Antwort 1  Frage 2");
+    mockAnswersQuestions2.add(correctAnswer2);
+    mockAnswersQuestions2.add(QuizAnswer(5, "Antwort 2  Frage 2"));
+    mockAnswersQuestions2.add(QuizAnswer(6, "Antwort 3  Frage 2"));
+    QuizQuestion question2 =
+        QuizQuestion("Frage 2", mockAnswersQuestions2, correctAnswer2, 2);
+
+    List<QuizQuestion> questions = List();
+    questions.add(question1);
+    questions.add(question2);
+    QuizData quizData = new QuizData(questions, 1);
+    return quizData;
+  }
+
   Widget quizFeature() {
+    QuizData quizData = mockQuizData();
+
     return Container(
-      child: Text("Quiz Feature"),
+      child: QuizFeature(quizData),
     );
   }
 
