@@ -31,6 +31,7 @@ dependencies:
   meta: ^1.1.8
   shared_preferences: ^0.5.7
   get_it: ^4.0.2
+  audioplayers: ^0.15.1
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,8 @@ flutter:
   assets:
     - assets/img/logo.png
     - assets/sftp_auth.json
+    - assets/img/example_no_vc.jpg
+    - assets/example_audio.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

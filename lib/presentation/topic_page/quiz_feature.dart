@@ -29,23 +29,23 @@ class _QuizFeatureState extends State<QuizFeature> {
   @override
   Widget build(BuildContext context) {
     List<Widget> questionWidgets = List();
-    Widget firstQuizPage = Container(
-      child: Column(
-        children: [
-          Text(
-            "Zeit für ein Quiz",
-            style: TextStyle(
-              fontSize: 36,
-              decoration: TextDecoration.underline,
-            ),
+    Widget firstQuizPage = Column(
+      children: [
+        Text(
+          "Zeit für ein Quiz",
+          style: TextStyle(
+            fontSize: 36,
+            decoration: TextDecoration.underline,
           ),
-          Text(
-            "Wie lauten die folgenden Redewendungen?",
-            style: TextStyle(fontSize: 36),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+        ),
+        Spacer(),
+        Text(
+          "Wie lauten die folgenden Redewendungen?",
+          style: TextStyle(fontSize: 36),
+          textAlign: TextAlign.center,
+        ),
+        Spacer(),
+      ],
     );
     questionWidgets.add(firstQuizPage);
     for (QuizQuestion quizQuestion in widget.quizData.questions) {

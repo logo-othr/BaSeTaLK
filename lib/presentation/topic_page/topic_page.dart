@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
@@ -56,6 +58,12 @@ class _TopicPageState extends State<TopicPage> {
     return FileImage(backgroundMedia.file);
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     initLayoutSizes();
@@ -144,6 +152,7 @@ class _TopicPageState extends State<TopicPage> {
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Container(
+        color: primary_green,
         child: Icon(
           Icons.volume_down,
           size: 200,
@@ -153,8 +162,14 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget imageFeature() {
-    return Image(
-      image: AssetImage("assets/img/example_no_vc.jpg"),
+    return Container(
+      color: primary_green,
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Image(
+          image: AssetImage("assets/img/example_no_vc.jpg"),
+        ),
+      ),
     );
   }
 
@@ -211,27 +226,27 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget audioButtonBar() {
+    AudioPlayer audioPlayer = AudioPlayer();
+    AudioCache audioCache = new AudioCache(fixedPlayer: audioPlayer);
     return ButtonBar(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         audioButton(
-            icon: Icon(
-              Icons.play_arrow,
-              size: audioButtonSize,
-            ),
-            onPressed: () => print('Play')),
-        audioButton(
-            icon: Icon(
-              Icons.replay,
-              size: audioButtonSize,
-            ),
-            onPressed: () => print('Replay')),
+          icon: Icon(
+            Icons.play_arrow,
+            size: audioButtonSize,
+          ),
+          onPressed: () {
+            print("Play audio");
+            audioCache.play('example_audio.mp3');
+          },
+        ),
         audioButton(
             icon: Icon(
               Icons.pause,
               size: audioButtonSize,
             ),
-            onPressed: () => print('Pause')),
+            onPressed: () => audioPlayer.stop()),
       ],
     );
   }
