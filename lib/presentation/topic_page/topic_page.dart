@@ -12,6 +12,7 @@ import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
 import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
@@ -155,8 +156,10 @@ class _TopicPageState extends State<TopicPage> {
     QuizData quizData = mockQuizData();
 
     return Container(
+        child: ChangeNotifierProvider<QuizViewModel>(
+      create: (_) => QuizViewModel(),
       child: QuizFeature(quizData),
-    );
+    ));
   }
 
   Widget audioFeature() {

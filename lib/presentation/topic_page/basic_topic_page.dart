@@ -72,4 +72,3 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
   }
 }
 
-void nachLinks() {}

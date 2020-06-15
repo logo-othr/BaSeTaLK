@@ -2,10 +2,13 @@ import 'package:basetalk/domain/entities/quiz_answer.dart';
 import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
 import 'package:basetalk/presentation/colors.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuizFeature extends StatefulWidget {
   final QuizData quizData;
+  final QuizViewModel quizViewModel = QuizViewModel();
 
   QuizFeature(this.quizData);
 
@@ -14,8 +17,6 @@ class QuizFeature extends StatefulWidget {
 }
 
 class _QuizFeatureState extends State<QuizFeature> {
-  bool isNextButtonVisible = true;
-
   PageController _controller = PageController(
     initialPage: 0,
   );
@@ -65,7 +66,7 @@ class _QuizFeatureState extends State<QuizFeature> {
                     physics: new NeverScrollableScrollPhysics(),
                     controller: _controller,
                     children: questionWidgets)),
-            isNextButtonVisible
+            Provider.of<QuizViewModel>(context).isNextButtonVisible
                 ? FlatButton(
                     padding: EdgeInsets.all(20),
                     child: Text(
@@ -77,9 +78,8 @@ class _QuizFeatureState extends State<QuizFeature> {
                       _controller.nextPage(
                           duration: Duration(milliseconds: 300),
                           curve: Curves.linear);
-                      setState(() {
-                        isNextButtonVisible = false;
-                      });
+                      Provider.of<QuizViewModel>(context, listen: false)
+                          .setNextButtonVisibility(false);
                     },
                   )
                 : Container(),
@@ -94,16 +94,14 @@ class _QuizFeatureState extends State<QuizFeature> {
     for (QuizAnswer quizAnswer in quizQuestion.answers) {
       Color activatedColor = Colors.red;
       VoidCallback onPressed = () {
-        setState(() {
-          isNextButtonVisible = false;
-        });
+        Provider.of<QuizViewModel>(context, listen: false)
+            .setNextButtonVisibility(false);
       };
       if (quizAnswer == quizQuestion.correctAnswer) {
         activatedColor = Colors.green;
         onPressed = () {
-          setState(() {
-            isNextButtonVisible = true;
-          });
+          Provider.of<QuizViewModel>(context, listen: false)
+              .setNextButtonVisibility(true);
         };
       }
       buttons.add(QuizButton(activatedColor, quizAnswer.answer, onPressed));
@@ -168,29 +166,3 @@ class _QuizButtonState extends State<QuizButton> {
     );
   }
 }
-
-/*
-            Text(
-              "Zeit für ein Quiz",
-              style: TextStyle(
-                fontSize: 36,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-            Text(
-              "Wie lauten die folgenden Redewendungen?",
-              style: TextStyle(fontSize: 36),
-              textAlign: TextAlign.center,
-            ),
-            FlatButton(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                "Los geht's",
-                style: TextStyle(fontSize: 35, color: Colors.white),
-              ),
-              color: Colors.grey[600],
-              onPressed: () {
-
-              },
-            ),
- */
