@@ -10,13 +10,12 @@ import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
+import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///A:/basetalk/lib/presentation/topic_page/quiz_feature.dart';
 
 class TopicPage extends StatefulWidget {
   static const routeName = "/topicPage";
@@ -63,7 +62,7 @@ class _TopicPageState extends State<TopicPage> {
     // TODO: implement dispose
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     initLayoutSizes();
@@ -72,29 +71,41 @@ class _TopicPageState extends State<TopicPage> {
     return FutureBuilder(
       future: loadBackgroundImage(),
       builder: (BuildContext context, AsyncSnapshot<FileImage> image) {
-        if (image.hasData) {
-          return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: image.data,
+        ImageProvider background = AssetImage("assets/img/placeholder.png");
+        if (image.hasData) background = image.data;
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: background,
                 fit: BoxFit.cover,
+                colorFilter: topicPageViewModel.isFeatureVisible
+                    ? ColorFilter.mode(Colors.black45, BlendMode.saturation)
+                    : ColorFilter.mode(
+                        Colors.transparent, BlendMode.saturation)),
+          ),
+          child: BackdropFilter(
+            filter: topicPageViewModel.isFeatureVisible
+                ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
+                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+            child: Container(
+              color: topicPageViewModel.isFeatureVisible
+                  ? Colors.black.withOpacity(0.3)
+                  : Colors.black.withOpacity(0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  SizedBox(height: rowDividerHeight),
+                  topicPageViewModel.isFeatureVisible
+                      ? featureRow()
+                      : Container(),
+                  SizedBox(height: rowDividerHeight),
+                  featureImpulseRow(),
+                  SizedBox(height: rowDividerHeight)
+                ],
               ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                SizedBox(height: rowDividerHeight),
-                topicPageViewModel.isFeatureVisible
-                    ? featureRow()
-                    : Container(),
-                SizedBox(height: rowDividerHeight),
-                featureImpulseRow(),
-                SizedBox(height: rowDividerHeight)
-              ],
-            ),
-          );
-        } else
-          return Container();
+          ),
+        );
       },
     );
   }
