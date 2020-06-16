@@ -28,10 +28,12 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
           pageContentDto.id,
           pageContentDto.topicId,
           pageContentDto.pageNumber,
-          new PageFeature(
-              pageContentDto.pageFeature.id,
-              pageContentDto.pageFeature.featureType,
-              pageContentDto.pageFeature.featureFileName),
+          pageContentDto.pageFeature == null
+              ? null
+              : new PageFeature(
+                  pageContentDto.pageFeature.id,
+                  pageContentDto.pageFeature.featureType,
+                  pageContentDto.pageFeature.featureFileName),
           impulses,
           new InformationContent(pageContentDto.informationContent.heading,
               pageContentDto.informationContent.content),

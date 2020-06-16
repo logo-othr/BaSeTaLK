@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
@@ -113,8 +114,10 @@ class _TopicPageState extends State<TopicPage> {
 
   Widget featureRow() {
     Widget child = Container();
-    var type =
-        topicViewModel.getPageFeature(topicPageViewModel.pageNumber).type;
+    PageFeature pageFeature =
+        topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
+    if (pageFeature == null) return Container();
+    var type = pageFeature.type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
       child = audioFeature();
     else if (type == FeatureType.IMAGE)
@@ -213,6 +216,10 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget featureButton() {
+    PageFeature pageFeature =
+    topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
+    if (pageFeature == null) return Container();
+
     return Container(
       child: Card(
         margin: EdgeInsets.all(0),
@@ -227,11 +234,11 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget buttonRow() {
-    Widget child;
-    var type =
-        topicViewModel
-            .getPageFeature(topicPageViewModel.pageNumber)
-            .type;
+    Widget child = Container();
+    PageFeature pageFeature =
+    topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
+    if (pageFeature == null) return Container();
+    var type = pageFeature.type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
       child = audioButtonBar();
     else

@@ -9,7 +9,7 @@ import 'package:basetalk/domain/entities/topic.dart';
 /// local memory cache.
 
 abstract class ITopicRepository {
-  FutureOr<List<Topic>> getAllTopics();
+  FutureOr<List<Topic>> getAllTopics({bool requestRefresh = false});
 
   FutureOr<Topic> getTopicById(int topicId);
 

@@ -46,9 +46,7 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
       appBar: new SubPageAppbar(
           onInfoButtonPressed: () => {print("info")},
           onFinishButtonPressed: () => {print("Finish")},
-          title: topicViewModel.topic.name +
-              " " +
-              subPageViewModel.pageNumber.toString()),
+          title: topicViewModel.topic.name),
       body: ArrowNavigation(
         child: widget.child,
         onLeftPressed: () {
