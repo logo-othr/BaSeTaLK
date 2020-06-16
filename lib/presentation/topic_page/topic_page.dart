@@ -18,6 +18,7 @@ import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class TopicPage extends StatefulWidget {
   static const routeName = "/topicPage";
@@ -65,6 +66,22 @@ class _TopicPageState extends State<TopicPage> {
     super.dispose();
   }
 
+  void precacheImages() async {
+    String backgroundImagefileName = Provider.of<TopicViewModel>(context)
+        .getBackgroundImageFileName(
+            Provider.of<TopicPageViewModel>(context).pageNumber);
+    Media backgroundMedia = await Provider.of<TopicPageViewModel>(context)
+        .getBackgroundImage(backgroundImagefileName);
+    FileImage fileImage = FileImage(backgroundMedia.file);
+    precacheImage(fileImage, context);
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    precacheImages();
+  }
+
   @override
   Widget build(BuildContext context) {
     initLayoutSizes();
@@ -76,37 +93,38 @@ class _TopicPageState extends State<TopicPage> {
         ImageProvider background = AssetImage("assets/img/placeholder.png");
         if (image.hasData) background = image.data;
         return Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: background,
-                fit: BoxFit.cover,
-                colorFilter: topicPageViewModel.isFeatureVisible
-                    ? ColorFilter.mode(Colors.black45, BlendMode.saturation)
-                    : ColorFilter.mode(
-                        Colors.transparent, BlendMode.saturation)),
-          ),
-          child: BackdropFilter(
-            filter: topicPageViewModel.isFeatureVisible
-                ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
-                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-            child: Container(
-              color: topicPageViewModel.isFeatureVisible
-                  ? Colors.black.withOpacity(0.3)
-                  : Colors.black.withOpacity(0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  SizedBox(height: rowDividerHeight),
-                  topicPageViewModel.isFeatureVisible
-                      ? featureRow()
-                      : Container(),
-                  SizedBox(height: rowDividerHeight),
-                  featureImpulseRow(),
-                  SizedBox(height: rowDividerHeight)
-                ],
-              ),
-            ),
-          ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                FadeInImage(
+                  placeholder: MemoryImage(kTransparentImage),
+                  image: background,
+                  fit: BoxFit.cover,
+                ),
+                BackdropFilter(
+                  filter: topicPageViewModel.isFeatureVisible
+                      ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
+                      : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                  child: Container(
+                    color: topicPageViewModel.isFeatureVisible
+                        ? Colors.black.withOpacity(0.3)
+                        : Colors.black.withOpacity(0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        SizedBox(height: rowDividerHeight),
+                        topicPageViewModel.isFeatureVisible
+                            ? featureRow()
+                            : Container(),
+                        SizedBox(height: rowDividerHeight),
+                        featureImpulseRow(),
+                        SizedBox(height: rowDividerHeight)
+                      ],
+                    ),
+                  ),
+                ),
+              ],)
+
         );
       },
     );
@@ -115,7 +133,7 @@ class _TopicPageState extends State<TopicPage> {
   Widget featureRow() {
     Widget child = Container();
     PageFeature pageFeature =
-        topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
+    topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
     if (pageFeature == null) return Container();
     var type = pageFeature.type;
     if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
@@ -138,7 +156,7 @@ class _TopicPageState extends State<TopicPage> {
     mockAnswersQuestions1.add(QuizAnswer(2, "Antwort 2 Frage 1"));
     mockAnswersQuestions1.add(QuizAnswer(3, "Antwort 3 Frage 1"));
     QuizQuestion question1 =
-        QuizQuestion("Frage 1", mockAnswersQuestions1, correctAnswer1, 1);
+    QuizQuestion("Frage 1", mockAnswersQuestions1, correctAnswer1, 1);
 
     List<QuizAnswer> mockAnswersQuestions2 = List();
     QuizAnswer correctAnswer2 = QuizAnswer(4, "Antwort 1  Frage 2");
@@ -146,7 +164,7 @@ class _TopicPageState extends State<TopicPage> {
     mockAnswersQuestions2.add(QuizAnswer(5, "Antwort 2  Frage 2"));
     mockAnswersQuestions2.add(QuizAnswer(6, "Antwort 3  Frage 2"));
     QuizQuestion question2 =
-        QuizQuestion("Frage 2", mockAnswersQuestions2, correctAnswer2, 2);
+    QuizQuestion("Frage 2", mockAnswersQuestions2, correctAnswer2, 2);
 
     List<QuizQuestion> questions = List();
     questions.add(question1);
@@ -160,9 +178,9 @@ class _TopicPageState extends State<TopicPage> {
 
     return Container(
         child: ChangeNotifierProvider<QuizViewModel>(
-      create: (_) => QuizViewModel(),
-      child: QuizFeature(quizData),
-    ));
+          create: (_) => QuizViewModel(),
+          child: QuizFeature(quizData),
+        ));
   }
 
   Widget audioFeature() {
