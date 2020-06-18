@@ -2,7 +2,7 @@ import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/drawer.dart';
 import 'package:basetalk/presentation/home_page/home_screen.dart';
 import 'package:basetalk/presentation/information_dialog.dart';
-import 'package:basetalk/presentation/subpage_appbar.dart';
+import 'package:basetalk/presentation/main_appbar.dart';
 import 'package:basetalk/presentation/topic_page/arrow_navigation.dart';
 import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
@@ -23,10 +23,7 @@ class _BlitzLichtState extends State<BlitzLicht> {
     TopicViewModel topicViewModel = Provider.of<TopicViewModel>(context);
     return Scaffold(
       drawer: MainDrawer(),
-      appBar: new SubPageAppbar(
-          onInfoButtonPressed: () => {print("info")},
-          onFinishButtonPressed: () => {print("Finish")},
-          title: topicViewModel.topic.name),
+      appBar: MainAppBar(title: topicViewModel.topic.name),
       body: ArrowNavigation(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

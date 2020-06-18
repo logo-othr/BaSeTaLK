@@ -3,6 +3,7 @@ import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/blitzlicht_page/blitzlicht_page.dart';
 import 'package:basetalk/presentation/home_page/home_screen.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/rating_page/rating_page.dart';
 import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
@@ -43,6 +44,16 @@ class RouteService {
                   : TopicPage(),
             ),
           ),
+        );
+      case RatingPage.routeName:
+        final int topicId = settings.arguments;
+        return new _CustomRoute(
+          builder: (_) => new MultiProvider(providers: [
+            ChangeNotifierProvider<TopicViewModel>.value(
+                value: serviceLocator
+                    .get<TopicListViewModel>()
+                    .getTopicViewModelById(topicId)),
+          ], child: RatingPage()),
         );
       default:
         return new _CustomRoute(

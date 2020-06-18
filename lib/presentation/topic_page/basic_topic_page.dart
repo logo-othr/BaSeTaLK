@@ -30,7 +30,7 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
     if (pageNumber == PageNumber.zero) return PageNumber.one;
     if (pageNumber == PageNumber.one) return PageNumber.two;
     if (pageNumber == PageNumber.two) return PageNumber.three;
-    if (pageNumber == PageNumber.three) return PageNumber.one;
+    if (pageNumber == PageNumber.three) return PageNumber.rating;
   }
 
   PageNumber navigateBack(PageNumber pageNumber) {

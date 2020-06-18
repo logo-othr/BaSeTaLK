@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final filteredViewModels = topicListViewModel.filteredList();
     return new Scaffold(
       drawer: MainDrawer(),
-      appBar: new MainAppbar(new Text(widget._screenTitle)),
+      appBar: MainAppBar(title: widget._screenTitle),
       body: Container(
         color: const Color(0xFFF5F5F5),
         child: Padding(
