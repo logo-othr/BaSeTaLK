@@ -23,14 +23,14 @@ class SubPageAppbar extends StatelessWidget implements PreferredSizeWidget {
             Icons.check,
             color: Colors.black,
           ),
-          onPressed: () => onFinishButtonPressed,
+          onPressed: onFinishButtonPressed,
         ),
         IconButton(
             icon: Icon(
               Icons.info,
               color: Colors.black,
             ),
-            onPressed: () => onInfoButtonPressed
+            onPressed: onInfoButtonPressed
             //subPageViewModel.toggleInfoDialogVisible();
             ),
       ],

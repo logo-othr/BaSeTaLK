@@ -38,32 +38,35 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
   @override
   Widget build(BuildContext context) {
     TopicViewModel topicViewModel = Provider.of<TopicViewModel>(context);
-    TopicPageViewModel subPageViewModel =
+    TopicPageViewModel topicPageViewModel =
         Provider.of<TopicPageViewModel>(context);
 
     return Scaffold(
       drawer: MainDrawer(),
       appBar: new SubPageAppbar(
-          onInfoButtonPressed: () => {print("info")},
+          onInfoButtonPressed: () =>
+          {
+            topicPageViewModel.toggleInfoDialogVisible()
+          },
           onFinishButtonPressed: () => {print("Finish")},
           title: topicViewModel.topic.name),
       body: ArrowNavigation(
         child: widget.child,
         onLeftPressed: () {
-          if (navigateBack(subPageViewModel.pageNumber) ==
+          if (navigateBack(topicPageViewModel.pageNumber) ==
               PageNumber.blitzlicht) {
             Navigator.of(context).pushReplacementNamed(BlitzLicht.routeName,
                 arguments: topicViewModel.topic.id);
           } else {
             Navigator.of(context).pushReplacementNamed(BasicTopicPage.routeName,
                 arguments: TopicPageParams(topicViewModel.topic.id,
-                    navigateBack(subPageViewModel.pageNumber)));
+                    navigateBack(topicPageViewModel.pageNumber)));
           }
         },
         onRightPressed: () {
           Navigator.of(context).pushReplacementNamed(BasicTopicPage.routeName,
               arguments: TopicPageParams(topicViewModel.topic.id,
-                  navigateNext(subPageViewModel.pageNumber)));
+                  navigateNext(topicPageViewModel.pageNumber)));
         },
       ),
     );

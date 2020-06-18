@@ -11,6 +11,7 @@ import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
+import 'package:basetalk/presentation/topic_page/information_bar.dart';
 import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
@@ -93,19 +94,28 @@ class _TopicPageState extends State<TopicPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         SizedBox(height: rowDividerHeight),
-                        topicPageViewModel.isFeatureVisible
-                            ? featureRow()
-                            : Container(),
-                        SizedBox(height: rowDividerHeight),
-                        featureImpulseRow(),
-                        SizedBox(height: rowDividerHeight)
-                      ],
-                    ),
-                  ),
+                    topicPageViewModel.isFeatureVisible
+                        ? featureRow()
+                        : Container(),
+                    SizedBox(height: rowDividerHeight),
+                    featureImpulseRow(),
+                    SizedBox(height: rowDividerHeight)
+                  ],
                 ),
-              ],)
-
-        );
+              ),
+            ),
+            topicPageViewModel.isInfoDialogVisible
+                ? InformationBar(
+                    title: 'Berlin',
+                    description:
+                        'Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben\nda sind und wie sie aussehen. Manchmal benutzt man Worte wie\nHamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen.',
+                    onClosePressed: () {
+                      topicPageViewModel.toggleInfoDialogVisible();
+                    },
+                  )
+                : Container(),
+          ],
+        ));
       },
     );
   }
