@@ -20,26 +20,30 @@ class ArrowNavigation extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Center(
-              child: Card(
-                color: Color.fromRGBO(255, 255, 255, 0.5),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  iconSize: 100,
-                  onPressed: onLeftPressed,
-                ),
-              ),
-            ),
-            Center(
-              child: Card(
-                color: Color.fromRGBO(255, 255, 255, 0.5),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                  iconSize: 100,
-                  onPressed: onRightPressed,
-                ),
-              ),
-            ),
+            onLeftPressed != null
+                ? Center(
+                    child: Card(
+                      color: Color.fromRGBO(255, 255, 255, 0.5),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        iconSize: 100,
+                        onPressed: onLeftPressed,
+                      ),
+                    ),
+                  )
+                : Container(),
+            onRightPressed != null
+                ? Center(
+                    child: Card(
+                      color: Color.fromRGBO(255, 255, 255, 0.5),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_forward_ios),
+                        iconSize: 100,
+                        onPressed: onRightPressed,
+                      ),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ],

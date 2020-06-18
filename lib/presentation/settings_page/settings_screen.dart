@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../drawer.dart';
 
 class SettingsScreen extends StatelessWidget {
-  static const routeName = '/settings';
   String _screenTitle;
 
   SettingsScreen(this._screenTitle);

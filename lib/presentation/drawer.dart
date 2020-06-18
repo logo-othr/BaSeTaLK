@@ -1,8 +1,4 @@
-import 'package:basetalk/domain/entities/page_number.dart';
-import 'package:basetalk/presentation/home_page/home_screen.dart';
-import 'package:basetalk/presentation/settings_page/settings_screen.dart';
-import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
-import 'package:basetalk/presentation/topic_page/topic_page.dart';
+import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -27,17 +23,7 @@ class MainDrawer extends StatelessWidget {
           height: 20,
         ),
         buildListTile("Home", Icons.home, () {
-          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-        }),
-        buildListTile("Settings", Icons.restaurant, () {
-          Navigator.of(context).pushReplacementNamed(SettingsScreen.routeName);
-        }),
-        buildListTile("Subpage", Icons.info, () {
-          Navigator.of(context).pushReplacementNamed(TopicPage.routeName);
-        }),
-        buildListTile("Blitzlicht", Icons.lightbulb_outline, () {
-          Navigator.of(context).pushReplacementNamed(BasicTopicPage.routeName,
-              arguments: TopicPageParams(1, PageNumber.one));
+          Navigator.of(context).pushReplacementNamed(RouteName.HOME);
         }),
         AboutListTile(
           icon: Icon(

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = "/homepage";
   String _screenTitle;
 
   HomeScreen(this._screenTitle);

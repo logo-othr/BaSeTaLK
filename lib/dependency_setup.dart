@@ -24,6 +24,7 @@ import 'package:basetalk/persistence/repositorys/topic_repository.dart';
 import 'package:basetalk/persistence/sftp_auth.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:ssh/ssh.dart';
@@ -99,6 +100,8 @@ Future<void> init() async {
   serviceLocator
       .registerLazySingleton(() => GetListOfAllTopicsUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => SortTopicListToFavFirstUseCase());
+
+  serviceLocator.registerLazySingleton(() => NavigationService());
 
   // ToDo: move in async singleton
   await serviceLocator<TopicListViewModel>().init();

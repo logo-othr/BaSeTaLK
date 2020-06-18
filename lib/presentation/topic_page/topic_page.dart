@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TopicPage extends StatefulWidget {
-  static const routeName = "/topicPage";
 
   @override
   _TopicPageState createState() => _TopicPageState();

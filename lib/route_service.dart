@@ -3,6 +3,7 @@ import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/blitzlicht_page/blitzlicht_page.dart';
 import 'package:basetalk/presentation/home_page/home_screen.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/rating_page/rating_page.dart';
 import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
@@ -16,7 +17,7 @@ import 'file:///A:/basetalk/lib/presentation/topic_page/topic_front_page.dart';
 class RouteService {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case BlitzLicht.routeName:
+      case RouteName.BLITZLICHT:
         final int topicId = settings.arguments;
         return new _CustomRoute(
           builder: (_) => new MultiProvider(providers: [
@@ -26,7 +27,8 @@ class RouteService {
                     .getTopicViewModelById(topicId)),
           ], child: BlitzLicht()),
         );
-      case BasicTopicPage.routeName:
+
+      case RouteName.TOPIC:
         final TopicPageParams params = settings.arguments;
         return new _CustomRoute(
           builder: (_) => new MultiProvider(
@@ -45,7 +47,8 @@ class RouteService {
             ),
           ),
         );
-      case RatingPage.routeName:
+
+      case RouteName.RATING:
         final int topicId = settings.arguments;
         return new _CustomRoute(
           builder: (_) => new MultiProvider(providers: [
@@ -55,6 +58,7 @@ class RouteService {
                     .getTopicViewModelById(topicId)),
           ], child: RatingPage()),
         );
+
       default:
         return new _CustomRoute(
             builder: (_) => ChangeNotifierProvider<TopicListViewModel>.value(
