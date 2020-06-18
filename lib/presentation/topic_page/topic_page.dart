@@ -4,14 +4,12 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
-import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/quiz_answer.dart';
 import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
-import 'package:basetalk/presentation/topic_page/information_bar.dart';
 import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
@@ -19,7 +17,6 @@ import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class TopicPage extends StatefulWidget {
   static const routeName = "/topicPage";
@@ -53,70 +50,27 @@ class _TopicPageState extends State<TopicPage> {
     impulseBarViewModel = ImpulseBarViewModel(impulses);
   }
 
-  Future<FileImage> loadBackgroundImage() async {
-    String backgroundImagefileName = topicViewModel
-        .getBackgroundImageFileName(topicPageViewModel.pageNumber);
-    Media backgroundMedia =
-        await topicPageViewModel.getBackgroundImage(backgroundImagefileName);
-    return FileImage(backgroundMedia.file);
-  }
 
-// ToDo: precache images
 
   @override
   Widget build(BuildContext context) {
     initLayoutSizes();
     initProviders(context);
 
-    return FutureBuilder(
-      future: loadBackgroundImage(),
-      builder: (BuildContext context, AsyncSnapshot<FileImage> image) {
-        ImageProvider background = AssetImage("assets/img/placeholder.png");
-        if (image.hasData) background = image.data;
-        return Container(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                FadeInImage(
-                  placeholder: MemoryImage(kTransparentImage),
-                  image: background,
-                  fit: BoxFit.cover,
-                ),
-                BackdropFilter(
-                  filter: topicPageViewModel.isFeatureVisible
-                      ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
-                      : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                  child: Container(
-                    color: topicPageViewModel.isFeatureVisible
-                        ? Colors.black.withOpacity(0.3)
-                        : Colors.black.withOpacity(0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        SizedBox(height: rowDividerHeight),
-                    topicPageViewModel.isFeatureVisible
-                        ? featureRow()
-                        : Container(),
-                    SizedBox(height: rowDividerHeight),
-                    featureImpulseRow(),
-                    SizedBox(height: rowDividerHeight)
-                  ],
-                ),
-              ),
-            ),
-            topicPageViewModel.isInfoDialogVisible
-                ? InformationBar(
-                    title: 'Berlin',
-                    description:
-                        'Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben\nda sind und wie sie aussehen. Manchmal benutzt man Worte wie\nHamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen.',
-                    onClosePressed: () {
-                      topicPageViewModel.toggleInfoDialogVisible();
-                    },
-                  )
-                : Container(),
-          ],
-        ));
-      },
+    return Container(
+      color: topicPageViewModel.isFeatureVisible
+          ? Colors.black.withOpacity(0.3)
+          : Colors.black.withOpacity(0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          SizedBox(height: rowDividerHeight),
+          topicPageViewModel.isFeatureVisible ? featureRow() : Container(),
+          SizedBox(height: rowDividerHeight),
+          featureImpulseRow(),
+          SizedBox(height: rowDividerHeight)
+        ],
+      ),
     );
   }
 

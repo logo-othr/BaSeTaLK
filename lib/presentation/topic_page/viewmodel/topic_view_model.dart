@@ -1,8 +1,12 @@
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/impulse.dart';
+import 'package:basetalk/domain/entities/information_content.dart';
+import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_content.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/topic.dart';
+import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';
@@ -30,7 +34,7 @@ class TopicViewModel extends ChangeNotifier {
 
   Future<void> downloadTopic(Function callback) async {
     DownloadTopicDataUseCaseParams params =
-        DownloadTopicDataUseCaseParams(this.topic, callback);
+    DownloadTopicDataUseCaseParams(this.topic, callback);
     await _downloadTopicDataUseCase(params);
     notifyListeners();
   }
@@ -45,6 +49,12 @@ class TopicViewModel extends ChangeNotifier {
     return pageContent.pageFeature;
   }
 
+  InformationContent getInformationContent(PageNumber pageNumber) {
+    if (pageNumber == PageNumber.zero) return topic.frontPageInformationContent;
+    var pageContent = getPageContent(pageNumber);
+    return pageContent.informationContent;
+  }
+
   Impulse getImpulse(PageNumber pageNumber, int index) {
     return topic.getImpulse(pageNumber, index);
   }
@@ -53,9 +63,15 @@ class TopicViewModel extends ChangeNotifier {
     return topic.getImpulses(pageNumber);
   }
 
-  getBackgroundImageFileName(PageNumber pageNumber) {
+  _getBackgroundImageFileName(PageNumber pageNumber) {
     if (pageNumber == PageNumber.zero) return topic.frontPageImageName;
     PageContent pageContent = getPageContent(pageNumber);
     return pageContent.backgroundImage;
+  }
+
+  Future<Media> getBackgroundImage(PageNumber pageNumber) async {
+    String backgroundImgFileName = _getBackgroundImageFileName(pageNumber);
+    IMediaRepository mediaRepository = serviceLocator.get<IMediaRepository>();
+    return await mediaRepository.getMediaFile(backgroundImgFileName);
   }
 }

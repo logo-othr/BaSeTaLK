@@ -1,13 +1,18 @@
+import 'dart:ui';
+
+import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/blitzlicht_page/blitzlicht_page.dart';
 import 'package:basetalk/presentation/drawer.dart';
 import 'package:basetalk/presentation/subpage_appbar.dart';
 import 'package:basetalk/presentation/topic_page/arrow_navigation.dart';
+import 'package:basetalk/presentation/topic_page/information_bar.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class BasicTopicPage extends StatefulWidget {
   static const routeName = "/basictopic";
@@ -35,23 +40,68 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
     if (pageNumber == PageNumber.three) return PageNumber.two;
   }
 
+  Future<FileImage> loadBackgroundImage() async {
+    Media backgroundMedia = await topicViewModel.getBackgroundImage(pageNumber);
+    return FileImage(backgroundMedia.file);
+  }
+
+// ToDo: precache images
+
+  TopicViewModel topicViewModel;
+  TopicPageViewModel topicPageViewModel;
+  PageNumber pageNumber;
+
   @override
   Widget build(BuildContext context) {
-    TopicViewModel topicViewModel = Provider.of<TopicViewModel>(context);
-    TopicPageViewModel topicPageViewModel =
-        Provider.of<TopicPageViewModel>(context);
+    topicViewModel = Provider.of<TopicViewModel>(context);
+    topicPageViewModel = Provider.of<TopicPageViewModel>(context);
+    pageNumber = topicPageViewModel.pageNumber;
 
     return Scaffold(
       drawer: MainDrawer(),
       appBar: new SubPageAppbar(
           onInfoButtonPressed: () =>
-          {
-            topicPageViewModel.toggleInfoDialogVisible()
-          },
+              {topicPageViewModel.toggleInfoDialogVisible()},
           onFinishButtonPressed: () => {print("Finish")},
           title: topicViewModel.topic.name),
       body: ArrowNavigation(
-        child: widget.child,
+        child: FutureBuilder(
+          future: loadBackgroundImage(),
+          builder: (BuildContext context, AsyncSnapshot<FileImage> image) {
+            ImageProvider background = AssetImage("assets/img/placeholder.png");
+            if (image.hasData) background = image.data;
+            return Container(
+                child: Stack(
+              fit: StackFit.expand,
+              children: [
+                FadeInImage(
+                  placeholder: MemoryImage(kTransparentImage),
+                  image: background,
+                  fit: BoxFit.cover,
+                ),
+                BackdropFilter(
+                  filter: topicPageViewModel.isFeatureVisible
+                      ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
+                      : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                  child: widget.child,
+                ),
+                topicPageViewModel.isInfoDialogVisible
+                    ? InformationBar(
+                        title: topicViewModel
+                            .getInformationContent(pageNumber)
+                            .heading,
+                        description: topicViewModel
+                            .getInformationContent(pageNumber)
+                            .content,
+                        onClosePressed: () {
+                          topicPageViewModel.toggleInfoDialogVisible();
+                        },
+                      )
+                    : Container(),
+              ],
+            ));
+          },
+        ),
         onLeftPressed: () {
           if (navigateBack(topicPageViewModel.pageNumber) ==
               PageNumber.blitzlicht) {
@@ -72,4 +122,3 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
     );
   }
 }
-
