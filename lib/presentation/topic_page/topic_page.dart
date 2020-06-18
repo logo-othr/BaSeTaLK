@@ -60,27 +60,7 @@ class _TopicPageState extends State<TopicPage> {
     return FileImage(backgroundMedia.file);
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  void precacheImages() async {
-    String backgroundImagefileName = Provider.of<TopicViewModel>(context)
-        .getBackgroundImageFileName(
-            Provider.of<TopicPageViewModel>(context).pageNumber);
-    Media backgroundMedia = await Provider.of<TopicPageViewModel>(context)
-        .getBackgroundImage(backgroundImagefileName);
-    FileImage fileImage = FileImage(backgroundMedia.file);
-    precacheImage(fileImage, context);
-  }
-
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    precacheImages();
-  }
+// ToDo: precache images
 
   @override
   Widget build(BuildContext context) {
