@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/drawer.dart';
+import 'package:basetalk/presentation/information_dialog.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/subpage_appbar.dart';
 import 'package:basetalk/presentation/topic_page/arrow_navigation.dart';
@@ -14,7 +16,6 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class BasicTopicPage extends StatefulWidget {
-
   final Widget child;
 
   BasicTopicPage({@required this.child});
@@ -24,8 +25,6 @@ class BasicTopicPage extends StatefulWidget {
 }
 
 class _BasicTopicPageState extends State<BasicTopicPage> {
-
-
   Future<FileImage> loadBackgroundImage() async {
     Media backgroundMedia = await topicViewModel.getBackgroundImage(pageNumber);
     return FileImage(backgroundMedia.file);
@@ -48,7 +47,19 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
       appBar: new SubPageAppbar(
           onInfoButtonPressed: () =>
               {topicPageViewModel.toggleInfoDialogVisible()},
-          onFinishButtonPressed: () => {print("Finish")},
+          onFinishButtonPressed: () => {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => InformationDialog(
+                    description: "Möchten Sie zur Bewertung des Themas gehen?",
+                    buttonText: "Thema bewerten",
+                    onActionPressed: () => serviceLocator<NavigationService>()
+                        .navigateTo(
+                            routeName: RouteName.RATING,
+                            arguments: topicViewModel.topic.id),
+                  ),
+                )
+              },
           title: topicViewModel.topic.name),
       body: ArrowNavigation(
           child: FutureBuilder(
