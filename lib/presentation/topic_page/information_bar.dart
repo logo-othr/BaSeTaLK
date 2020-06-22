@@ -34,11 +34,11 @@ class _InformationBarState extends State<InformationBar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Überschrift",
+                      widget.title,
                       style: TextStyle(fontSize: 70),
                     ),
                     Text(
-                      "Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben\nda sind und wie sie aussehen. Manchmal benutzt man Worte wie\nHamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen.",
+                      widget.description,
                       style: TextStyle(fontSize: 32),
                     )
                   ],
