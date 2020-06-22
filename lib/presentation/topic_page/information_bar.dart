@@ -22,7 +22,7 @@ class _InformationBarState extends State<InformationBar> {
         Spacer(),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 30),
-          height: 300,
+          height: 350,
           width: double.infinity,
           color: Color.fromRGBO(220, 220, 220, 0.95),
           child: Row(
@@ -39,7 +39,7 @@ class _InformationBarState extends State<InformationBar> {
                     ),
                     Text(
                       "Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben\nda sind und wie sie aussehen. Manchmal benutzt man Worte wie\nHamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen.",
-                      style: TextStyle(fontSize: 34),
+                      style: TextStyle(fontSize: 32),
                     )
                   ],
                 ),
@@ -47,7 +47,7 @@ class _InformationBarState extends State<InformationBar> {
               Container(
                 child: IconButton(
                   icon: Icon(Icons.close),
-                  iconSize: 150,
+                  iconSize: 120,
                   alignment: Alignment.topCenter,
                   onPressed: widget.onClosePressed,
                 ),
