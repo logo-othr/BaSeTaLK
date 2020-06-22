@@ -33,6 +33,7 @@ dependencies:
   get_it: ^4.0.2
   audioplayers: ^0.15.1
   transparent_image: ^1.0.0
+  flutter_rating_bar: ^3.0.1+1
 
 dev_dependencies:
   flutter_test:
