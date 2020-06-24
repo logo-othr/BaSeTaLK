@@ -1,5 +1,3 @@
-import 'dart:developer' as logger;
-
 import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:basetalk/presentation/colors.dart';
@@ -161,8 +159,8 @@ class _TopicRowState extends State<TopicRow> {
   void selectTopic(BuildContext context) {}
 
   _toggleFavorite() {
-    logger.log("toggleFavorite");
     topicViewModel.toggleFavorite();
+    topicListViewModel.sort();
   }
 
   _toggleVisited(bool newValue) {

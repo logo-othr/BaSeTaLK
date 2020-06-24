@@ -76,6 +76,11 @@ class TopicListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void sort() async {
+    topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
+    notifyListeners();
+  }
+
   void setFilter(String value) {
     this._filter = value;
     notifyListeners();
