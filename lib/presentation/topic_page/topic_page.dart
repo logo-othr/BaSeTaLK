@@ -1,23 +1,22 @@
 import 'dart:ui';
 
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/quiz_answer.dart';
 import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
+import 'package:basetalk/presentation/colors.dart';
+import 'package:basetalk/presentation/topic_page/audio_button_bar.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
 import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/audio_button_bar_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///C:/Flutter-Projects/bt_topic_converter/lib/colors.dart';
 
 class TopicPage extends StatefulWidget {
   @override
@@ -48,8 +47,6 @@ class _TopicPageState extends State<TopicPage> {
     var impulses = topicViewModel.getImpulses(pageNumber);
     impulseBarViewModel = ImpulseBarViewModel(impulses);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +80,16 @@ class _TopicPageState extends State<TopicPage> {
     topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
     if (pageFeature == null) return Container();
     var type = pageFeature.type;
-    if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
-      child = audioFeature();
-    else if (type == FeatureType.IMAGE)
+    if (type == FeatureType.AUDIO)
+      child = AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Container(
+          color: Colors.transparent,
+        ),
+      );
+    if (type == FeatureType.AUDIOIMAGE) {
+      child = imageFeature();
+    } else if (type == FeatureType.IMAGE)
       child = imageFeature();
     else if (type == FeatureType.QUIZ) child = quizFeature();
 
@@ -130,16 +134,6 @@ class _TopicPageState extends State<TopicPage> {
         ));
   }
 
-  Widget audioFeature() {
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: Container(
-        color: Colors.transparent,
-
-      ),
-    );
-  }
-
   Widget imageFeature() {
     return Card(
       child: Padding(
@@ -149,23 +143,7 @@ class _TopicPageState extends State<TopicPage> {
         ),
       ),
     );
-    /*
-    return Container(
-      decoration: BoxDecoration(
-          shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
-          boxShadow: [BoxShadow(
-            color: Colors.black,
-            blurRadius: 10.0,
-          ),]
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(1),
-        child: Image(
-          image: AssetImage("assets/img/example_no_vc.jpg"),
-        ),
-      ),
-    );
-    */
+
   }
 
   showImpulseBar() {
@@ -216,52 +194,17 @@ class _TopicPageState extends State<TopicPage> {
     PageFeature pageFeature =
     topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
     if (pageFeature == null) return Container();
-    var type = pageFeature.type;
-    if (type == FeatureType.AUDIO || type == FeatureType.AUDIOIMAGE)
-      child = audioButtonBar();
+    if (pageFeature.type == FeatureType.AUDIO ||
+        pageFeature.type == FeatureType.AUDIOIMAGE)
+      child = ChangeNotifierProvider(
+          create: (_) => AudioButtonBarViewModel("example_audio.mp3"),
+          child: AudioButtonBar(audioButtonSize));
     else
       child = Container();
     return Container(child: Center(child: child));
   }
 
-  Widget audioButtonBar() {
-    AudioPlayer audioPlayer = AudioPlayer();
-    AudioCache audioCache = new AudioCache(fixedPlayer: audioPlayer);
-    return ButtonBar(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        audioButton(
-          icon: Icon(
-            Icons.play_arrow,
-            size: audioButtonSize,
-          ),
-          onPressed: () {
-            print("Play audio");
-            audioCache.play('example_audio.mp3');
-          },
-        ),
-        audioButton(
-            icon: Icon(
-              Icons.pause,
-              size: audioButtonSize,
-            ),
-            onPressed: () => audioPlayer.stop()),
-      ],
-    );
-  }
 
-  Widget audioButton({@required Icon icon, @required VoidCallback onPressed}) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(30.0, 0, 30.0, 0),
-      child: RawMaterialButton(
-        padding: EdgeInsets.all(20),
-        fillColor: primary_green,
-        shape: CircleBorder(),
-        child: icon,
-        onPressed: onPressed,
-      ),
-    );
-  }
 
   Widget featureImpulseRow() {
     return Container(
