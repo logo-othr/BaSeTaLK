@@ -57,7 +57,11 @@ class _TopicPageState extends State<TopicPage> {
     initProviders(context);
 
     return Container(
-      color: topicPageViewModel.isFeatureVisible
+      color: topicPageViewModel.isFeatureVisible &&
+              topicViewModel
+                      .getPageFeature(topicPageViewModel.pageNumber)
+                      .type !=
+                  FeatureType.AUDIO
           ? Colors.black.withOpacity(0.3)
           : Colors.black.withOpacity(0),
       child: Column(
@@ -137,8 +141,7 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget imageFeature() {
-    return Container(
-      color: primary_green,
+    return Card(
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Image(
@@ -146,6 +149,23 @@ class _TopicPageState extends State<TopicPage> {
         ),
       ),
     );
+    /*
+    return Container(
+      decoration: BoxDecoration(
+          shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
+          boxShadow: [BoxShadow(
+            color: Colors.black,
+            blurRadius: 10.0,
+          ),]
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(1),
+        child: Image(
+          image: AssetImage("assets/img/example_no_vc.jpg"),
+        ),
+      ),
+    );
+    */
   }
 
   showImpulseBar() {

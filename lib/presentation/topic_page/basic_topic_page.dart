@@ -80,11 +80,11 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
                   ),
                   BackdropFilter(
                     filter: topicPageViewModel.isFeatureVisible &&
-                        topicViewModel
-                            .getPageFeature(
-                            topicPageViewModel.pageNumber)
-                            .type !=
-                            FeatureType.AUDIO
+                            topicViewModel
+                                    .getPageFeature(
+                                        topicPageViewModel.pageNumber)
+                                    .type !=
+                                FeatureType.AUDIO
                         ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
                         : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
                     child: widget.child,
