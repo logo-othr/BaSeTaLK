@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:basetalk/dependency_setup.dart';
+import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/drawer.dart';
@@ -78,7 +79,12 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
                     fit: BoxFit.cover,
                   ),
                   BackdropFilter(
-                    filter: topicPageViewModel.isFeatureVisible
+                    filter: topicPageViewModel.isFeatureVisible &&
+                        topicViewModel
+                            .getPageFeature(
+                            topicPageViewModel.pageNumber)
+                            .type !=
+                            FeatureType.AUDIO
                         ? ImageFilter.blur(sigmaX: 7, sigmaY: 7)
                         : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
                     child: widget.child,

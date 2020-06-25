@@ -1,10 +1,10 @@
 import 'package:basetalk/dependency_setup.dart';
+import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/route_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'presentation/colors.dart';
 
 const String _AppName = 'Appname';
 

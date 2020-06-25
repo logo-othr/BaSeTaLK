@@ -1,6 +1,5 @@
 import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
-import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/home_page/topic_download_dialog.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_download_dialog_view_model.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
@@ -8,6 +7,8 @@ import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///C:/Flutter-Projects/bt_topic_converter/lib/colors.dart';
 
 class TopicRow extends StatefulWidget {
   @override

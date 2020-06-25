@@ -6,13 +6,12 @@ import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/rating_page/rating_page.dart';
 import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
+import 'package:basetalk/presentation/topic_page/topic_front_page.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///A:/basetalk/lib/presentation/topic_page/topic_front_page.dart';
 
 class RouteService {
   static Route<dynamic> generateRoute(RouteSettings settings) {

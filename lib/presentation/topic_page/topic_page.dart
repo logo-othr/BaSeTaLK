@@ -8,7 +8,6 @@ import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/quiz_answer.dart';
 import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
-import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
 import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
@@ -18,8 +17,9 @@ import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TopicPage extends StatefulWidget {
+import 'file:///C:/Flutter-Projects/bt_topic_converter/lib/colors.dart';
 
+class TopicPage extends StatefulWidget {
   @override
   _TopicPageState createState() => _TopicPageState();
 }
@@ -130,11 +130,8 @@ class _TopicPageState extends State<TopicPage> {
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Container(
-        color: primary_green,
-        child: Icon(
-          Icons.volume_down,
-          size: 200,
-        ),
+        color: Colors.transparent,
+
       ),
     );
   }
