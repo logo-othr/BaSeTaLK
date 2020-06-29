@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
@@ -8,9 +6,11 @@ import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/audio_button_bar.dart';
+import 'package:basetalk/presentation/topic_page/image_feature_view.dart';
 import 'package:basetalk/presentation/topic_page/impulse_bar.dart';
 import 'package:basetalk/presentation/topic_page/quiz_feature.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/audio_button_bar_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/image_feature_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
@@ -77,21 +77,26 @@ class _TopicPageState extends State<TopicPage> {
   Widget featureRow() {
     Widget child = Container();
     PageFeature pageFeature =
-    topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
-    if (pageFeature == null) return Container();
-    var type = pageFeature.type;
-    if (type == FeatureType.AUDIO)
-      child = AspectRatio(
-        aspectRatio: 16 / 9,
-        child: Container(
-          color: Colors.transparent,
-        ),
-      );
-    if (type == FeatureType.AUDIOIMAGE) {
-      child = imageFeature();
-    } else if (type == FeatureType.IMAGE)
-      child = imageFeature();
-    else if (type == FeatureType.QUIZ) child = quizFeature();
+        topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
+
+    if (pageFeature == null) child = Container();
+    switch (pageFeature.type) {
+      case FeatureType.AUDIO:
+        child = Container();
+        break;
+      case FeatureType.AUDIOIMAGE:
+        child = imageFeature();
+        break;
+      case FeatureType.IMAGE:
+        child = imageFeature();
+        break;
+      case FeatureType.QUIZ:
+        child = quizFeature();
+        break;
+      default:
+        child = Container();
+        break;
+    }
 
     return Expanded(
       child: Container(
@@ -135,15 +140,12 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget imageFeature() {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(5),
-        child: Image(
-          image: AssetImage("assets/img/example_no_vc.jpg"),
-        ),
-      ),
-    );
-
+    return Provider(
+        create: (_) =>
+            ImageFeatureViewModel(topicViewModel
+                .getPageFeature(topicPageViewModel.pageNumber)
+                .filename),
+        child: ImageFeatureView());
   }
 
   showImpulseBar() {
@@ -203,8 +205,6 @@ class _TopicPageState extends State<TopicPage> {
       child = Container();
     return Container(child: Center(child: child));
   }
-
-
 
   Widget featureImpulseRow() {
     return Container(
