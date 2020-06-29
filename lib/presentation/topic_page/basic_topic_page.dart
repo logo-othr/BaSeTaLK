@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
@@ -54,10 +53,11 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
                   builder: (BuildContext context) => InformationDialog(
                     description: "Möchten Sie zur Bewertung des Themas gehen?",
                     buttonText: "Thema bewerten",
-                    onActionPressed: () => serviceLocator<NavigationService>()
-                        .navigateTo(
-                            routeName: RouteName.RATING,
-                            arguments: topicViewModel.topic.id),
+                    onActionPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacementNamed(context, RouteName.RATING,
+                          arguments: topicViewModel.topic.id);
+                    },
                   ),
                 )
               },
