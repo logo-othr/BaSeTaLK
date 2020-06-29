@@ -1,20 +1,26 @@
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:basetalk/dependency_setup.dart';
+import 'package:basetalk/domain/entities/media.dart';
+import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class AudioButtonBarViewModel extends ChangeNotifier {
-  final String audioFilePath;
+  final String audioName;
   AudioPlayer audioPlayer;
-  AudioCache audioCache;
+  Media audioMedia;
 
-  AudioButtonBarViewModel(this.audioFilePath) {
-    audioPlayer = AudioPlayer();
-    audioCache = new AudioCache(fixedPlayer: audioPlayer);
+  AudioButtonBarViewModel(this.audioName) {
+    audioPlayer = serviceLocator.get<AudioPlayer>();
   }
 
-  void playAudio() {
+  void playAudio() async {
+    if (audioMedia == null) {
+      IMediaRepository mediaRepository = serviceLocator.get<IMediaRepository>();
+      Media media = await mediaRepository.getMediaFile(audioName);
+      this.audioMedia = media;
+    }
     print("Play audio");
-    audioCache.play(audioFilePath);
+    audioPlayer.play(audioMedia.file.path, isLocal: true);
   }
 
   void stopAudio() {
