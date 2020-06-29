@@ -139,6 +139,7 @@ class _TopicPageState extends State<TopicPage> {
         ));
   }
 
+
   Widget imageFeature() {
     return Provider(
         create: (_) =>
@@ -199,7 +200,7 @@ class _TopicPageState extends State<TopicPage> {
     if (pageFeature.type == FeatureType.AUDIO ||
         pageFeature.type == FeatureType.AUDIOIMAGE)
       child = ChangeNotifierProvider(
-          create: (_) => AudioButtonBarViewModel("example_audio.mp3"),
+          create: (_) => AudioButtonBarViewModel(pageFeature.filename),
           child: AudioButtonBar(audioButtonSize));
     else
       child = Container();

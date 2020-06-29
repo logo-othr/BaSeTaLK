@@ -12,7 +12,8 @@ class AudioButtonBar extends StatefulWidget {
   _AudioButtonBarState createState() => _AudioButtonBarState();
 }
 
-class _AudioButtonBarState extends State<AudioButtonBar> {
+class _AudioButtonBarState extends State<AudioButtonBar>
+    with WidgetsBindingObserver {
   AudioButtonBarViewModel audioButtonBarViewModel;
 
   @override
@@ -25,6 +26,12 @@ class _AudioButtonBarState extends State<AudioButtonBar> {
   void dispose() {
     audioButtonBarViewModel.stopAudio();
     super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    audioButtonBarViewModel.stopAudio();
+    super.deactivate();
   }
 
   Widget audioButtonBar() {
