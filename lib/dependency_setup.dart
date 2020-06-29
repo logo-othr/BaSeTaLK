@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:basetalk/domain/repositorys/i_topic_repository.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
@@ -75,6 +76,8 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton<IMediaRepository>(
     () => MediaRepository(mediaRemoteRepository, mediaLocalRepository),
   );
+
+  serviceLocator.registerLazySingleton<AudioPlayer>(() => AudioPlayer());
 
   serviceLocator.registerLazySingleton<TopicListViewModel>(
     () => TopicListViewModel(
