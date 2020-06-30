@@ -18,7 +18,7 @@ class TopicDTORemoteSFTPRepository implements ITopicDTORepository {
   @override
   Future<List<TopicDTO>> getAllTopicDTOs({requestRefresh = false}) async {
     try {
-      await downloadFromSFTP(_sshClient, ["topics.json"], _remotePath,
+      await downloadFromSFTP(["topics.json"], _remotePath,
           _topicPathProvider.appCacheRootPath,
           callback: null);
     } on Exception catch (e) {

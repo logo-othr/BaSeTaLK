@@ -40,9 +40,10 @@ Future<void> init() async {
   // ToDo: provide path but check path existence later  or move in async singleton
   await topicPathProvider.init();
 
-  serviceLocator.registerLazySingleton(() => sshClient);
-  serviceLocator.registerLazySingleton(() => topicPathProvider);
-  serviceLocator.registerLazySingleton(() => TopicMapper());
+  serviceLocator.registerLazySingleton<SSHClient>(() => sshClient);
+  serviceLocator
+      .registerLazySingleton<TopicPathProvider>(() => topicPathProvider);
+  serviceLocator.registerLazySingleton<TopicMapper>(() => TopicMapper());
 
   serviceLocator.registerLazySingleton<ITopicDTOCacheRepository>(
     () => TopicDTOLocalFileRepository(serviceLocator()),
@@ -60,27 +61,28 @@ Future<void> init() async {
     () => TopicRepository(
       topicDTORepository: serviceLocator.get<ITopicDTORepository>(),
       topicUserInformationDTORepository:
-          serviceLocator.get<ITopicUserInformationDTORepository>(),
+      serviceLocator.get<ITopicUserInformationDTORepository>(),
       topicMapper: serviceLocator.get<TopicMapper>(),
     ),
   );
 
   serviceLocator.registerLazySingleton<ITopicUserInformationDTORepository>(
-    () => TopicUserInformationDTORepository(),
+        () => TopicUserInformationDTORepository(),
   );
 
   IMediaRepository mediaRemoteRepository = MediaRemoteSFTPRepository(
-      serviceLocator(), topicPathProvider.topicMediaRootPath);
+      topicPathProvider.topicMediaRootPath);
   IMediaRepository mediaLocalRepository = MediaLocalFileRepository();
 
   serviceLocator.registerLazySingleton<IMediaRepository>(
-    () => MediaRepository(mediaRemoteRepository, mediaLocalRepository),
+        () => MediaRepository(mediaRemoteRepository, mediaLocalRepository),
   );
 
   serviceLocator.registerLazySingleton<AudioPlayer>(() => AudioPlayer());
 
   serviceLocator.registerLazySingleton<TopicListViewModel>(
-    () => TopicListViewModel(
+        () =>
+        TopicListViewModel(
         serviceLocator(),
         serviceLocator(),
         serviceLocator(),

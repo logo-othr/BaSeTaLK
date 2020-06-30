@@ -7,6 +7,7 @@ import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'file:///C:/Flutter-Projects/bt_topic_converter/lib/colors.dart';
 
@@ -37,20 +38,25 @@ class _TopicRowState extends State<TopicRow> {
     final leftSection = new Container(
       padding: new EdgeInsets.only(right: 15.0),
       margin: new EdgeInsets.all(16.0),
-      child: Image(
-        width: 200,
-        height: 100,
-        image: FileImage(
-          serviceLocator
-              .get<TopicPathProvider>()
-              .getTopicMediaFile(topicViewModel.topic.thumbnail),
-        ),
-      ),
+      child: Container(
+          width: 150,
+          height: 84,
+          padding: EdgeInsets.all(2),
+          color: Colors.black12,
+          child: FadeInImage(
+            placeholder: MemoryImage(kTransparentImage),
+            width: 150,
+            height: 84,
+            image: FileImage(serviceLocator
+                .get<TopicPathProvider>()
+                .getTopicMediaFile(topicViewModel.topic.thumbnail)),
+            fit: BoxFit.cover,
+          )),
     );
-
     Widget createTags() {
       List<Widget> v = [];
-      for (String tag in topicViewModel.topic.tags) v.add(Text("#$tag "));
+      for (String tag in topicViewModel.topic.tags)
+        v.add(Text("#$tag "));
       return Row(children: v);
     }
 

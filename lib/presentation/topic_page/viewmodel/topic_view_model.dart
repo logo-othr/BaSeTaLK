@@ -74,4 +74,10 @@ class TopicViewModel extends ChangeNotifier {
     IMediaRepository mediaRepository = serviceLocator.get<IMediaRepository>();
     return await mediaRepository.getMediaFile(backgroundImgFileName);
   }
+
+  Future<Media> getThumbnail() async {
+    String backgroundImgFileName = topic.thumbnail;
+    IMediaRepository mediaRepository = serviceLocator.get<IMediaRepository>();
+    return await mediaRepository.getMediaFile(backgroundImgFileName);
+  }
 }
