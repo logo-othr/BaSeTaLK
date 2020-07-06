@@ -22,6 +22,8 @@ class TopicListViewModel extends ChangeNotifier {
 
   List<TopicViewModel> topicViewModels = new List();
 
+  bool initialized = false;
+
   TopicListViewModel(
       this._getAllTopics,
       this._sortTopicListToFavFirst,
@@ -31,8 +33,17 @@ class TopicListViewModel extends ChangeNotifier {
       this._topicsToViewModels,
       this._downloadTopicData);
 
-  init() async {
-    await _refreshStates();
+  Future<List<TopicViewModel>> init() async {
+    if (initialized) return filteredList();
+    List<Topic> topics = await _getAllTopics(null);
+    var params = new TopicsToViewModelsUseCaseParams(
+        topics, _toggleTopicFavorite, _toggleTopicVisited, _downloadTopicData);
+    topicViewModels = _topicsToViewModels(params);
+    topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
+    await _getTopicThumbnails(topics);
+    notifyListeners();
+    initialized = true;
+    return filteredList();
   }
 
   List<TopicViewModel> filteredList() {
@@ -66,15 +77,6 @@ class TopicListViewModel extends ChangeNotifier {
     topicViewModels.insert(0, tempTopicViewModel);
   }
 
-  _refreshStates() async {
-    List<Topic> topics = await _getAllTopics(null);
-    var params = new TopicsToViewModelsUseCaseParams(
-        topics, _toggleTopicFavorite, _toggleTopicVisited, _downloadTopicData);
-    topicViewModels = _topicsToViewModels(params);
-    topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
-    await _getTopicThumbnails(topics);
-    notifyListeners();
-  }
 
   void sort() async {
     topicViewModels = await _sortTopicListToFavFirst(topicViewModels);

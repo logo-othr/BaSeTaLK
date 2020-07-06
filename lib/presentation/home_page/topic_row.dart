@@ -147,6 +147,7 @@ class _TopicRowState extends State<TopicRow> {
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
+            height: 150,
             decoration: BoxDecoration(color: Color.fromRGBO(255, 255, 255, .9)),
             child: Row(
               children: <Widget>[

@@ -46,10 +46,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future<List<TopicViewModel>> _futureInitializedFilteredList;
+
+  @override
+  initState() {
+    super.initState();
+    _futureInitializedFilteredList =
+        Provider.of<TopicListViewModel>(context, listen: false).init();
+  }
+
   @override
   Widget build(BuildContext context) {
-    topicListViewModel = Provider.of<TopicListViewModel>(context);
-    final filteredViewModels = topicListViewModel.filteredList();
     return new Scaffold(
       drawer: MainDrawer(),
       appBar: MainAppBar(title: widget._screenTitle),
@@ -87,27 +94,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, position) {
-                    var topicViewModel = filteredViewModels[position];
-                    var row = ChangeNotifierProvider<TopicViewModel>.value(
-                      value: topicViewModel,
-                      child: TopicRow(),
-                    );
-                    return row;
-                  },
-                  itemCount: filteredViewModels.length,
-                ),
+                child: FutureBuilder(
+                    future: _futureInitializedFilteredList,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<TopicViewModel>>
+                            filteredViewModels) {
+                      if (filteredViewModels.hasData) {
+                        return ListView.builder(
+                          itemBuilder: (context, position) {
+                            var topicViewModel =
+                                filteredViewModels.data[position];
+                            var row =
+                                ChangeNotifierProvider<TopicViewModel>.value(
+                              value: topicViewModel,
+                              child: TopicRow(),
+                            );
+                            return row;
+                          },
+                          itemCount: filteredViewModels.data.length,
+                        );
+                      } else {
+                        return Center(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 50),
+                            Text("Themen werden geladen...")
+                          ],
+                        ));
+                      }
+                    }),
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  @override
-  initState() {
-    super.initState();
   }
 }

@@ -107,9 +107,6 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(() => SortTopicListToFavFirstUseCase());
 
   serviceLocator.registerLazySingleton(() => NavigationService());
-
-  // ToDo: move in async singleton
-  await serviceLocator<TopicListViewModel>().init();
 }
 
 Future<SSHClient> setUpSFTP() async {
