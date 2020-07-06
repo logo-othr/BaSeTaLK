@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-
 class TopicRow extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _TopicRowState();
@@ -55,8 +54,7 @@ class _TopicRowState extends State<TopicRow> {
     );
     Widget createTags() {
       List<Widget> v = [];
-      for (String tag in topicViewModel.topic.tags)
-        v.add(Text("#$tag "));
+      for (String tag in topicViewModel.topic.tags) v.add(Text("#$tag "));
       return Row(children: v);
     }
 
@@ -138,8 +136,12 @@ class _TopicRowState extends State<TopicRow> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushReplacementNamed(RouteName.BLITZLICHT,
-            arguments: topicViewModel.topic.id);
+        if (topicViewModel.topic.isDownloaded) {
+          Navigator.of(context).pushReplacementNamed(RouteName.BLITZLICHT,
+              arguments: topicViewModel.topic.id);
+        } else {
+          showDownloadDialog();
+        }
       },
       child: Card(
           elevation: 8.0,
