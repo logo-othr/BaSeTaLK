@@ -60,7 +60,7 @@ class _TopicRowState extends State<TopicRow> {
 
     final middleSection = new Container(
       width: 400,
-      padding: new EdgeInsets.only(left: 8.0),
+      padding: new EdgeInsets.only(left: 8.0, top: 15.0, bottom: 15.0),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
