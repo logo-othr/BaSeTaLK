@@ -1,8 +1,8 @@
+import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'file:///C:/Flutter-Projects/bt_topic_converter/lib/colors.dart';
 
 class ImpulseBar extends StatefulWidget {
   final VoidCallback onClose;

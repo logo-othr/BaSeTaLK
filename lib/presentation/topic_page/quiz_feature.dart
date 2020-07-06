@@ -1,11 +1,11 @@
 import 'package:basetalk/domain/entities/quiz_answer.dart';
 import 'package:basetalk/domain/entities/quiz_data.dart';
 import 'package:basetalk/domain/entities/quiz_question.dart';
+import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'file:///C:/Flutter-Projects/bt_topic_converter/lib/colors.dart';
 
 class QuizFeature extends StatefulWidget {
   final QuizData quizData;
