@@ -22,13 +22,14 @@ class _InformationBarState extends State<InformationBar> {
         Spacer(),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 30),
-          height: 350,
+          height: MediaQuery.of(context).size.height * 0.4,
           width: double.infinity,
           color: Color.fromRGBO(220, 220, 220, 0.95),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
+                width: MediaQuery.of(context).size.width * 0.8,
                 padding: EdgeInsets.fromLTRB(50, 40, 50, 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
