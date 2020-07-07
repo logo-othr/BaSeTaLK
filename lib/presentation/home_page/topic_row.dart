@@ -1,4 +1,5 @@
 import 'package:basetalk/dependency_setup.dart';
+import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/home_page/topic_download_dialog.dart';
@@ -135,8 +136,31 @@ class _TopicRowState extends State<TopicRow> {
     );
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (topicViewModel.topic.isDownloaded) {
+          // ToDo: use numbers instead of PageNumber and delete PageNumber class?
+          //  List<Media> backgroundImages = await topicViewModel.getBackgroundImages();
+          precacheImage(
+              FileImage(
+                  (await topicViewModel.getBackgroundImage(PageNumber.zero))
+                      .file),
+              context);
+          precacheImage(
+              FileImage(
+                  (await topicViewModel.getBackgroundImage(PageNumber.one))
+                      .file),
+              context);
+          precacheImage(
+              FileImage(
+                  (await topicViewModel.getBackgroundImage(PageNumber.two))
+                      .file),
+              context);
+          precacheImage(
+              FileImage(
+                  (await topicViewModel.getBackgroundImage(PageNumber.three))
+                      .file),
+              context);
+
           Navigator.of(context).pushReplacementNamed(RouteName.BLITZLICHT,
               arguments: topicViewModel.topic.id);
         } else {
