@@ -102,8 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (filteredViewModels.hasData) {
                         return ListView.builder(
                           itemBuilder: (context, position) {
+                            // ToDo: only use view model and return true/false
+                            // in future builder
+                            var listViewModel =
+                                Provider.of<TopicListViewModel>(context);
                             var topicViewModel =
-                                filteredViewModels.data[position];
+                                listViewModel.topicViewModels[position];
                             var row =
                                 ChangeNotifierProvider<TopicViewModel>.value(
                               value: topicViewModel,
