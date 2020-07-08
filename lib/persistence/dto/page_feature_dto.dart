@@ -7,7 +7,7 @@ part 'page_feature_dto.g.dart';
 class PageFeatureDTO {
   int id;
   FeatureType featureType;
-  String featureFileName;
+  List<String> featureFileName;
 
   PageFeatureDTO(this.id, this.featureType, this.featureFileName);
 

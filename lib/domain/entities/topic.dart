@@ -59,7 +59,7 @@ class Topic {
     filenames.add(this.thumbnail);
     for (PageContent pageContent in this.pageContents) {
       if (pageContent.pageFeature != null)
-        filenames.add(pageContent.pageFeature.filename);
+        filenames.addAll(pageContent.pageFeature.filename);
       filenames.add(pageContent.backgroundImage);
       for (Impulse impulse in pageContent.pageImpluses) {
         filenames.add(impulse.audioFileName);
