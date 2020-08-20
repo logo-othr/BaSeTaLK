@@ -201,7 +201,7 @@ class _TopicPageState extends State<TopicPage> {
     if (pageFeature.type == FeatureType.AUDIO ||
         pageFeature.type == FeatureType.AUDIOIMAGE)
       child = ChangeNotifierProvider(
-          create: (_) => AudioButtonBarViewModel(pageFeature.filename[0]),
+          create: (_) => AudioButtonBarViewModel(pageFeature.filename[1]),
           child: AudioButtonBar(audioButtonSize));
     else
       child = Container();
