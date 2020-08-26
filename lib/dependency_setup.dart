@@ -4,7 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:basetalk/domain/repositorys/i_topic_repository.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
-import 'package:basetalk/domain/usecases/getListOfAllTopics.dart';
+import 'package:basetalk/domain/usecases/get_list_of_all_topics_usecase.dart';
 import 'package:basetalk/domain/usecases/get_topic_thumbnails_usecase.dart';
 import 'package:basetalk/domain/usecases/sort_topic_list_to_fav_first.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
