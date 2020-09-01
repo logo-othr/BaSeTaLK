@@ -5,7 +5,7 @@ import 'package:basetalk/domain/usecases/get_topic_thumbnails_usecase.dart';
 import 'package:basetalk/domain/usecases/sort_topic_list_to_fav_first.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';
-import 'package:basetalk/domain/usecases/topics_to_viewmodels.dart';
+import 'package:basetalk/domain/usecases/topics_to_viewmodels_usecase.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
