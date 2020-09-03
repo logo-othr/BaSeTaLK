@@ -28,6 +28,14 @@ class _QuizFeatureState extends State<QuizFeature> {
     super.dispose();
   }
 
+  Future<QuizData> _futureQuizData;
+
+  @override
+  initState() {
+    super.initState();
+    _futureQuizData = Provider.of<QuizViewModel>(context, listen: false).init();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> questionWidgets = List();
@@ -59,16 +67,22 @@ class _QuizFeatureState extends State<QuizFeature> {
       child: Container(
         padding: EdgeInsets.all(20),
         color: Colors.grey[200],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Expanded(
-                child: PageView(
-                    physics: new NeverScrollableScrollPhysics(),
-                    controller: _controller,
-                    children: questionWidgets)),
-            Provider.of<QuizViewModel>(context).isNextButtonVisible
-                ? FlatButton(
+        child: FutureBuilder(
+          future: _futureQuizData,
+          builder: (BuildContext context, AsyncSnapshot<QuizData> snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Expanded(
+                      child: PageView(
+                          physics: new NeverScrollableScrollPhysics(),
+                          controller: _controller,
+                          children: questionWidgets)),
+                  Provider
+                      .of<QuizViewModel>(context)
+                      .isNextButtonVisible
+                      ? FlatButton(
                     padding: EdgeInsets.all(20),
                     child: Text(
                       "Weiter",
@@ -83,8 +97,14 @@ class _QuizFeatureState extends State<QuizFeature> {
                           .setNextButtonVisibility(false);
                     },
                   )
-                : Container(),
-          ],
+                      : Container(),
+                ],
+              );
+            }
+            else {
+              return Container();
+            }
+          },
         ),
       ),
     );
