@@ -7,7 +7,7 @@ import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_quiz_dt
 class QuizDTORepository implements IQuizDTORepository {
   Future<QuizDataDTO> getQuizDataDTO(Media quizFileMedia) async {
     String jsonString = await quizFileMedia.file.readAsString();
-    QuizDataDTO topicDtos = jsonDecode(jsonString) as QuizDataDTO;
+    QuizDataDTO topicDtos = QuizDataDTO.fromJson(jsonDecode(jsonString));
     return topicDtos;
   }
 }

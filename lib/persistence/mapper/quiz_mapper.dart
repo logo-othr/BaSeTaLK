@@ -23,6 +23,7 @@ class QuizMapper implements IMapper<QuizData, QuizDataDTO> {
     }
 
     QuizData quizData = QuizData(questions, quizDataDTO.id);
+    return quizData;
   }
 
   @override
