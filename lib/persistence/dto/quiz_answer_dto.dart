@@ -3,14 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 part 'quiz_answer_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class QuizAnswer {
+class QuizAnswerDTO {
   int id;
   String answer;
 
-  QuizAnswer(this.id, this.answer);
+  QuizAnswerDTO(this.id, this.answer);
 
-  factory QuizAnswer.fromJson(Map<String, dynamic> json) =>
-      _$QuizAnswerFromJson(json);
+  factory QuizAnswerDTO.fromJson(Map<String, dynamic> json) =>
+      _$QuizAnswerDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$QuizAnswerToJson(this);
+  Map<String, dynamic> toJson() => _$QuizAnswerDTOToJson(this);
 }

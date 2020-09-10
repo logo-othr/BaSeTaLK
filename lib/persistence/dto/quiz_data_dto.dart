@@ -5,7 +5,10 @@ part 'quiz_data_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class QuizDataDTO {
-  List<QuizQuestion> questions;
+  List<QuizQuestionDTO> questions;
+
+  // ToDo: add id generation to bt_topic_converter
+  final id = 0;
 
   QuizDataDTO(this.questions);
 
