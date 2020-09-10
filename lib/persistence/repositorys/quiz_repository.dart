@@ -9,6 +9,7 @@ import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_quiz_dt
 
 class QuizRepository implements IQuizRepository {
   Future<QuizData> getQuizDataByFilename(String filename) async {
+    // ToDo: QuizRepository should not depend on MediaRepository?
     Media quizFileMedia =
         await serviceLocator.get<IMediaRepository>().getMediaFile(filename);
     QuizDataDTO quizDataDTO = await serviceLocator
