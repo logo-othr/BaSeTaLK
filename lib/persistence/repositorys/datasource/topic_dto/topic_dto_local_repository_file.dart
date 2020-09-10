@@ -28,6 +28,7 @@ class TopicDTOLocalFileRepository implements ITopicDTOCacheRepository {
 
   @override
   FutureOr<TopicDTO> getTopicDTOById(int id) async {
+    // ToDo: improve performance
     TopicDTO result;
     List<TopicDTO> topicDTOs = await getAllTopicDTOs();
     for (TopicDTO topicDTO in topicDTOs)
