@@ -112,7 +112,7 @@ class _TopicPageState extends State<TopicPage> {
     mockAnswersQuestions1.add(QuizAnswer(2, "Antwort 2 Frage 1"));
     mockAnswersQuestions1.add(QuizAnswer(3, "Antwort 3 Frage 1"));
     QuizQuestion question1 =
-    QuizQuestion("Frage 1", mockAnswersQuestions1, correctAnswer1, 1);
+        QuizQuestion("Frage 1", mockAnswersQuestions1, correctAnswer1, 1);
 
     List<QuizAnswer> mockAnswersQuestions2 = List();
     QuizAnswer correctAnswer2 = QuizAnswer(4, "Antwort 1  Frage 2");
@@ -120,7 +120,7 @@ class _TopicPageState extends State<TopicPage> {
     mockAnswersQuestions2.add(QuizAnswer(5, "Antwort 2  Frage 2"));
     mockAnswersQuestions2.add(QuizAnswer(6, "Antwort 3  Frage 2"));
     QuizQuestion question2 =
-    QuizQuestion("Frage 2", mockAnswersQuestions2, correctAnswer2, 2);
+        QuizQuestion("Frage 2", mockAnswersQuestions2, correctAnswer2, 2);
 
     List<QuizQuestion> questions = List();
     questions.add(question1);
@@ -130,15 +130,15 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget quizFeature() {
-    QuizData quizData = mockQuizData();
+    PageNumber pageNumber = topicPageViewModel.pageNumber;
+    PageFeature quizPageFeature = topicViewModel.getPageFeature(pageNumber);
 
     return Container(
         child: ChangeNotifierProvider<QuizViewModel>(
-          create: (_) => QuizViewModel(),
-          child: QuizFeature(quizData),
+          create: (_) => QuizViewModel(quizPageFeature),
+          child: QuizFeature(),
         ));
   }
-
 
   Widget imageFeature() {
     // ToDo: Move filename list access to ImageFeatureViewModel or TopicViewModel

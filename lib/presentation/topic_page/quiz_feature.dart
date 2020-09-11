@@ -8,16 +8,15 @@ import 'package:provider/provider.dart';
 
 
 class QuizFeature extends StatefulWidget {
-  final QuizData quizData;
-  final QuizViewModel quizViewModel = QuizViewModel();
-
-  QuizFeature(this.quizData);
+  QuizFeature();
 
   @override
   _QuizFeatureState createState() => _QuizFeatureState();
 }
 
 class _QuizFeatureState extends State<QuizFeature> {
+  QuizViewModel quizViewModel;
+
   PageController _controller = PageController(
     initialPage: 0,
   );
@@ -26,6 +25,16 @@ class _QuizFeatureState extends State<QuizFeature> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<QuizData> _futureQuizData;
+
+  @override
+  initState() {
+    super.initState();
+    this.quizViewModel = Provider.of<QuizViewModel>(context, listen: false);
+    _futureQuizData =
+        Provider.of<QuizViewModel>(context, listen: false).getQuizData();
   }
 
   @override
@@ -50,25 +59,32 @@ class _QuizFeatureState extends State<QuizFeature> {
       ],
     );
     questionWidgets.add(firstQuizPage);
-    for (QuizQuestion quizQuestion in widget.quizData.questions) {
-      questionWidgets.add(quizContainer(quizQuestion));
-    }
+
 
     return AspectRatio(
       aspectRatio: 4 / 3,
       child: Container(
         padding: EdgeInsets.all(20),
         color: Colors.grey[200],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Expanded(
-                child: PageView(
-                    physics: new NeverScrollableScrollPhysics(),
-                    controller: _controller,
-                    children: questionWidgets)),
-            Provider.of<QuizViewModel>(context).isNextButtonVisible
-                ? FlatButton(
+        child: FutureBuilder(
+          future: _futureQuizData,
+          builder: (BuildContext context, AsyncSnapshot<QuizData> snapshot) {
+            if (snapshot.hasData) {
+              for (QuizQuestion quizQuestion in snapshot.data.questions) {
+                questionWidgets.add(quizContainer(quizQuestion));
+              }
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Expanded(
+                      child: PageView(
+                          physics: new NeverScrollableScrollPhysics(),
+                          controller: _controller,
+                          children: questionWidgets)),
+                  Provider
+                      .of<QuizViewModel>(context)
+                      .isNextButtonVisible
+                      ? FlatButton(
                     padding: EdgeInsets.all(20),
                     child: Text(
                       "Weiter",
@@ -83,8 +99,14 @@ class _QuizFeatureState extends State<QuizFeature> {
                           .setNextButtonVisibility(false);
                     },
                   )
-                : Container(),
-          ],
+                      : Container(),
+                ],
+              );
+            }
+            else {
+              return Container();
+            }
+          },
         ),
       ),
     );
