@@ -25,6 +25,8 @@ enum EventType {
 }
 
 class StatisticLogger {
+  final String delimiter = ",";
+
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
     return directory.path;
@@ -36,17 +38,76 @@ class StatisticLogger {
     return File('$path/statistic.csv');
   }
 
-  Future<int> readCounter() async {
+  Future<File> _setupStatisticFile() async {
+    final file = await _localFile;
+    //file.delete();
+    if (!(await file.exists())) {
+      String csvHeader = "timestamp" +
+          delimiter +
+          "event_type" +
+          delimiter +
+          "topic" +
+          delimiter +
+          "topic_id" +
+          delimiter +
+          "page_number" +
+          delimiter +
+          "rating" +
+          delimiter +
+          "value";
+
+      await file.create();
+      await file.writeAsString(csvHeader);
+    }
+    return file;
+  }
+
+  logEvent({
+    String eventType = "",
+    String topicName = "",
+    String topicID = "",
+    String pageNumber = "",
+    String nValue = "",
+    String bValue = "",
+  }) async {
     try {
-      final file = await _localFile;
-
-      // Read the file.
-      String contents = await file.readAsString();
-
-      return int.parse(contents);
+      final file = await _setupStatisticFile();
+      String line = "timestamp" +
+          "0" +
+          delimiter +
+          "event_type" +
+          eventType +
+          delimiter +
+          "topic" +
+          topicName +
+          delimiter +
+          "topic_id" +
+          topicID +
+          delimiter +
+          "page_number" +
+          pageNumber +
+          delimiter +
+          "rating" +
+          nValue +
+          delimiter +
+          "value" +
+          bValue;
+      await file.writeAsString(line);
     } catch (e) {
-      // If encountering an error, return 0.
-      return 0;
+      // ToDo: exception handling
+      print(e);
+    }
+  }
+
+  Future<int> readFile() async {
+    try {
+      final file = await _setupStatisticFile();
+
+      String contents = await file.readAsString();
+      print(contents);
+    } catch (e) {
+      // ToDo: exception handling
+      print(e);
     }
   }
 }
