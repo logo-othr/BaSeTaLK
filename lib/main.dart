@@ -15,9 +15,9 @@ void main() async {
     DeviceOrientation.landscapeRight,
   ]).then((_) async {
     await init();
-    await serviceLocator
+    serviceLocator
         .get<StatisticLogger>()
-        .logEvent(eventType: EventType.DEFAULT);
+        .logEvent(eventType: EventType.APP_START);
 
     runApp(MyApp());
   });

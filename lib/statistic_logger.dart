@@ -25,7 +25,8 @@ enum EventType {
   TOPIC_OPEN,
   SEARCH,
   APP_MAX,
-  APP_MIN
+  APP_MIN,
+  APP_START
 }
 
 class StatisticLogger {
@@ -74,18 +75,24 @@ class StatisticLogger {
     String nValue = "",
     String bValue = "",
   }) async {
-    print("logging...");
     final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd-H-Hm-Hms');
+    final DateFormat formatter = DateFormat('yyyy-MM-dd h:m:s');
     final String timestamp = formatter.format(now);
 
-    String line = timestamp + delimiter +
-        EnumToString.convertToString(eventType) + delimiter +
-        topicName + delimiter +
-        topicID + delimiter +
-        EnumToString.convertToString(pageNumber) + delimiter +
-        nValue + delimiter +
-        bValue + "\n";
+    String line = timestamp +
+        delimiter +
+        EnumToString.convertToString(eventType) +
+        delimiter +
+        topicName +
+        delimiter +
+        topicID +
+        delimiter +
+        EnumToString.convertToString(pageNumber) +
+        delimiter +
+        nValue +
+        delimiter +
+        bValue +
+        "\n";
     try {
       final file = await _setupStatisticFile();
 
