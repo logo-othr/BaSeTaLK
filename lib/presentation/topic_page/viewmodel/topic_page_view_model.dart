@@ -24,23 +24,38 @@ class TopicPageViewModel extends ChangeNotifier {
 
   toggleInfoDialogVisible() {
     _isInfoDialogVisible = !_isInfoDialogVisible;
+    serviceLocator.get<StatisticLogger>().logEvent(
+        eventType:
+            _isInfoDialogVisible ? EventType.infoOpen : EventType.infoClosed,
+        topicID: topicId.toString(),
+        pageNumber: pageNumber,
+        topicName: topicName);
     notifyListeners();
   }
 
   toggleFeatureVisible() {
     _isFeatureVisible = !_isFeatureVisible;
     serviceLocator.get<StatisticLogger>().logEvent(
-          eventType: _isFeatureVisible
-              ? EventType.featureOpen
-              : EventType.featureClosed,
-          topicID: topicId.toString(),
-          topicName: topicName,
+      eventType: _isFeatureVisible
+          ? EventType.featureOpen
+          : EventType.featureClosed,
+      topicID: topicId.toString(),
+      pageNumber: pageNumber,
+      topicName: topicName,
         );
     notifyListeners();
   }
 
   toggleImpulseBarVisible() {
     _isImpulseBarVisible = !_isImpulseBarVisible;
+    serviceLocator.get<StatisticLogger>().logEvent(
+      eventType: _isImpulseBarVisible
+          ? EventType.featureOpen
+          : EventType.featureClosed,
+      pageNumber: pageNumber,
+      topicID: topicId.toString(),
+      topicName: topicName,
+    );
     notifyListeners();
   }
 
@@ -48,6 +63,12 @@ class TopicPageViewModel extends ChangeNotifier {
     PageNumber targetPageNumber;
     switch (currentPageNumber) {
       case PageNumber.zero:
+        serviceLocator.get<StatisticLogger>().logEvent(
+          eventType: EventType.pageClosed,
+          pageNumber: pageNumber,
+          topicID: topicId.toString(),
+          topicName: topicName,
+        );
         serviceLocator<NavigationService>()
             .navigateTo(routeName: RouteName.BLITZLICHT, arguments: topicId);
         return;
@@ -61,6 +82,21 @@ class TopicPageViewModel extends ChangeNotifier {
         targetPageNumber = PageNumber.two;
         break;
     }
+
+    serviceLocator.get<StatisticLogger>().logEvent(
+      eventType: EventType.pageClosed,
+      pageNumber: pageNumber,
+      topicID: topicId.toString(),
+      topicName: topicName,
+    );
+
+    serviceLocator.get<StatisticLogger>().logEvent(
+      eventType: EventType.pageOpen,
+      pageNumber: targetPageNumber,
+      topicID: topicId.toString(),
+      topicName: topicName,
+    );
+
     serviceLocator<NavigationService>().navigateTo(
         routeName: RouteName.TOPIC,
         arguments: TopicPageParams(topicId, targetPageNumber));
@@ -80,10 +116,30 @@ class TopicPageViewModel extends ChangeNotifier {
         targetPageNumber = PageNumber.three;
         break;
       case PageNumber.three:
+        serviceLocator.get<StatisticLogger>().logEvent(
+          eventType: EventType.pageClosed,
+          pageNumber: pageNumber,
+          topicID: topicId.toString(),
+          topicName: topicName,
+        );
         serviceLocator<NavigationService>()
             .navigateTo(routeName: RouteName.RATING, arguments: topicId);
         return;
     }
+    serviceLocator.get<StatisticLogger>().logEvent(
+      eventType: EventType.pageClosed,
+      pageNumber: pageNumber,
+      topicID: topicId.toString(),
+      topicName: topicName,
+    );
+
+    serviceLocator.get<StatisticLogger>().logEvent(
+      eventType: EventType.pageOpen,
+      pageNumber: targetPageNumber,
+      topicID: topicId.toString(),
+      topicName: topicName,
+    );
+
     serviceLocator<NavigationService>().navigateTo(
         routeName: RouteName.TOPIC,
         arguments: TopicPageParams(topicId, targetPageNumber));

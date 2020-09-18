@@ -24,7 +24,6 @@ enum EventType {
   topicVisitedCheck,
   topicVisitedUncheck,
   topicOpen,
-  search,
   appMaximize,
   appMinimize,
   appStart

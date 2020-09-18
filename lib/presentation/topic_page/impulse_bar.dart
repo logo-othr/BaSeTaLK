@@ -1,8 +1,10 @@
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class ImpulseBar extends StatefulWidget {
   final VoidCallback onClose;
@@ -53,6 +55,19 @@ class _ImpulseBarState extends State<ImpulseBar> {
               color: Colors.black,
               onPressed: () {
                 impulseBarViewModel.incrementImpulseIndex();
+                serviceLocator.get<StatisticLogger>().logEvent(
+                  eventType: EventType.impulseBarNext,
+                  pageNumber: Provider
+                      .of<TopicPageViewModel>(context, listen: false)
+                      .pageNumber,
+                  topicID: Provider
+                      .of<TopicPageViewModel>(context, listen: false)
+                      .topicId
+                      .toString(),
+                  topicName: Provider
+                      .of<TopicPageViewModel>(context, listen: false)
+                      .topicName,
+                );
               },
               child: Text(
                 'Weiter',
@@ -72,7 +87,20 @@ class _ImpulseBarState extends State<ImpulseBar> {
                 icon: Icon(Icons.chat),
                 iconSize: widget.audioIconSize,
                 onPressed: () {
-                  // Audio-Output
+                  serviceLocator.get<StatisticLogger>().logEvent(
+                    eventType: EventType.impulseBarAudio,
+                    pageNumber: Provider
+                        .of<TopicPageViewModel>(context, listen: false)
+                        .pageNumber,
+                    topicID: Provider
+                        .of<TopicPageViewModel>(context, listen: false)
+                        .topicId
+                        .toString(),
+                    topicName: Provider
+                        .of<TopicPageViewModel>(context, listen: false)
+                        .topicName,
+                  );
+                  // ToDo: Audio-Output
                 },
               ),
             ),
