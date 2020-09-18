@@ -8,17 +8,13 @@ import 'package:path_provider/path_provider.dart';
 enum EventType {
   DEFAULT,
   IMPULSEBAR_OPEN,
-  IMPULSEBAR_CLOSED,
   IMPULSEBAR_NEXT,
   IMPULSEBAR_AUDIO,
   INFO_OPEN,
-  INFO_CLOSED,
   PAGE_OPEN,
-  PAGE_CLOSED,
   TOPIC_CLOSE_TO_RATING,
   TOPIC_CLOSE_TO_HOME,
   FEATURE_OPEN,
-  FEATURE_CLOSED,
   TOPIC_RATING,
   TOPIC_FAVORITE,
   TOPIC_VISITED,
@@ -56,9 +52,9 @@ class StatisticLogger {
           delimiter +
           "page_number" +
           delimiter +
-          "rating" +
+          "n_value" +
           delimiter +
-          "value" +
+          "b_value" +
           "\n";
 
       await file.create();
@@ -68,31 +64,38 @@ class StatisticLogger {
   }
 
   logEvent({
-    EventType eventType = EventType.DEFAULT,
-    String topicName = "",
-    String topicID = "",
-    PageNumber pageNumber = PageNumber.none,
-    String nValue = "",
-    String bValue = "",
+    EventType eventType,
+    String topicName,
+    String topicID,
+    PageNumber pageNumber,
+    int nValue,
+    bool bValue,
   }) async {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd h:m:s');
     final String timestamp = formatter.format(now);
 
-    String line = timestamp +
-        delimiter +
-        EnumToString.convertToString(eventType) +
-        delimiter +
-        topicName +
-        delimiter +
-        topicID +
-        delimiter +
-        EnumToString.convertToString(pageNumber) +
-        delimiter +
-        nValue +
-        delimiter +
-        bValue +
-        "\n";
+    //String nValueStr = (nValue == null ? "null" : nValue.toString());
+    //String bValueStr = (bValue == null ? "null" : bValue.toString());
+    var buffer = new StringBuffer();
+
+    buffer.write(timestamp);
+    buffer.write(delimiter);
+    buffer.write(EnumToString.convertToString(eventType));
+    buffer.write(delimiter);
+    buffer.write(topicName);
+    buffer.write(delimiter);
+    buffer.write(topicID);
+    buffer.write(delimiter);
+    buffer.write(EnumToString.convertToString(pageNumber));
+    buffer.write(delimiter);
+    buffer.write(nValue.toString());
+    buffer.write(delimiter);
+    buffer.write(bValue.toString());
+    buffer.write("\n");
+
+    String line = buffer.toString();
+    
     try {
       final file = await _setupStatisticFile();
 

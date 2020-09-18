@@ -29,15 +29,17 @@ class RouteService {
 
       case RouteName.TOPIC:
         final TopicPageParams params = settings.arguments;
+        TopicViewModel topicViewModel = serviceLocator
+            .get<TopicListViewModel>()
+            .getTopicViewModelById(params.topicId);
         return new _CustomRoute(
           builder: (_) => new MultiProvider(
             providers: [
               ChangeNotifierProvider<TopicViewModel>.value(
-                  value: serviceLocator
-                      .get<TopicListViewModel>()
-                      .getTopicViewModelById(params.topicId)),
+                  value: topicViewModel),
               ChangeNotifierProvider<TopicPageViewModel>(
-                  create: (_) => TopicPageViewModel(params.pageNumber))
+                  create: (_) => TopicPageViewModel(params.pageNumber,
+                      topicViewModel.topic.id, topicViewModel.topic.name))
             ],
             child: new BasicTopicPage(
               child: params.pageNumber == PageNumber.zero

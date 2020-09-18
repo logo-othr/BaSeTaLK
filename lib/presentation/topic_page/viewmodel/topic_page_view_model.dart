@@ -2,6 +2,7 @@ import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 
 class TopicPageViewModel extends ChangeNotifier {
@@ -10,8 +11,10 @@ class TopicPageViewModel extends ChangeNotifier {
   bool _isImpulseBarVisible = false;
 
   final PageNumber pageNumber;
+  final int topicId;
+  final String topicName;
 
-  TopicPageViewModel(this.pageNumber);
+  TopicPageViewModel(this.pageNumber, this.topicId, this.topicName);
 
   bool get isInfoDialogVisible => _isInfoDialogVisible;
 
@@ -26,6 +29,12 @@ class TopicPageViewModel extends ChangeNotifier {
 
   toggleFeatureVisible() {
     _isFeatureVisible = !_isFeatureVisible;
+    serviceLocator.get<StatisticLogger>().logEvent(
+          eventType: EventType.FEATURE_OPEN,
+          topicID: topicId.toString(),
+          topicName: topicName,
+          bValue: _isFeatureVisible,
+        );
     notifyListeners();
   }
 
