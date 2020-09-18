@@ -30,10 +30,11 @@ class TopicPageViewModel extends ChangeNotifier {
   toggleFeatureVisible() {
     _isFeatureVisible = !_isFeatureVisible;
     serviceLocator.get<StatisticLogger>().logEvent(
-          eventType: EventType.FEATURE_OPEN,
+          eventType: _isFeatureVisible
+              ? EventType.featureOpen
+              : EventType.featureClosed,
           topicID: topicId.toString(),
           topicName: topicName,
-          bValue: _isFeatureVisible,
         );
     notifyListeners();
   }

@@ -7,6 +7,7 @@ import 'package:basetalk/presentation/home_page/viewmodel/topic_download_dialog_
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -161,6 +162,10 @@ class _TopicRowState extends State<TopicRow> {
                       .file),
               context);
 
+          serviceLocator.get<StatisticLogger>().logEvent(
+              eventType: EventType.topicOpen,
+              topicID: topicViewModel.topic.id.toString(),
+              topicName: topicViewModel.topic.name);
           Navigator.of(context).pushReplacementNamed(RouteName.BLITZLICHT,
               arguments: topicViewModel.topic.id);
         } else {

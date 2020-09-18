@@ -6,23 +6,28 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 enum EventType {
-  DEFAULT,
-  IMPULSEBAR_OPEN,
-  IMPULSEBAR_NEXT,
-  IMPULSEBAR_AUDIO,
-  INFO_OPEN,
-  PAGE_OPEN,
-  TOPIC_CLOSE_TO_RATING,
-  TOPIC_CLOSE_TO_HOME,
-  FEATURE_OPEN,
-  TOPIC_RATING,
-  TOPIC_FAVORITE,
-  TOPIC_VISITED,
-  TOPIC_OPEN,
-  SEARCH,
-  APP_MAX,
-  APP_MIN,
-  APP_START
+  impulseBarOpen,
+  impulseBarClosed,
+  impulseBarNext,
+  impulseBarAudio,
+  infoOpen,
+  infoClosed,
+  pageOpen,
+  pageClosed,
+  topicCloseToRating,
+  topicCloseToHome,
+  featureOpen,
+  featureClosed,
+  topicRating,
+  topicFavoriteCheck,
+  topicFavoriteUncheck,
+  topicVisitedCheck,
+  topicVisitedUncheck,
+  topicOpen,
+  search,
+  appMaximize,
+  appMinimize,
+  appStart
 }
 
 class StatisticLogger {
@@ -95,7 +100,7 @@ class StatisticLogger {
     buffer.write("\n");
 
     String line = buffer.toString();
-    
+
     try {
       final file = await _setupStatisticFile();
 

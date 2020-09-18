@@ -17,7 +17,7 @@ void main() async {
     await init();
     serviceLocator
         .get<StatisticLogger>()
-        .logEvent(eventType: EventType.APP_START);
+        .logEvent(eventType: EventType.appStart);
 
     runApp(MyApp());
   });
