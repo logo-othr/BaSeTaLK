@@ -34,6 +34,8 @@ dependencies:
   audioplayers: ^0.15.1
   transparent_image: ^1.0.0
   flutter_rating_bar: ^3.0.1+1
+  intl: ^0.16.1
+  enum_to_string: ^1.0.11
 
 dev_dependencies:
   flutter_test:

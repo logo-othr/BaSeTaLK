@@ -2,11 +2,11 @@ import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/route_service.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
-const String _AppName = 'Appname';
+const String _AppName = 'BaSeTaLK';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +15,10 @@ void main() async {
     DeviceOrientation.landscapeRight,
   ]).then((_) async {
     await init();
+    await serviceLocator
+        .get<StatisticLogger>()
+        .logEvent(eventType: EventType.DEFAULT);
+
     runApp(MyApp());
   });
 }

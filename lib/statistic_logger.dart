@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:basetalk/domain/entities/page_number.dart';
+import 'package:enum_to_string/enum_to_string.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 enum EventType {
+  DEFAULT,
   IMPULSEBAR_OPEN,
   IMPULSEBAR_CLOSED,
   IMPULSEBAR_NEXT,
@@ -25,7 +29,7 @@ enum EventType {
 }
 
 class StatisticLogger {
-  final String delimiter = ",";
+  final String delimiter = ";";
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -40,7 +44,6 @@ class StatisticLogger {
 
   Future<File> _setupStatisticFile() async {
     final file = await _localFile;
-    //file.delete();
     if (!(await file.exists())) {
       String csvHeader = "timestamp" +
           delimiter +
@@ -54,7 +57,8 @@ class StatisticLogger {
           delimiter +
           "rating" +
           delimiter +
-          "value";
+          "value" +
+          "\n";
 
       await file.create();
       await file.writeAsString(csvHeader);
@@ -63,36 +67,29 @@ class StatisticLogger {
   }
 
   logEvent({
-    String eventType = "",
+    EventType eventType = EventType.DEFAULT,
     String topicName = "",
     String topicID = "",
-    String pageNumber = "",
+    PageNumber pageNumber = PageNumber.none,
     String nValue = "",
     String bValue = "",
   }) async {
+    print("logging...");
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd-H-Hm-Hms');
+    final String timestamp = formatter.format(now);
+
+    String line = timestamp + delimiter +
+        EnumToString.convertToString(eventType) + delimiter +
+        topicName + delimiter +
+        topicID + delimiter +
+        EnumToString.convertToString(pageNumber) + delimiter +
+        nValue + delimiter +
+        bValue + "\n";
     try {
       final file = await _setupStatisticFile();
-      String line = "timestamp" +
-          "0" +
-          delimiter +
-          "event_type" +
-          eventType +
-          delimiter +
-          "topic" +
-          topicName +
-          delimiter +
-          "topic_id" +
-          topicID +
-          delimiter +
-          "page_number" +
-          pageNumber +
-          delimiter +
-          "rating" +
-          nValue +
-          delimiter +
-          "value" +
-          bValue;
-      await file.writeAsString(line);
+
+      await file.writeAsString(line, mode: FileMode.append);
     } catch (e) {
       // ToDo: exception handling
       print(e);
