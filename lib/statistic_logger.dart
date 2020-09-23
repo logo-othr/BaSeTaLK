@@ -103,22 +103,13 @@ class StatisticLogger {
     try {
       final file = await _setupStatisticFile();
 
-      await file.writeAsString(line, mode: FileMode.append);
+      file.writeAsStringSync(line, mode: FileMode.append);
+      print(line);
     } catch (e) {
       // ToDo: exception handling
       print(e);
     }
   }
 
-  Future<int> readFile() async {
-    try {
-      final file = await _setupStatisticFile();
 
-      String contents = await file.readAsString();
-      print(contents);
-    } catch (e) {
-      // ToDo: exception handling
-      print(e);
-    }
-  }
 }
