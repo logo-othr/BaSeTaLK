@@ -161,7 +161,6 @@ class _TopicRowState extends State<TopicRow> {
                   (await topicViewModel.getBackgroundImage(PageNumber.three))
                       .file),
               context);
-
           serviceLocator.get<StatisticLogger>().logEvent(
               eventType: EventType.topicOpen,
               topicID: topicViewModel.topic.id.toString(),
