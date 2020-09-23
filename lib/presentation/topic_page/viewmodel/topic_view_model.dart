@@ -10,6 +10,7 @@ import 'package:basetalk/domain/repositorys/i_media_repository.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/cupertino.dart';
 
 class TopicViewModel extends ChangeNotifier {
@@ -24,11 +25,22 @@ class TopicViewModel extends ChangeNotifier {
 
   void toggleFavorite() async {
     await _toggleTopicFavorite(topic);
+    serviceLocator.get<StatisticLogger>().logEvent(
+        eventType: topic.isFavorite
+            ? EventType.topicFavoriteCheck
+            : EventType.topicFavoriteUncheck,
+        topicID: topic.id.toString(),
+        topicName: topic.name);
     notifyListeners();
   }
 
   void toggleVisited() async {
     await _toogleTopicVisited(topic);
+    serviceLocator.get<StatisticLogger>().logEvent(
+        eventType: topic.isVisited ? EventType.topicVisitedCheck : EventType
+            .topicVisitedUncheck,
+        topicID: topic.id.toString(),
+        topicName: topic.name);
     notifyListeners();
   }
 

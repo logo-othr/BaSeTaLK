@@ -1,3 +1,4 @@
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/drawer.dart';
 import 'package:basetalk/presentation/information_dialog.dart';
@@ -6,6 +7,7 @@ import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/topic_page/arrow_navigation.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,12 +46,17 @@ class _BlitzLichtState extends State<BlitzLicht> {
           showDialog(
             context: context,
             builder: (BuildContext context) => InformationDialog(
-              description:
-                  "Möchten Sie das Thema wirklich ohne Bewertung beenden",
-              buttonText: "Thema beenden",
-              onActionPressed: () =>
-                  Navigator.of(context).pushReplacementNamed(RouteName.HOME),
-            ),
+                description:
+                    "Möchten Sie das Thema wirklich ohne Bewertung beenden",
+                buttonText: "Thema beenden",
+                onActionPressed: () {
+                  serviceLocator.get<StatisticLogger>().logEvent(
+                        eventType: EventType.topicCloseToHome,
+                        topicID: topicViewModel.topic.id.toString(),
+                        topicName: topicViewModel.topic.name,
+                      );
+                  Navigator.of(context).pushReplacementNamed(RouteName.HOME);
+                }),
           );
         },
         onRightPressed: () {

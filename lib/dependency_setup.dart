@@ -32,6 +32,7 @@ import 'package:basetalk/persistence/sftp_auth.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:ssh/ssh.dart';
@@ -123,6 +124,9 @@ Future<void> init() async {
   serviceLocator
       .registerLazySingleton<GetQuizDataUsecase>(() => GetQuizDataUsecase());
   serviceLocator.registerLazySingleton<QuizMapper>(() => QuizMapper());
+
+  serviceLocator
+      .registerLazySingleton<StatisticLogger>(() => StatisticLogger());
 }
 
 Future<SSHClient> setUpSFTP() async {
