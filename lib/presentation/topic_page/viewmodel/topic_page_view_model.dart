@@ -50,12 +50,12 @@ class TopicPageViewModel extends ChangeNotifier {
     _isImpulseBarVisible = !_isImpulseBarVisible;
     serviceLocator.get<StatisticLogger>().logEvent(
       eventType: _isImpulseBarVisible
-          ? EventType.featureOpen
-          : EventType.featureClosed,
-      pageNumber: pageNumber,
-      topicID: topicId.toString(),
-      topicName: topicName,
-    );
+              ? EventType.impulseBarOpen
+              : EventType.impulseBarClosed,
+          pageNumber: pageNumber,
+          topicID: topicId.toString(),
+          topicName: topicName,
+        );
     notifyListeners();
   }
 
