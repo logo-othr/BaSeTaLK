@@ -36,6 +36,8 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   intl: ^0.16.1
   enum_to_string: ^1.0.11
+  flutter_svg: ^0.19.0
+
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +63,8 @@ flutter:
     - assets/img/example_no_vc.jpg
     - assets/example_audio.mp3
     - assets/img/placeholder.png
+    - assets/icons/arrow_back_ios-black-24dp.svg
+    - assets/icons/arrow_forward_ios-black-24dp.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
