@@ -134,13 +134,11 @@ class _QuizFeatureState extends State<QuizFeature> {
                       },
                     ),
                   ),
-                  Provider
-                      .of<QuizViewModel>(context)
-                      .isNextButtonVisible
+                  Provider.of<QuizViewModel>(context).isNextButtonVisible
                       ? nextButton
                       : Container(
-                    height: 70,
-                  ),
+                          height: 70,
+                        ),
                 ],
               );
             } else {
@@ -156,10 +154,7 @@ class _QuizFeatureState extends State<QuizFeature> {
     List<Widget> buttons = List();
     for (QuizAnswer quizAnswer in quizQuestion.answers) {
       Color activatedColor = Colors.red;
-      VoidCallback onPressed = () {
-        Provider.of<QuizViewModel>(context, listen: false)
-            .setNextButtonVisibility(false);
-      };
+      VoidCallback onPressed = () {};
       if (quizAnswer == quizQuestion.correctAnswer) {
         activatedColor = Colors.green;
         onPressed = () {
@@ -186,9 +181,7 @@ class _QuizFeatureState extends State<QuizFeature> {
                 child: Container(
                   padding: EdgeInsets.all(14),
                   child: Column(
-                    children: buttons
-                        .map((w) => Expanded(child: w))
-                        .toList(),
+                    children: buttons.map((w) => Expanded(child: w)).toList(),
                   ),
                 ),
               ),
