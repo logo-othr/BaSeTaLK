@@ -77,15 +77,23 @@ class _RatingPageState extends State<RatingPage> {
                 onPressed: rated
                     ? (() {
                   serviceLocator.get<StatisticLogger>().logEvent(
-                    eventType: EventType.topicRating,
-                    topicID: topicViewModel.topic.id.toString(),
-                    topicName: topicViewModel.topic.name,
-                    nValue: this.rating,
-                  );
-                  Navigator.of(context).pushReplacementNamed(
-                    RouteName.HOME,
-                  );
-                })
+                              eventType: EventType.topicRating,
+                              topicID: topicViewModel.topic.id.toString(),
+                              topicName: topicViewModel.topic.name,
+                              nValue: this.rating,
+                            );
+                        serviceLocator.get<StatisticLogger>().logEvent(
+                              eventType: EventType.topicCloseToHome,
+                              topicID: topicViewModel.topic.id.toString(),
+                              topicName: topicViewModel.topic.name,
+                              nValue: this.rating,
+                            );
+                        topicViewModel.toggleVisited();
+
+                        Navigator.of(context).pushReplacementNamed(
+                          RouteName.HOME,
+                        );
+                      })
                     : null,
               ),
             ],
