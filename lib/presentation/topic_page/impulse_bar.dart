@@ -20,6 +20,12 @@ class _ImpulseBarState extends State<ImpulseBar> {
   ImpulseBarViewModel impulseBarViewModel;
 
   @override
+  void dispose() {
+    impulseBarViewModel.stopAudio();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     impulseBarViewModel = Provider.of<ImpulseBarViewModel>(context);
 
@@ -34,7 +40,10 @@ class _ImpulseBarState extends State<ImpulseBar> {
             child: IconButton(
                 icon: Icon(Icons.close),
                 iconSize: 100,
-                onPressed: () => widget.onClose()),
+                onPressed: () {
+                  widget.onClose();
+                  impulseBarViewModel.stopAudio();
+                }),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 0, 40.0, 0),
@@ -55,6 +64,7 @@ class _ImpulseBarState extends State<ImpulseBar> {
               color: Colors.black,
               onPressed: () {
                 impulseBarViewModel.incrementImpulseIndex();
+                impulseBarViewModel.stopAudio();
                 serviceLocator.get<StatisticLogger>().logEvent(
                   eventType: EventType.impulseBarNext,
                   pageNumber: Provider
@@ -100,7 +110,7 @@ class _ImpulseBarState extends State<ImpulseBar> {
                         .of<TopicPageViewModel>(context, listen: false)
                         .topicName,
                   );
-                  // ToDo: Audio-Output
+                  impulseBarViewModel.playImpulse();
                 },
               ),
             ),
