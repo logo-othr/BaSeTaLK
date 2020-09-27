@@ -33,7 +33,10 @@ class TopicListViewModel extends ChangeNotifier {
       this._topicsToViewModels,
       this._downloadTopicData);
 
+  List<TopicViewModel> filteredTopicList = List();
+
   Future<List<TopicViewModel>> init() async {
+    _filter = "";
     if (initialized) return filteredList();
     List<Topic> topics = await _getAllTopics(null);
     var params = new TopicsToViewModelsUseCaseParams(
@@ -41,24 +44,33 @@ class TopicListViewModel extends ChangeNotifier {
     topicViewModels = _topicsToViewModels(params);
     topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
     await _getTopicThumbnails(topics);
-    notifyListeners();
     initialized = true;
+    filteredTopicList = topicViewModels;
+
+    notifyListeners();
     return filteredList();
   }
 
+
   List<TopicViewModel> filteredList() {
     // ToDo: Move functionality in a UseCase class
-    if (_filter == null || _filter.isEmpty) return topicViewModels;
-    List<String> filters = _filter.split(",");
-    List<TopicViewModel> filteredList = new List();
-    for (TopicViewModel topicViewModel in topicViewModels) {
-      for (String tag in filters) {
-        if (topicViewModel.topic.tags.contains(tag))
-          filteredList.add(topicViewModel);
-        break;
+    if (_filter == null || _filter.isEmpty) {
+      filteredTopicList = topicViewModels;
+    } else {
+      List<String> filters = _filter.split(",");
+      List<TopicViewModel> filteredList = new List();
+      for (TopicViewModel topicViewModel in topicViewModels) {
+        for (String tag in filters) {
+          if (topicViewModel.topic.tags.contains(tag))
+            filteredList.add(topicViewModel);
+          break;
+        }
       }
+      if (filteredList.isEmpty) filteredList = topicViewModels;
+      filteredTopicList = filteredList;
     }
-    return filteredList;
+    sort();
+    return filteredTopicList;
   }
 
   TopicViewModel getTopicViewModelById(int topicId) {
@@ -68,23 +80,14 @@ class TopicListViewModel extends ChangeNotifier {
     return result;
   }
 
-  void moveTopicToTop(Topic topic) {
-    TopicViewModel tempTopicViewModel;
-    for (TopicViewModel topicViewModel in topicViewModels)
-      if (topicViewModel.topic.id == topic.id)
-        tempTopicViewModel = topicViewModel;
-    topicViewModels.remove(tempTopicViewModel);
-    topicViewModels.insert(0, tempTopicViewModel);
-  }
 
-
-  void sort() async {
-    topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
-    notifyListeners();
+  void sort() {
+    filteredTopicList = _sortTopicListToFavFirst(filteredTopicList);
   }
 
   void setFilter(String value) {
     this._filter = value;
+    filteredList();
     notifyListeners();
   }
 }

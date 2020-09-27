@@ -6,7 +6,7 @@ class SortTopicListToFavFirstUseCase
   SortTopicListToFavFirstUseCase();
 
   @override
-  Future<List<TopicViewModel>> call(List<TopicViewModel> topicsToSort) async {
+  List<TopicViewModel> call(List<TopicViewModel> topicsToSort) {
     List<TopicViewModel> sortedTopics = new List();
     for (int i = 0; i < topicsToSort.length; i++) {
       TopicViewModel topicViewModel = topicsToSort[i];
