@@ -220,7 +220,8 @@ class _TopicPageState extends State<TopicPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               featureButton(),
-              topicPageViewModel.isImpulseBarVisible
+              (topicPageViewModel.isImpulseBarVisible &&
+                      !topicPageViewModel.isFeatureVisible)
                   ? showImpulseBar()
                   : showImpulseBarButton()
             ],
