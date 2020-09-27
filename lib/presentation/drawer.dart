@@ -12,7 +12,7 @@ class MainDrawer extends StatelessWidget {
           padding: EdgeInsets.all(20),
           alignment: Alignment.centerLeft,
           color: Theme.of(context).accentColor,
-          child: Text('Beispieltext',
+          child: Text('BaSeTaLK',
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w900,
@@ -22,10 +22,12 @@ class MainDrawer extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        buildListTile("Home", Icons.home, () {
+        buildListTile("Startseite", Icons.home, () {
           Navigator.of(context).pushReplacementNamed(RouteName.HOME);
         }),
         AboutListTile(
+          applicationName: "BaSeTaLK",
+          applicationLegalese: "Hier können Sie die Lizenzen der genutzten Open Source Bibliotheken einsehen.",
           icon: Icon(
             Icons.info,
           ),

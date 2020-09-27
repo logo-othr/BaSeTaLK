@@ -60,7 +60,6 @@ flutter:
   assets:
     - assets/img/logo.png
     - assets/sftp_auth.json
-    - assets/img/example_no_vc.jpg
     - assets/example_audio.mp3
     - assets/img/placeholder.png
     - assets/icons/arrow_back_ios-black-24dp.svg
