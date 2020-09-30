@@ -80,9 +80,13 @@ class TopicListViewModel extends ChangeNotifier {
     return result;
   }
 
-
   void sort() {
     filteredTopicList = _sortTopicListToFavFirst(filteredTopicList);
+  }
+
+  void update() {
+    filteredList();
+    notifyListeners();
   }
 
   void setFilter(String value) {

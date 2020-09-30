@@ -112,7 +112,11 @@ class _TopicRowState extends State<TopicRow> {
                 size: 40,
               ),
               // onPressed: _toggleFavorite(),
-              onPressed: _toggleFavorite,
+              onPressed: () {
+                _toggleFavorite();
+                Provider.of<TopicListViewModel>(context, listen: false)
+                    .update();
+              },
             ),
           ),
           Container(
@@ -196,9 +200,8 @@ class _TopicRowState extends State<TopicRow> {
 
   void selectTopic(BuildContext context) {}
 
-  _toggleFavorite() {
-    topicViewModel.toggleFavorite();
-    topicListViewModel.sort();
+  _toggleFavorite() async {
+    await Provider.of<TopicViewModel>(context, listen: false).toggleFavorite();
   }
 
   _toggleVisited(bool newValue) {
