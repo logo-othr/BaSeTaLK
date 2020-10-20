@@ -9,6 +9,6 @@ class GetListOfAllTopicsUseCase implements BaseUseCase<List<Topic>, void> {
 
   @override
   Future<List<Topic>> call(_) {
-    return _topicRepository.getAllTopics(requestRefresh: true);
+    return _topicRepository.getAllTopics(requestRefresh: false);
   }
 }

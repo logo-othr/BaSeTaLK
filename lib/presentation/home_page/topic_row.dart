@@ -114,8 +114,7 @@ class _TopicRowState extends State<TopicRow> {
               // onPressed: _toggleFavorite(),
               onPressed: () {
                 _toggleFavorite();
-                Provider.of<TopicListViewModel>(context, listen: false)
-                    .update();
+               // Provider.of<TopicListViewModel>(context, listen: false).update();
               },
             ),
           ),
