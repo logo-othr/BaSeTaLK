@@ -38,11 +38,10 @@ class _ImpulseBarState extends State<ImpulseBar> {
             elevation: 0,
             color: primary_green,
             child: IconButton(
-                icon: Icon(Icons.close),
+                icon: Icon(Icons.volume_up),
                 iconSize: 100,
                 onPressed: () {
-                  widget.onClose();
-                  impulseBarViewModel.stopAudio();
+                  impulseBarViewModel.playImpulse();
                 }),
           ),
           Padding(
@@ -99,18 +98,19 @@ class _ImpulseBarState extends State<ImpulseBar> {
                 onPressed: () {
                   serviceLocator.get<StatisticLogger>().logEvent(
                     eventType: EventType.impulseBarAudio,
-                    pageNumber: Provider
-                        .of<TopicPageViewModel>(context, listen: false)
-                        .pageNumber,
-                    topicID: Provider
-                        .of<TopicPageViewModel>(context, listen: false)
-                        .topicId
-                        .toString(),
-                    topicName: Provider
-                        .of<TopicPageViewModel>(context, listen: false)
-                        .topicName,
-                  );
-                  impulseBarViewModel.playImpulse();
+                    pageNumber: Provider.of<TopicPageViewModel>(context,
+                                listen: false)
+                            .pageNumber,
+                        topicID: Provider.of<TopicPageViewModel>(context,
+                                listen: false)
+                            .topicId
+                            .toString(),
+                        topicName: Provider.of<TopicPageViewModel>(context,
+                                listen: false)
+                            .topicName,
+                      );
+                  widget.onClose();
+                  impulseBarViewModel.stopAudio();
                 },
               ),
             ),
