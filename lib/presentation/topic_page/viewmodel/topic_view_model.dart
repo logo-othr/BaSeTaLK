@@ -23,6 +23,18 @@ class TopicViewModel extends ChangeNotifier {
   TopicViewModel(this.topic, this._toggleTopicFavorite,
       this._toogleTopicVisited, this._downloadTopicDataUseCase);
 
+  String getConversationDepthAssetPath() {
+    if (topic.conversationDepth != null) {
+      if (topic.conversationDepth == 1)
+        return 'assets/img/tiefenindikator1.png';
+      if (topic.conversationDepth == 2)
+        return 'assets/img/tiefenindikator2.png';
+      if (topic.conversationDepth == 3)
+        return 'assets/img/tiefenindikator3.png';
+    }
+    return "";
+  }
+
   void toggleFavorite() async {
     await _toggleTopicFavorite(topic);
     serviceLocator.get<StatisticLogger>().logEvent(

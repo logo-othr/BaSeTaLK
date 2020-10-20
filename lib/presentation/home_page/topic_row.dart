@@ -131,8 +131,23 @@ class _TopicRowState extends State<TopicRow> {
               onPressed: topicViewModel.topic.isDownloaded
                   ? null
                   : () async {
-                showDownloadDialog();
-              },
+                      showDownloadDialog();
+                    },
+            ),
+          ),
+          Container(
+            padding: new EdgeInsets.only(right: 40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Gesprächstiefe:"),
+                Image(
+                  image: AssetImage(
+                      topicViewModel.getConversationDepthAssetPath()),
+                  height: 40,
+                  width: 100,
+                )
+              ],
             ),
           ),
         ],

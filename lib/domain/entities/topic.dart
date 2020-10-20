@@ -15,6 +15,7 @@ class Topic {
   bool isDownloaded;
   bool isVisited;
   bool isFavorite;
+  int conversationDepth;
 
   Topic(
       this.id,
