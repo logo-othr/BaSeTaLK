@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/impulse.dart';
 import 'package:basetalk/domain/entities/information_content.dart';
@@ -31,9 +33,9 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
           pageContentDto.pageFeature == null
               ? null
               : new PageFeature(
-                  pageContentDto.pageFeature.id,
-                  pageContentDto.pageFeature.featureType,
-                  pageContentDto.pageFeature.featureFileName),
+              pageContentDto.pageFeature.id,
+              pageContentDto.pageFeature.featureType,
+              pageContentDto.pageFeature.featureFileName),
           impulses,
           new InformationContent(pageContentDto.informationContent.heading,
               pageContentDto.informationContent.content),
@@ -50,6 +52,10 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
         informationContent,
         pageContents,
         topicDto.thumbnail);
+    Random rnd = new Random();
+    int conversationDepth = 1 + rnd.nextInt(3);
+
+    topic.conversationDepth = conversationDepth;
     return topic;
   }
 
