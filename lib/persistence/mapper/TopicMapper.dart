@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/impulse.dart';
@@ -51,11 +50,8 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
         topicDto.frontPageImageName,
         informationContent,
         pageContents,
-        topicDto.thumbnail);
-    Random rnd = new Random();
-    int conversationDepth = 1 + rnd.nextInt(3);
-
-    topic.conversationDepth = conversationDepth;
+        topicDto.thumbnail,
+        topicDto.conversationDepth);
     return topic;
   }
 
@@ -97,7 +93,8 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
         topic.frontPageImageName,
         informationContentDTO,
         pageContentDTOs,
-        topic.thumbnail);
+        topic.thumbnail,
+        topic.conversationDepth);
     return topicDTO;
   }
 }
