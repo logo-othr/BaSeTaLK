@@ -9,8 +9,12 @@ import 'package:provider/provider.dart';
 class ImpulseBar extends StatefulWidget {
   final VoidCallback onClose;
   final double audioIconSize;
+  final double iconSize;
 
-  ImpulseBar({@required this.onClose, @required this.audioIconSize});
+  ImpulseBar(
+      {@required this.onClose,
+      @required this.audioIconSize,
+      @required this.iconSize});
 
   @override
   _ImpulseBarState createState() => _ImpulseBarState();
@@ -34,15 +38,18 @@ class _ImpulseBarState extends State<ImpulseBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Card(
-            elevation: 0,
-            color: primary_green,
-            child: IconButton(
-                icon: Icon(Icons.volume_up),
-                iconSize: 100,
-                onPressed: () {
-                  impulseBarViewModel.playImpulse();
-                }),
+          Container(
+            height: widget.iconSize + 30,
+            child: Card(
+              elevation: 0,
+              color: primary_green,
+              child: IconButton(
+                  icon: Icon(Icons.volume_up),
+                  iconSize: 100,
+                  onPressed: () {
+                    impulseBarViewModel.playImpulse();
+                  }),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 0, 40.0, 0),
@@ -85,6 +92,8 @@ class _ImpulseBarState extends State<ImpulseBar> {
             ),
           ),
           Container(
+            height: widget.iconSize + 30,
+            width: widget.iconSize + 30,
             child: Card(
               elevation: 0,
               margin: EdgeInsets.all(0),
@@ -94,21 +103,23 @@ class _ImpulseBarState extends State<ImpulseBar> {
               color: primary_green,
               child: IconButton(
                 icon: Icon(Icons.chat),
-                iconSize: widget.audioIconSize,
+                iconSize: widget.iconSize,
                 onPressed: () {
                   serviceLocator.get<StatisticLogger>().logEvent(
                     eventType: EventType.impulseBarAudio,
-                    pageNumber: Provider.of<TopicPageViewModel>(context,
-                                listen: false)
-                            .pageNumber,
-                        topicID: Provider.of<TopicPageViewModel>(context,
-                                listen: false)
-                            .topicId
-                            .toString(),
-                        topicName: Provider.of<TopicPageViewModel>(context,
-                                listen: false)
-                            .topicName,
-                      );
+                    pageNumber: Provider
+                        .of<TopicPageViewModel>(context,
+                        listen: false)
+                        .pageNumber,
+                    topicID: Provider
+                        .of<TopicPageViewModel>(context,
+                        listen: false)
+                        .topicId
+                        .toString(),
+                    topicName: Provider.of<TopicPageViewModel>(context,
+                        listen: false)
+                        .topicName,
+                  );
                   widget.onClose();
                   impulseBarViewModel.stopAudio();
                 },

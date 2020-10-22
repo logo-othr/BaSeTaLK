@@ -15,6 +15,7 @@ import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_mode
 import 'package:basetalk/presentation/topic_page/viewmodel/quiz_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -155,21 +156,27 @@ class _TopicPageState extends State<TopicPage> {
       child: ImpulseBar(
         onClose: topicPageViewModel.toggleImpulseBarVisible,
         audioIconSize: iconSize,
+        iconSize: iconSize,
       ),
     );
   }
 
   Widget showImpulseBarButton() {
     return Container(
-      child: Card(
-        elevation: 0,
-        margin: EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
-        color: primary_green,
-        child: IconButton(
-            icon: Icon(Icons.chat),
-            iconSize: iconSize,
-            onPressed: () => topicPageViewModel.toggleImpulseBarVisible()),
+      child: Container(
+        height: iconSize + 30,
+        width: iconSize + 30,
+        child: Card(
+          elevation: 0,
+          margin: EdgeInsets.all(0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
+          color: primary_green,
+          child: IconButton(
+              icon: Icon(Icons.chat),
+              iconSize: iconSize,
+              onPressed: () => topicPageViewModel.toggleImpulseBarVisible()),
+        ),
       ),
     );
   }
@@ -180,14 +187,22 @@ class _TopicPageState extends State<TopicPage> {
     if (pageFeature == null) return Container();
 
     return Container(
-      child: Card(
-        margin: EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
-        color: primary_green,
-        child: IconButton(
-            icon: Icon(Icons.card_giftcard),
-            iconSize: iconSize,
-            onPressed: () => topicPageViewModel.toggleFeatureVisible()),
+      child: Container(
+        height: iconSize + 30,
+        width: iconSize + 30,
+        child: Card(
+          margin: EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0)),
+          color: primary_green,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+            child: IconButton(
+                icon: Icon(CupertinoIcons.gift),
+                iconSize: iconSize,
+                onPressed: () => topicPageViewModel.toggleFeatureVisible()),
+          ),
+        ),
       ),
     );
   }
