@@ -114,8 +114,23 @@ class _TopicRowState extends State<TopicRow> {
               // onPressed: _toggleFavorite(),
               onPressed: () {
                 _toggleFavorite();
-               // Provider.of<TopicListViewModel>(context, listen: false).update();
+                // Provider.of<TopicListViewModel>(context, listen: false).update();
               },
+            ),
+          ),
+          Container(
+            padding: new EdgeInsets.only(right: 40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Gesprächstiefe:"),
+                Image(
+                  image: AssetImage(
+                      topicViewModel.getConversationDepthAssetPath()),
+                  height: 40,
+                  width: 100,
+                )
+              ],
             ),
           ),
           Container(
@@ -133,21 +148,6 @@ class _TopicRowState extends State<TopicRow> {
                   : () async {
                       showDownloadDialog();
                     },
-            ),
-          ),
-          Container(
-            padding: new EdgeInsets.only(right: 40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Gesprächstiefe:"),
-                Image(
-                  image: AssetImage(
-                      topicViewModel.getConversationDepthAssetPath()),
-                  height: 40,
-                  width: 100,
-                )
-              ],
             ),
           ),
         ],
