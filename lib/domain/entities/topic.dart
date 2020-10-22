@@ -26,6 +26,7 @@ class Topic {
       this.frontPageInformationContent,
       this.pageContents,
       this.thumbnail,
+      this.conversationDepth,
       {this.isDownloaded = false,
       this.isVisited = false,
       this.isFavorite = false});

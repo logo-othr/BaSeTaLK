@@ -14,6 +14,7 @@ class TopicDTO {
   InformationContentDTO frontPageInformationContent;
   List<PageContentDTO> pageContents;
   String thumbnail;
+  int conversationDepth;
 
   TopicDTO(
       this.id,
@@ -23,7 +24,8 @@ class TopicDTO {
       this.frontPageImageName,
       this.frontPageInformationContent,
       this.pageContents,
-      this.thumbnail);
+      this.thumbnail,
+      this.conversationDepth);
 
   factory TopicDTO.fromJson(Map<String, dynamic> json) =>
       _$TopicDTOFromJson(json);
