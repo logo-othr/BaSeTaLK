@@ -6,6 +6,7 @@ class RouteName {
   static const HOME = "/homePage";
   static const BLITZLICHT = "/blitzlichtPage";
   static const RATING = "/ratingPage";
+  static const SETTINGS = "/settingsPage";
   static const TOPIC = "/topicPage";
 }
 

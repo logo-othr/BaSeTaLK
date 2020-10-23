@@ -1,14 +1,20 @@
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/impulse_bar_view_model.dart';
+import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class ImpulseBar extends StatefulWidget {
   final VoidCallback onClose;
   final double audioIconSize;
+  final double iconSize;
 
-  ImpulseBar({@required this.onClose, @required this.audioIconSize});
+  ImpulseBar(
+      {@required this.onClose,
+      @required this.audioIconSize,
+      @required this.iconSize});
 
   @override
   _ImpulseBarState createState() => _ImpulseBarState();
@@ -16,6 +22,12 @@ class ImpulseBar extends StatefulWidget {
 
 class _ImpulseBarState extends State<ImpulseBar> {
   ImpulseBarViewModel impulseBarViewModel;
+
+  @override
+  void dispose() {
+    impulseBarViewModel.stopAudio();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +38,18 @@ class _ImpulseBarState extends State<ImpulseBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Card(
-            elevation: 0,
-            color: primary_green,
-            child: IconButton(
-                icon: Icon(Icons.close),
-                iconSize: 100,
-                onPressed: () => widget.onClose()),
+          Container(
+            height: widget.iconSize + 30,
+            child: Card(
+              elevation: 0,
+              color: primary_green,
+              child: IconButton(
+                  icon: Icon(Icons.volume_up),
+                  iconSize: 100,
+                  onPressed: () {
+                    impulseBarViewModel.playImpulse();
+                  }),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 0, 40.0, 0),
@@ -53,6 +70,20 @@ class _ImpulseBarState extends State<ImpulseBar> {
               color: Colors.black,
               onPressed: () {
                 impulseBarViewModel.incrementImpulseIndex();
+                impulseBarViewModel.stopAudio();
+                serviceLocator.get<StatisticLogger>().logEvent(
+                  eventType: EventType.impulseBarNext,
+                  pageNumber: Provider
+                      .of<TopicPageViewModel>(context, listen: false)
+                      .pageNumber,
+                  topicID: Provider
+                      .of<TopicPageViewModel>(context, listen: false)
+                      .topicId
+                      .toString(),
+                  topicName: Provider
+                      .of<TopicPageViewModel>(context, listen: false)
+                      .topicName,
+                );
               },
               child: Text(
                 'Weiter',
@@ -61,6 +92,8 @@ class _ImpulseBarState extends State<ImpulseBar> {
             ),
           ),
           Container(
+            height: widget.iconSize + 30,
+            width: widget.iconSize + 30,
             child: Card(
               elevation: 0,
               margin: EdgeInsets.all(0),
@@ -70,9 +103,25 @@ class _ImpulseBarState extends State<ImpulseBar> {
               color: primary_green,
               child: IconButton(
                 icon: Icon(Icons.chat),
-                iconSize: widget.audioIconSize,
+                iconSize: widget.iconSize,
                 onPressed: () {
-                  // Audio-Output
+                  serviceLocator.get<StatisticLogger>().logEvent(
+                    eventType: EventType.impulseBarAudio,
+                    pageNumber: Provider
+                        .of<TopicPageViewModel>(context,
+                        listen: false)
+                        .pageNumber,
+                    topicID: Provider
+                        .of<TopicPageViewModel>(context,
+                        listen: false)
+                        .topicId
+                        .toString(),
+                    topicName: Provider.of<TopicPageViewModel>(context,
+                        listen: false)
+                        .topicName,
+                  );
+                  widget.onClose();
+                  impulseBarViewModel.stopAudio();
                 },
               ),
             ),

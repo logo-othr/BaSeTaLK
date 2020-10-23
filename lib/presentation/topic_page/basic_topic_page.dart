@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/feature_type.dart';
 import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
@@ -11,6 +12,7 @@ import 'package:basetalk/presentation/topic_page/arrow_navigation.dart';
 import 'package:basetalk/presentation/topic_page/information_bar.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -54,6 +56,12 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
                     description: "Möchten Sie zur Bewertung des Themas gehen?",
                     buttonText: "Thema bewerten",
                     onActionPressed: () {
+                      serviceLocator.get<StatisticLogger>().logEvent(
+                            eventType: EventType.topicCloseToRating,
+                            pageNumber: pageNumber,
+                            topicID: topicViewModel.topic.id.toString(),
+                            topicName: topicViewModel.topic.name,
+                          );
                       Navigator.of(context).pop();
                       Navigator.pushReplacementNamed(context, RouteName.RATING,
                           arguments: topicViewModel.topic.id);

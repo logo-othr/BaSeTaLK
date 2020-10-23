@@ -1,3 +1,4 @@
+
 import 'package:basetalk/domain/entities/feature.dart';
 import 'package:basetalk/domain/entities/impulse.dart';
 import 'package:basetalk/domain/entities/information_content.dart';
@@ -31,9 +32,9 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
           pageContentDto.pageFeature == null
               ? null
               : new PageFeature(
-                  pageContentDto.pageFeature.id,
-                  pageContentDto.pageFeature.featureType,
-                  pageContentDto.pageFeature.featureFileName),
+              pageContentDto.pageFeature.id,
+              pageContentDto.pageFeature.featureType,
+              pageContentDto.pageFeature.featureFileName),
           impulses,
           new InformationContent(pageContentDto.informationContent.heading,
               pageContentDto.informationContent.content),
@@ -49,7 +50,8 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
         topicDto.frontPageImageName,
         informationContent,
         pageContents,
-        topicDto.thumbnail);
+        topicDto.thumbnail,
+        topicDto.conversationDepth);
     return topic;
   }
 
@@ -91,7 +93,8 @@ class TopicMapper implements IMapper<Topic, TopicDTO> {
         topic.frontPageImageName,
         informationContentDTO,
         pageContentDTOs,
-        topic.thumbnail);
+        topic.thumbnail,
+        topic.conversationDepth);
     return topicDTO;
   }
 }

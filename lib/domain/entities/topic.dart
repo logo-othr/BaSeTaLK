@@ -15,6 +15,7 @@ class Topic {
   bool isDownloaded;
   bool isVisited;
   bool isFavorite;
+  int conversationDepth;
 
   Topic(
       this.id,
@@ -25,6 +26,7 @@ class Topic {
       this.frontPageInformationContent,
       this.pageContents,
       this.thumbnail,
+      this.conversationDepth,
       {this.isDownloaded = false,
       this.isVisited = false,
       this.isFavorite = false});

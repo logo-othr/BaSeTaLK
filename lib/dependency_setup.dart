@@ -2,30 +2,37 @@ import 'dart:convert';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/domain/repositorys/i_media_repository.dart';
+import 'package:basetalk/domain/repositorys/i_quiz_repository.dart';
 import 'package:basetalk/domain/repositorys/i_topic_repository.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
 import 'package:basetalk/domain/usecases/get_list_of_all_topics_usecase.dart';
+import 'package:basetalk/domain/usecases/get_quiz_data_usecase.dart';
 import 'package:basetalk/domain/usecases/get_topic_thumbnails_usecase.dart';
 import 'package:basetalk/domain/usecases/sort_topic_list_to_fav_first.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';
 import 'package:basetalk/domain/usecases/topics_to_viewmodels_usecase.dart';
 import 'package:basetalk/persistence/mapper/TopicMapper.dart';
+import 'package:basetalk/persistence/mapper/quiz_mapper.dart';
+import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_quiz_dto_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_user_information_dto_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/media/media_local_repository_file.dart';
 import 'package:basetalk/persistence/repositorys/datasource/media/media_remote_repository_sftp.dart';
+import 'package:basetalk/persistence/repositorys/datasource/quiz_dto/quiz_dto_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/topic_dto/cached_topic_dto_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/topic_dto/topic_dto_local_repository_file.dart';
 import 'package:basetalk/persistence/repositorys/datasource/topic_dto/topic_dto_remote_repository_sftp.dart';
 import 'package:basetalk/persistence/repositorys/datasource/topic_userinformation/topic_user_information_dto_repository.dart';
 import 'package:basetalk/persistence/repositorys/media_repository.dart';
+import 'package:basetalk/persistence/repositorys/quiz_repository.dart';
 import 'package:basetalk/persistence/repositorys/topic_repository.dart';
 import 'package:basetalk/persistence/sftp_auth.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
 import 'package:ssh/ssh.dart';
@@ -107,6 +114,19 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(() => SortTopicListToFavFirstUseCase());
 
   serviceLocator.registerLazySingleton(() => NavigationService());
+
+  serviceLocator.registerLazySingleton<IQuizRepository>(
+    () => QuizRepository(),
+  );
+  serviceLocator.registerLazySingleton<IQuizDTORepository>(
+    () => QuizDTORepository(),
+  );
+  serviceLocator
+      .registerLazySingleton<GetQuizDataUsecase>(() => GetQuizDataUsecase());
+  serviceLocator.registerLazySingleton<QuizMapper>(() => QuizMapper());
+
+  serviceLocator
+      .registerLazySingleton<StatisticLogger>(() => StatisticLogger());
 }
 
 Future<SSHClient> setUpSFTP() async {

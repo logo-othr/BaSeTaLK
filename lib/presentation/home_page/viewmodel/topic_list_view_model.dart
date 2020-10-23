@@ -24,8 +24,7 @@ class TopicListViewModel extends ChangeNotifier {
 
   bool initialized = false;
 
-  TopicListViewModel(
-      this._getAllTopics,
+  TopicListViewModel(this._getAllTopics,
       this._sortTopicListToFavFirst,
       this._getTopicThumbnails,
       this._toggleTopicVisited,
@@ -33,32 +32,45 @@ class TopicListViewModel extends ChangeNotifier {
       this._topicsToViewModels,
       this._downloadTopicData);
 
-  Future<List<TopicViewModel>> init() async {
+  List<TopicViewModel> filteredTopicList = List();
+
+
+  Future<List<TopicViewModel>> init({@required bool requestRefresh}) async {
+    _filter = "";
     if (initialized) return filteredList();
-    List<Topic> topics = await _getAllTopics(null);
+    List<Topic> topics = await _getAllTopics(requestRefresh);
     var params = new TopicsToViewModelsUseCaseParams(
         topics, _toggleTopicFavorite, _toggleTopicVisited, _downloadTopicData);
     topicViewModels = _topicsToViewModels(params);
     topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
     await _getTopicThumbnails(topics);
-    notifyListeners();
     initialized = true;
+    filteredTopicList = topicViewModels;
+
+    notifyListeners();
     return filteredList();
   }
 
+
   List<TopicViewModel> filteredList() {
     // ToDo: Move functionality in a UseCase class
-    if (_filter == null || _filter.isEmpty) return topicViewModels;
-    List<String> filters = _filter.split(",");
-    List<TopicViewModel> filteredList = new List();
-    for (TopicViewModel topicViewModel in topicViewModels) {
-      for (String tag in filters) {
-        if (topicViewModel.topic.tags.contains(tag))
-          filteredList.add(topicViewModel);
-        break;
+    if (_filter == null || _filter.isEmpty) {
+      filteredTopicList = topicViewModels;
+    } else {
+      List<String> filters = _filter.split(",");
+      List<TopicViewModel> filteredList = new List();
+      for (TopicViewModel topicViewModel in topicViewModels) {
+        for (String tag in filters) {
+          if (topicViewModel.topic.tags.contains(tag))
+            filteredList.add(topicViewModel);
+          break;
+        }
       }
+      if (filteredList.isEmpty) filteredList = topicViewModels;
+      filteredTopicList = filteredList;
     }
-    return filteredList;
+    sort();
+    return filteredTopicList;
   }
 
   TopicViewModel getTopicViewModelById(int topicId) {
@@ -68,23 +80,18 @@ class TopicListViewModel extends ChangeNotifier {
     return result;
   }
 
-  void moveTopicToTop(Topic topic) {
-    TopicViewModel tempTopicViewModel;
-    for (TopicViewModel topicViewModel in topicViewModels)
-      if (topicViewModel.topic.id == topic.id)
-        tempTopicViewModel = topicViewModel;
-    topicViewModels.remove(tempTopicViewModel);
-    topicViewModels.insert(0, tempTopicViewModel);
+  void sort() {
+    filteredTopicList = _sortTopicListToFavFirst(filteredTopicList);
   }
 
-
-  void sort() async {
-    topicViewModels = await _sortTopicListToFavFirst(topicViewModels);
+  void update() {
+    filteredList();
     notifyListeners();
   }
 
   void setFilter(String value) {
     this._filter = value;
+    filteredList();
     notifyListeners();
   }
 }

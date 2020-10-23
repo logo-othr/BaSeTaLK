@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController editingController = TextEditingController();
-  TopicListViewModel topicListViewModel;
 
   Widget searchBar() {
     return TextField(
@@ -25,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
       minLines: 1,
       style: TextStyle(fontSize: 20.0, height: 1.0, color: Colors.black),
       onChanged: (value) {
-        topicListViewModel.setFilter(value);
+        Provider.of<TopicListViewModel>(context, listen: false)
+            .setFilter(value);
       },
       controller: editingController,
       decoration: InputDecoration(
@@ -52,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     _futureInitializedFilteredList =
-        Provider.of<TopicListViewModel>(context, listen: false).init();
+        Provider.of<TopicListViewModel>(context, listen: false)
+            .init(requestRefresh: false);
   }
 
   @override
@@ -100,14 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         AsyncSnapshot<List<TopicViewModel>>
                             filteredViewModels) {
                       if (filteredViewModels.hasData) {
+                        print("dummy");
                         return ListView.builder(
                           itemBuilder: (context, position) {
                             // ToDo: only use view model and return true/false
                             // in future builder
-                            var listViewModel =
-                                Provider.of<TopicListViewModel>(context);
                             var topicViewModel =
-                                listViewModel.topicViewModels[position];
+                                Provider.of<TopicListViewModel>(context)
+                                    .filteredTopicList[position];
                             var row =
                                 ChangeNotifierProvider<TopicViewModel>.value(
                               value: topicViewModel,
@@ -115,19 +116,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                             return row;
                           },
-                          itemCount: filteredViewModels.data.length,
+                          itemCount: Provider.of<TopicListViewModel>(context)
+                              .filteredTopicList
+                              .length,
                         );
                       } else {
                         return Center(
                             child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(),
-                            SizedBox(height: 50),
-                            Text("Themen werden geladen...")
-                          ],
-                        ));
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(height: 50),
+                                Text("Themen werden geladen...")
+                              ],
+                            ));
                       }
                     }),
               ),

@@ -7,6 +7,7 @@ import 'package:basetalk/presentation/home_page/viewmodel/topic_download_dialog_
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
+import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -111,7 +112,25 @@ class _TopicRowState extends State<TopicRow> {
                 size: 40,
               ),
               // onPressed: _toggleFavorite(),
-              onPressed: _toggleFavorite,
+              onPressed: () {
+                _toggleFavorite();
+                // Provider.of<TopicListViewModel>(context, listen: false).update();
+              },
+            ),
+          ),
+          Container(
+            padding: new EdgeInsets.only(right: 40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Gesprächstiefe:"),
+                Image(
+                  image: AssetImage(
+                      topicViewModel.getConversationDepthAssetPath()),
+                  height: 40,
+                  width: 100,
+                )
+              ],
             ),
           ),
           Container(
@@ -127,8 +146,8 @@ class _TopicRowState extends State<TopicRow> {
               onPressed: topicViewModel.topic.isDownloaded
                   ? null
                   : () async {
-                showDownloadDialog();
-              },
+                      showDownloadDialog();
+                    },
             ),
           ),
         ],
@@ -160,7 +179,10 @@ class _TopicRowState extends State<TopicRow> {
                   (await topicViewModel.getBackgroundImage(PageNumber.three))
                       .file),
               context);
-
+          serviceLocator.get<StatisticLogger>().logEvent(
+              eventType: EventType.topicOpen,
+              topicID: topicViewModel.topic.id.toString(),
+              topicName: topicViewModel.topic.name);
           Navigator.of(context).pushReplacementNamed(RouteName.BLITZLICHT,
               arguments: topicViewModel.topic.id);
         } else {
@@ -192,9 +214,8 @@ class _TopicRowState extends State<TopicRow> {
 
   void selectTopic(BuildContext context) {}
 
-  _toggleFavorite() {
-    topicViewModel.toggleFavorite();
-    topicListViewModel.sort();
+  _toggleFavorite() async {
+    await Provider.of<TopicViewModel>(context, listen: false).toggleFavorite();
   }
 
   _toggleVisited(bool newValue) {
