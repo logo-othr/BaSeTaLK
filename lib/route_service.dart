@@ -5,6 +5,8 @@ import 'package:basetalk/presentation/home_page/home_screen.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/presentation/rating_page/rating_page.dart';
+import 'package:basetalk/presentation/settings_page/view/settings_screen.dart';
+import 'package:basetalk/presentation/settings_page/viewmodel/settings_page_view_model.dart';
 import 'package:basetalk/presentation/topic_page/basic_topic_page.dart';
 import 'package:basetalk/presentation/topic_page/topic_front_page.dart';
 import 'package:basetalk/presentation/topic_page/topic_page.dart';
@@ -16,6 +18,18 @@ import 'package:provider/provider.dart';
 class RouteService {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case RouteName.SETTINGS:
+        return new _CustomRoute(
+            builder: (_) => new MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider<TopicListViewModel>.value(
+                      value: serviceLocator.get<TopicListViewModel>(),
+                    ),
+                    ChangeNotifierProvider<SettingsPageViewModel>(
+                        create: (_) => SettingsPageViewModel())
+                  ],
+                  child: SettingsScreen(),
+                ));
       case RouteName.BLITZLICHT:
         final int topicId = settings.arguments;
         return new _CustomRoute(
@@ -26,7 +40,6 @@ class RouteService {
                     .getTopicViewModelById(topicId)),
           ], child: BlitzLicht()),
         );
-
       case RouteName.TOPIC:
         final TopicPageParams params = settings.arguments;
         TopicViewModel topicViewModel = serviceLocator

@@ -52,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
   initState() {
     super.initState();
     _futureInitializedFilteredList =
-        Provider.of<TopicListViewModel>(context, listen: false).init();
+        Provider.of<TopicListViewModel>(context, listen: false)
+            .init(requestRefresh: false);
   }
 
   @override

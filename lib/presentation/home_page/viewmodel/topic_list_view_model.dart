@@ -24,8 +24,7 @@ class TopicListViewModel extends ChangeNotifier {
 
   bool initialized = false;
 
-  TopicListViewModel(
-      this._getAllTopics,
+  TopicListViewModel(this._getAllTopics,
       this._sortTopicListToFavFirst,
       this._getTopicThumbnails,
       this._toggleTopicVisited,
@@ -35,10 +34,11 @@ class TopicListViewModel extends ChangeNotifier {
 
   List<TopicViewModel> filteredTopicList = List();
 
-  Future<List<TopicViewModel>> init() async {
+
+  Future<List<TopicViewModel>> init({@required bool requestRefresh}) async {
     _filter = "";
     if (initialized) return filteredList();
-    List<Topic> topics = await _getAllTopics(null);
+    List<Topic> topics = await _getAllTopics(requestRefresh);
     var params = new TopicsToViewModelsUseCaseParams(
         topics, _toggleTopicFavorite, _toggleTopicVisited, _downloadTopicData);
     topicViewModels = _topicsToViewModels(params);

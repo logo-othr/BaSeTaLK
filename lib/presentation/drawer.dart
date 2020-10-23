@@ -25,9 +25,13 @@ class MainDrawer extends StatelessWidget {
         buildListTile("Startseite", Icons.home, () {
           Navigator.of(context).pushReplacementNamed(RouteName.HOME);
         }),
+        buildListTile("Einstellungen", Icons.settings, () {
+          Navigator.of(context).pushReplacementNamed(RouteName.SETTINGS);
+        }),
         AboutListTile(
           applicationName: "BaSeTaLK",
-          applicationLegalese: "Hier können Sie die Lizenzen der genutzten Open Source Bibliotheken einsehen.",
+          applicationLegalese:
+              "Hier können Sie die Lizenzen der genutzten Open Source Bibliotheken einsehen.",
           icon: Icon(
             Icons.info,
           ),
