@@ -26,11 +26,11 @@ class TopicViewModel extends ChangeNotifier {
   String getConversationDepthAssetPath() {
     if (topic.conversationDepth != null) {
       if (topic.conversationDepth == 1)
-        return 'assets/img/tiefenindikator1.png';
+        return 'assets/img/conversation_depth_1.png';
       if (topic.conversationDepth == 2)
-        return 'assets/img/tiefenindikator2.png';
+        return 'assets/img/conversation_depth_2.png';
       if (topic.conversationDepth == 3)
-        return 'assets/img/tiefenindikator3.png';
+        return 'assets/img/conversation_depth_3.png';
     }
     return "";
   }
