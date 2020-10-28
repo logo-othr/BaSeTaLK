@@ -91,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Spacer(),
-                    Spacer(),
                   ],
                 ),
               ),
@@ -102,11 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         AsyncSnapshot<List<TopicViewModel>>
                             filteredViewModels) {
                       if (filteredViewModels.hasData) {
-                        print("dummy");
                         return ListView.builder(
                           itemBuilder: (context, position) {
-                            // ToDo: only use view model and return true/false
-                            // in future builder
                             var topicViewModel =
                                 Provider.of<TopicListViewModel>(context)
                                     .filteredTopicList[position];
