@@ -15,21 +15,20 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   SettingsPageViewModel settingsPageViewModel;
 
-  static final String path = "lib/src/pages/settings/settings3.dart";
   final TextStyle headerStyle = TextStyle(
-    color: Colors.grey.shade800,
+    color: Colors.grey.shade700,
     fontWeight: FontWeight.bold,
-    fontSize: 20.0,
+    fontSize: 18.0,
   );
 
-  Container _buildDivider() {
+  Container _dividerLine() {
     return Container(
       margin: const EdgeInsets.symmetric(
-        horizontal: 8.0,
+        horizontal: 10.0,
       ),
       width: double.infinity,
       height: 1.0,
-      color: Colors.grey.shade300,
+      color: Colors.grey.shade400,
     );
   }
 
@@ -89,7 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           }
                         },
                       ),
-                      _buildDivider(),
+                      _dividerLine(),
                       SwitchListTile(
                         value: Provider.of<TopicListViewModel>(context)
                             .isShowFavIconSet,
@@ -99,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 listen: false)
                             .isShowFavIconSet = val,
                       ),
-                      _buildDivider(),
+                      _dividerLine(),
                       SwitchListTile(
                         value: Provider.of<TopicListViewModel>(context)
                             .isShowVisitedIconSet,
@@ -109,7 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 listen: false)
                             .isShowVisitedIconSet = val,
                       ),
-                      _buildDivider(),
+                      _dividerLine(),
                       SwitchListTile(
                         value: Provider.of<TopicListViewModel>(context)
                             .isShowDownloadIconSet,
@@ -119,7 +118,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 listen: false)
                             .isShowDownloadIconSet = val,
                       ),
-                      _buildDivider(),
+                      _dividerLine(),
                     ],
                   ),
                 ),
