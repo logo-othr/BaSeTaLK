@@ -24,7 +24,41 @@ class TopicListViewModel extends ChangeNotifier {
 
   bool initialized = false;
 
-  TopicListViewModel(this._getAllTopics,
+  bool _showFavIcon = true;
+
+  bool get isShowFavIconSet {
+    return _showFavIcon;
+  }
+
+  set isShowFavIconSet(bool value) {
+    _showFavIcon = value;
+    notifyListeners();
+  }
+
+  bool _showVisitedIcon = true;
+
+  bool get isShowVisitedIconSet {
+    return _showVisitedIcon;
+  }
+
+  set isShowVisitedIconSet(bool value) {
+    _showVisitedIcon = value;
+    notifyListeners();
+  }
+
+  bool _showDownloadIcon = true;
+
+  bool get isShowDownloadIconSet {
+    return _showDownloadIcon;
+  }
+
+  set isShowDownloadIconSet(bool value) {
+    _showDownloadIcon = value;
+    notifyListeners();
+  }
+
+  TopicListViewModel(
+      this._getAllTopics,
       this._sortTopicListToFavFirst,
       this._getTopicThumbnails,
       this._toggleTopicVisited,
@@ -33,7 +67,6 @@ class TopicListViewModel extends ChangeNotifier {
       this._downloadTopicData);
 
   List<TopicViewModel> filteredTopicList = List();
-
 
   Future<List<TopicViewModel>> init({@required bool requestRefresh}) async {
     _filter = "";
