@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController editingController = TextEditingController();
 
   Widget searchBar() {
-    return TextField(
+  /*  return TextField(
       maxLines: 1,
       minLines: 1,
       style: TextStyle(fontSize: 20.0, height: 1.0, color: Colors.black),
@@ -43,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
+    );*/
+    return Container();
   }
 
   Future<List<TopicViewModel>> _futureInitializedFilteredList;
