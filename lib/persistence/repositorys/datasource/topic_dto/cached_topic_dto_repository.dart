@@ -1,3 +1,4 @@
+import 'package:basetalk/domain/exceptions/topic_parse_exception.dart';
 import 'package:basetalk/persistence/dto/topic_dto.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
@@ -11,15 +12,22 @@ class CachedTopicDTORepository implements ITopicDTORepository {
   @override
   Future<List<TopicDTO>> getAllTopicDTOs({requestRefresh = false}) async {
     List<TopicDTO> topicDTOs = new List();
-    if (requestRefresh == true) {
-      topicDTOs = await remoteRepository.getAllTopicDTOs();
-    } else {
-      List<TopicDTO> inCacheTopicDtos = await cacheRepository.getAllTopicDTOs();
-      if (inCacheTopicDtos == null || inCacheTopicDtos.isEmpty) {
+    try {
+      if (requestRefresh == true) {
         topicDTOs = await remoteRepository.getAllTopicDTOs();
       } else {
-        topicDTOs = inCacheTopicDtos;
+        List<TopicDTO> inCacheTopicDtos = List<TopicDTO>();
+
+        inCacheTopicDtos = await cacheRepository.getAllTopicDTOs();
+
+        if (inCacheTopicDtos == null || inCacheTopicDtos.isEmpty) {
+          topicDTOs = await remoteRepository.getAllTopicDTOs();
+        } else {
+          topicDTOs = inCacheTopicDtos;
+        }
       }
+    } on TopicParseException catch (e) {
+      print(e.toString());
     }
     return topicDTOs;
   }

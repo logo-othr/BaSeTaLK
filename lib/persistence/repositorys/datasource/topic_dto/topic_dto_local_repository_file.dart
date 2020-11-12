@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:basetalk/domain/exceptions/topic_parse_exception.dart';
 import 'package:basetalk/persistence/dto/topic_dto.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
@@ -20,9 +21,13 @@ class TopicDTOLocalFileRepository implements ITopicDTOCacheRepository {
     if (!await file.exists()) return null;
     String jsonString = await file.readAsString();
 
-    List<TopicDTO> topicDtos = (jsonDecode(jsonString) as List)
-        .map((i) => TopicDTO.fromJson(i))
-        .toList();
+    List<TopicDTO> topicDtos = (jsonDecode(jsonString) as List).map((i) {
+      try {
+        return TopicDTO.fromJson(i);
+      } on TypeError catch (e) {
+        throw TopicParseException(e.toString(), i.toString());
+      }
+    }).toList();
     return topicDtos;
   }
 

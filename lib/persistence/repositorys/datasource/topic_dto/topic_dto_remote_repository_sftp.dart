@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:basetalk/domain/exceptions/topic_parse_exception.dart';
 import 'package:basetalk/persistence/dto/topic_dto.dart';
 import 'package:basetalk/persistence/helper/sftp_helper.dart';
 import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
@@ -18,8 +19,8 @@ class TopicDTORemoteSFTPRepository implements ITopicDTORepository {
   @override
   Future<List<TopicDTO>> getAllTopicDTOs({requestRefresh = false}) async {
     try {
-      await downloadFromSFTP(["topics.json"], _remotePath,
-          _topicPathProvider.appCacheRootPath,
+      await downloadFromSFTP(
+          ["topics.json"], _remotePath, _topicPathProvider.appCacheRootPath,
           callback: null);
     } on Exception catch (e) {
       print("SFTP ERROR: " + e.toString());
@@ -30,9 +31,13 @@ class TopicDTORemoteSFTPRepository implements ITopicDTORepository {
     if (!await file.exists()) return null;
     String jsonString = await file.readAsString();
 
-    List<TopicDTO> topicDtos = (jsonDecode(jsonString) as List)
-        .map((i) => TopicDTO.fromJson(i))
-        .toList();
+    List<TopicDTO> topicDtos = (jsonDecode(jsonString) as List).map((i) {
+      try {
+        return TopicDTO.fromJson(i);
+      } on TypeError catch (e) {
+        throw TopicParseException(e.toString(), i.toString());
+      }
+    }).toList();
     return topicDtos;
   }
 

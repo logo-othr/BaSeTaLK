@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController editingController = TextEditingController();
 
   Widget searchBar() {
-  /*  return TextField(
+    /*  return TextField(
       maxLines: 1,
       minLines: 1,
       style: TextStyle(fontSize: 20.0, height: 1.0, color: Colors.black),
@@ -101,6 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         AsyncSnapshot<List<TopicViewModel>>
                             filteredViewModels) {
                       if (filteredViewModels.hasData) {
+                        if (Provider.of<TopicListViewModel>(context)
+                            .filteredTopicList
+                            .isEmpty) {
+                          return Text(
+                            "Beim laden der Themen ist ein Fehler aufgetreten.",
+                            style: TextStyle(fontSize: 20),
+                          );
+                        }
                         return ListView.builder(
                           itemBuilder: (context, position) {
                             var topicViewModel =
