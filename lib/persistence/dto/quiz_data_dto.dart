@@ -7,8 +7,7 @@ part 'quiz_data_dto.g.dart';
 class QuizDataDTO {
   List<QuizQuestionDTO> questions;
 
-  // ToDo: add id generation to bt_topic_converter
-  final id = 0;
+  String id;
 
   QuizDataDTO(this.questions);
 

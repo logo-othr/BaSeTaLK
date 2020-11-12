@@ -4,7 +4,7 @@ part 'page_impulse_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class PageImpulseDTO {
-  int id;
+  String id;
   String text;
   String audio;
 

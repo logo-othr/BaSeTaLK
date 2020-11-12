@@ -5,7 +5,7 @@ part 'page_feature_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class PageFeatureDTO {
-  int id;
+  String id;
   FeatureType featureType;
   List<String> featureFileName;
 

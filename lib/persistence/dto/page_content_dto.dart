@@ -9,7 +9,7 @@ part 'page_content_dto.g.dart';
 
 @JsonSerializable()
 class PageContentDTO {
-  int id;
+  String id;
   int topicId;
   PageNumber pageNumber;
   PageFeatureDTO pageFeature;

@@ -4,7 +4,7 @@ part 'quiz_answer_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class QuizAnswerDTO {
-  int id;
+  String id;
   String answer;
 
   QuizAnswerDTO(this.id, this.answer);

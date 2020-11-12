@@ -4,7 +4,7 @@ import 'package:basetalk/domain/entities/information_content.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 
 class PageContent {
-  int id;
+  String id;
   int topicId;
   PageNumber pageNumber;
   PageFeature pageFeature;

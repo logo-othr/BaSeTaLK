@@ -8,7 +8,7 @@ class QuizQuestionDTO {
   final String question;
   List<QuizAnswerDTO> answers;
   int correctAnswerIndex;
-  int id;
+  String id;
 
   QuizQuestionDTO(
       this.question, this.answers, this.correctAnswerIndex, this.id);

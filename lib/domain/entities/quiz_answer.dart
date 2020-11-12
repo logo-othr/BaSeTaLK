@@ -1,5 +1,5 @@
 class QuizAnswer {
-  int id;
+  String id;
   String answer;
 
   QuizAnswer(this.id, this.answer);
