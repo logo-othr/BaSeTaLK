@@ -36,7 +36,7 @@ class MediaRemoteSFTPRepository implements IMediaRepository {
     for (var filename in filenames) {
       File mediaFile = topicPathProvider.getTopicMediaFile(filename);
       if (!await mediaFile.exists())
-        throw ("Error while downloading the file $filename");
+        print("Error while downloading the file $filename");
       mediaFiles.add(new Media(mediaFile));
     }
     return mediaFiles;
