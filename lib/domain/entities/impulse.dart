@@ -1,5 +1,5 @@
 class Impulse {
-  int id;
+  String id;
   String text;
   String audioFileName;
 

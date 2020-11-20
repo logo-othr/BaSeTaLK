@@ -17,8 +17,14 @@ class QuizMapper implements IMapper<QuizData, QuizDataDTO> {
       for (QuizAnswerDTO quizAnswerDTO in questionDTO.answers) {
         answers.add(QuizAnswer(quizAnswerDTO.id, quizAnswerDTO.answer));
       }
-      QuizQuestion quizQuestion = QuizQuestion(questionDTO.question, answers,
-          answers[questionDTO.correctAnswerIndex], questionDTO.id);
+
+      QuizAnswer correctAnswer;
+      for (QuizAnswer answer in answers) {
+        if (answer.id == questionDTO.correctAnswerId) correctAnswer = answer;
+      }
+
+      QuizQuestion quizQuestion = QuizQuestion(
+          questionDTO.question, answers, correctAnswer, questionDTO.id);
       questions.add(quizQuestion);
     }
 

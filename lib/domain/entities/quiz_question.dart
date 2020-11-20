@@ -4,7 +4,7 @@ class QuizQuestion {
   final String question;
   List<QuizAnswer> answers;
   QuizAnswer correctAnswer;
-  int id;
+  String id;
 
   QuizQuestion(this.question, this.answers, this.correctAnswer, this.id);
 }

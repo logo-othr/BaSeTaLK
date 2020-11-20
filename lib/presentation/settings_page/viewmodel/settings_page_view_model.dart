@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class SettingsPageViewModel extends ChangeNotifier {
-  String topicReloadIndicator = "";
+  String topicReloadIndicator = "Themenliste neu laden";
   bool topicsCurrentlyReloading = false;
 
   void setTopicReloadIndicator(String topicReloadIndicator) {

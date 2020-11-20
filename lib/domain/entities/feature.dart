@@ -1,7 +1,7 @@
 import 'package:basetalk/domain/entities/feature_type.dart';
 
 class PageFeature {
-  final int id;
+  final String id;
   final FeatureType type;
   final List<String> filename;
 

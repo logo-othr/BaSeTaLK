@@ -7,11 +7,10 @@ part 'quiz_question_dto.g.dart';
 class QuizQuestionDTO {
   final String question;
   List<QuizAnswerDTO> answers;
-  int correctAnswerIndex;
-  int id;
+  String correctAnswerId;
+  String id;
 
-  QuizQuestionDTO(
-      this.question, this.answers, this.correctAnswerIndex, this.id);
+  QuizQuestionDTO(this.question, this.answers, this.correctAnswerId, this.id);
 
   factory QuizQuestionDTO.fromJson(Map<String, dynamic> json) =>
       _$QuizQuestionDTOFromJson(json);

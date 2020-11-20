@@ -55,9 +55,10 @@ class _TopicRowState extends State<TopicRow> {
           )),
     );
     Widget createTags() {
-      List<Widget> v = [];
+      /*List<Widget> v = [];
       for (String tag in topicViewModel.topic.tags) v.add(Text("#$tag "));
-      return Row(children: v);
+      return Row(children: v);*/
+      return Container();
     }
 
     final middleSection = new Container(
@@ -88,36 +89,39 @@ class _TopicRowState extends State<TopicRow> {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.black),
-            child: Container(
-              padding: new EdgeInsets.only(right: 40.0, top: 10),
-              child: Transform.scale(
-                scale: 1.6,
-                child: Checkbox(
-                  value: topicViewModel.topic.isVisited,
-                  onChanged: _toggleVisited,
-                  activeColor: primary_green,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            padding: new EdgeInsets.only(right: 40.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.favorite,
-                color:
-                    topicViewModel.topic.isFavorite ? Colors.red : Colors.black,
-                size: 40,
-              ),
-              // onPressed: _toggleFavorite(),
-              onPressed: () {
-                _toggleFavorite();
-                // Provider.of<TopicListViewModel>(context, listen: false).update();
-              },
-            ),
-          ),
+          topicListViewModel.isShowVisitedIconSet
+              ? Theme(
+                  data: ThemeData(unselectedWidgetColor: Colors.black),
+                  child: Container(
+                    padding: new EdgeInsets.only(right: 40.0, top: 10),
+                    child: Transform.scale(
+                      scale: 1.6,
+                      child: Checkbox(
+                        value: topicViewModel.topic.isVisited,
+                        onChanged: _toggleVisited,
+                        activeColor: primary_green,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
+          topicListViewModel.isShowFavIconSet
+              ? Container(
+                  padding: new EdgeInsets.only(right: 40.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      color: topicViewModel.topic.isFavorite
+                          ? Colors.red
+                          : Colors.black,
+                      size: 40,
+                    ),
+                    onPressed: () {
+                      _toggleFavorite();
+                    },
+                  ),
+                )
+              : Container(),
           Container(
             padding: new EdgeInsets.only(right: 40.0),
             child: Column(
@@ -133,7 +137,7 @@ class _TopicRowState extends State<TopicRow> {
               ],
             ),
           ),
-          Container(
+          topicListViewModel.isShowDownloadIconSet ? Container(
             padding: new EdgeInsets.only(right: 40.0),
             child: IconButton(
               icon: Icon(
@@ -146,10 +150,10 @@ class _TopicRowState extends State<TopicRow> {
               onPressed: topicViewModel.topic.isDownloaded
                   ? null
                   : () async {
-                      showDownloadDialog();
-                    },
+                showDownloadDialog();
+              },
             ),
-          ),
+          ) : Container()
         ],
       ),
     );
@@ -157,8 +161,6 @@ class _TopicRowState extends State<TopicRow> {
     return GestureDetector(
       onTap: () async {
         if (topicViewModel.topic.isDownloaded) {
-          // ToDo: use numbers instead of PageNumber and delete PageNumber class?
-          //  List<Media> backgroundImages = await topicViewModel.getBackgroundImages();
           precacheImage(
               FileImage(
                   (await topicViewModel.getBackgroundImage(PageNumber.zero))
