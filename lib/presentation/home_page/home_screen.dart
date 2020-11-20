@@ -1,4 +1,5 @@
 import 'package:basetalk/presentation/drawer.dart';
+import 'package:basetalk/presentation/home_page/search_result_box.dart';
 import 'package:basetalk/presentation/home_page/topic_row.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
 import 'package:basetalk/presentation/main_appbar.dart';
@@ -16,19 +17,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController editingController = TextEditingController();
+  TextEditingController editingController;
 
   Widget searchBar() {
-    /*  return TextField(
+    return TextField(
       maxLines: 1,
       minLines: 1,
       style: TextStyle(fontSize: 20.0, height: 1.0, color: Colors.black),
       onChanged: (value) {
         Provider.of<TopicListViewModel>(context, listen: false)
-            .setFilter(value);
+            .getResults(value);
       },
       controller: editingController,
       decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: () {
+            editingController.clear();
+            Provider.of<TopicListViewModel>(context, listen: false)
+                .clearSearch();
+            FocusScope.of(context).unfocus();
+          },
+          icon: Icon(Icons.clear),
+        ),
         contentPadding: EdgeInsets.symmetric(horizontal: 0),
         filled: true,
         fillColor: Colors.white,
@@ -43,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );*/
+    );
     return Container();
   }
 
@@ -59,6 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    editingController =
+        Provider.of<TopicListViewModel>(context).editingController;
     return new Scaffold(
       drawer: MainDrawer(),
       appBar: MainAppBar(title: widget._screenTitle),
@@ -78,67 +90,86 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.black))
                   ]),
               SizedBox(height: 40),
-              Container(
-                decoration: BoxDecoration(color: const Color(0xFFF5F5F5)),
-                child: Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: searchBar(),
-                        ),
-                      ),
+              Expanded(
+                child: Stack(
+                  children: [
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
+                      child: FutureBuilder(
+                          future: _futureInitializedFilteredList,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<TopicViewModel>>
+                              filteredViewModels) {
+                            if (filteredViewModels.hasData) {
+                              if (Provider
+                                  .of<TopicListViewModel>(context)
+                                  .filteredTopicList
+                                  .isEmpty) {
+                                return Text(
+                                  "Beim laden der Themen ist ein Fehler aufgetreten.",
+                                  style: TextStyle(fontSize: 20),
+                                );
+                              }
+                              return ListView.builder(
+                                itemBuilder: (context, position) {
+                                  var topicViewModel =
+                                  Provider
+                                      .of<TopicListViewModel>(context)
+                                      .filteredTopicList[position];
+                                  var row = ChangeNotifierProvider<
+                                      TopicViewModel>.value(
+                                    value: topicViewModel,
+                                    child: TopicRow(),
+                                  );
+                                  return row;
+                                },
+                                itemCount:
+                                Provider
+                                    .of<TopicListViewModel>(context)
+                                    .filteredTopicList
+                                    .length,
+                              );
+                            } else {
+                              return Center(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(),
+                                      SizedBox(height: 50),
+                                      Text("Themen werden geladen...")
+                                    ],
+                                  ));
+                            }
+                          }),
                     ),
-                    Spacer(),
+                    Row(
+                      children: <Widget>[
+                        Flexible(
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  searchBar(),
+                                  Provider
+                                      .of<TopicListViewModel>(context)
+                                      .isSearchResultBoxVisible
+                                      ? SearchResultBox()
+                                      : Container(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: FutureBuilder(
-                    future: _futureInitializedFilteredList,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<TopicViewModel>>
-                            filteredViewModels) {
-                      if (filteredViewModels.hasData) {
-                        if (Provider.of<TopicListViewModel>(context)
-                            .filteredTopicList
-                            .isEmpty) {
-                          return Text(
-                            "Beim laden der Themen ist ein Fehler aufgetreten.",
-                            style: TextStyle(fontSize: 20),
-                          );
-                        }
-                        return ListView.builder(
-                          itemBuilder: (context, position) {
-                            var topicViewModel =
-                                Provider.of<TopicListViewModel>(context)
-                                    .filteredTopicList[position];
-                            var row =
-                                ChangeNotifierProvider<TopicViewModel>.value(
-                              value: topicViewModel,
-                              child: TopicRow(),
-                            );
-                            return row;
-                          },
-                          itemCount: Provider.of<TopicListViewModel>(context)
-                              .filteredTopicList
-                              .length,
-                        );
-                      } else {
-                        return Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircularProgressIndicator(),
-                                SizedBox(height: 50),
-                                Text("Themen werden geladen...")
-                              ],
-                            ));
-                      }
-                    }),
-              ),
+              )
             ],
           ),
         ),
