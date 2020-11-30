@@ -36,11 +36,12 @@ class _InformationBarState extends State<InformationBar> {
                   children: [
                     Text(
                       widget.title,
-                      style: TextStyle(fontSize: 70),
+                      style: TextStyle(fontSize: 40),
                     ),
+                    SizedBox(height: 30),
                     Text(
                       widget.description,
-                      style: TextStyle(fontSize: 32),
+                      style: TextStyle(fontSize: 30),
                     )
                   ],
                 ),
