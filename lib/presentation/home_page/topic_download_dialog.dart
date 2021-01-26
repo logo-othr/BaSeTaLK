@@ -37,9 +37,10 @@ class _TopicDownloadDialogState extends State<TopicDownloadDialog> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(15.0),
-                  child: Text(viewmodel.isLoadingState
-                      ? "Thema wird herruntergeladen. Bitte warten.."
-                      : 'Möchten Sie dieses Thema herrunterladen?',
+                  child: Text(
+                    viewmodel.isLoadingState
+                        ? "Thema wird heruntergeladen. Bitte warten.."
+                        : 'Möchten Sie dieses Thema herunterladen?',
                     style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
                 ),
@@ -64,7 +65,7 @@ class _TopicDownloadDialogState extends State<TopicDownloadDialog> {
                     });
                   },
                   child: Text(
-                    'Herrunterladen',
+                    'Herunterladen',
                     style: TextStyle(color: primary_green, fontSize: 18.0),
                   ),
                 )

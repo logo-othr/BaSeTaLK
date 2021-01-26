@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-    return Container();
   }
 
   Future<List<TopicViewModel>> _futureInitializedFilteredList;
@@ -153,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  searchBar(),
+                                  //searchBar(),
                                   Provider
                                       .of<TopicListViewModel>(context)
                                       .isSearchResultBoxVisible
