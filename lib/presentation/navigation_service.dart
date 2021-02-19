@@ -8,6 +8,7 @@ class RouteName {
   static const RATING = "/ratingPage";
   static const SETTINGS = "/settingsPage";
   static const TOPIC = "/topicPage";
+  static const LEGAL = "/legalInfoPage";
 }
 
 class NavigationService {
