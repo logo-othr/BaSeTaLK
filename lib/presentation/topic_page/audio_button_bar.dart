@@ -39,13 +39,25 @@ class _AudioButtonBarState extends State<AudioButtonBar>
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         audioButton(
-          icon: Icon(
-            Icons.play_arrow,
-            size: widget.audioButtonSize,
-          ),
+          icon: Provider.of<AudioButtonBarViewModel>(context, listen: false)
+                  .isAudioPlayerPlaying
+              ? Icon(
+                  Icons.pause,
+                  size: widget.audioButtonSize,
+                )
+              : Icon(
+                  Icons.play_arrow,
+                  size: widget.audioButtonSize,
+                ),
           onPressed: () {
-            Provider.of<AudioButtonBarViewModel>(context, listen: false)
-                .playAudio();
+            AudioButtonBarViewModel audioButtonBarViewModel =
+                Provider.of<AudioButtonBarViewModel>(context, listen: false);
+            if (audioButtonBarViewModel.isAudioPlayerPlaying)
+              audioButtonBarViewModel.pauseAudio();
+            else
+              audioButtonBarViewModel.playAudio();
+
+            ;
           },
         ),
         audioButton(
