@@ -62,7 +62,7 @@ class _AudioButtonBarState extends State<AudioButtonBar>
         ),
         audioButton(
             icon: Icon(
-              Icons.pause,
+              Icons.stop,
               size: widget.audioButtonSize,
             ),
             onPressed: () =>
