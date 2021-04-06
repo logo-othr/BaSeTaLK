@@ -29,6 +29,8 @@ class PrivacyPage extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 25),
                       ),
                     ),
+                    Text(
+                        "Die Nutzung der BaSeTaLK-App ist ohne die Angabe von persönlichen Daten möglich. In der App werden keine Tracking-Dienste eingesetzt. Beim Download von Themen werden die Daten eines Themas von einem Server heruntergeladen. Bei diesem Vorgang wird protokollbedingt die IP-Adresse an den Server übertragen und kann dort in Logfiles gespeichert werden. ")
                   ],
                 ),
               ),
