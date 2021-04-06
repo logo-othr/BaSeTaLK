@@ -9,6 +9,7 @@ class RouteName {
   static const SETTINGS = "/settingsPage";
   static const TOPIC = "/topicPage";
   static const LEGAL = "/legalInfoPage";
+  static const PRIVACY = "/privacyPage";
 }
 
 class NavigationService {

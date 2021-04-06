@@ -31,6 +31,9 @@ class MainDrawer extends StatelessWidget {
         buildListTile("Impressum", Icons.info, () {
           Navigator.of(context).pushReplacementNamed(RouteName.LEGAL);
         }),
+        buildListTile("Datenschutz", Icons.info, () {
+          Navigator.of(context).pushReplacementNamed(RouteName.PRIVACY);
+        }),
         AboutListTile(
           applicationName: "BaSeTaLK",
           applicationLegalese:
