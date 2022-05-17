@@ -38,7 +38,7 @@ class _RatingPageState extends State<RatingPage> {
               SizedBox(
                 height: 100,
               ),
-              RatingBar(
+              RatingBar.builder(
                 initialRating: 0,
                 minRating: 0,
                 direction: Axis.horizontal,
@@ -48,8 +48,8 @@ class _RatingPageState extends State<RatingPage> {
                 itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
-                      color: Colors.amber,
-                    ),
+                  color: Colors.amber,
+                ),
                 onRatingUpdate: (rating) {
                   print(rating);
                   setState(() {

@@ -3,7 +3,9 @@ import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/presentation/blitzlicht_page/blitzlicht_page.dart';
 import 'package:basetalk/presentation/home_page/home_screen.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_list_view_model.dart';
+import 'package:basetalk/presentation/legal_info_page/view/legal_info_page.dart';
 import 'package:basetalk/presentation/navigation_service.dart';
+import 'package:basetalk/presentation/privacy_page/privacy_page.dart';
 import 'package:basetalk/presentation/rating_page/rating_page.dart';
 import 'package:basetalk/presentation/settings_page/view/settings_screen.dart';
 import 'package:basetalk/presentation/settings_page/viewmodel/settings_page_view_model.dart';
@@ -40,6 +42,16 @@ class RouteService {
                     .getTopicViewModelById(topicId)),
           ], child: BlitzLicht()),
         );
+      case RouteName.LEGAL:
+        return new _CustomRoute(
+          builder: (_) => LegalInfoPage(),
+        );
+        break;
+      case RouteName.PRIVACY:
+        return new _CustomRoute(
+          builder: (_) => PrivacyPage(),
+        );
+        break;
       case RouteName.TOPIC:
         final TopicPageParams params = settings.arguments;
         TopicViewModel topicViewModel = serviceLocator

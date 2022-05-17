@@ -18,6 +18,8 @@ class TopicListViewModel extends ChangeNotifier {
   final TopicsToViewModelsUseCase _topicsToViewModels;
   final DownloadTopicDataUseCase _downloadTopicData;
 
+  TextEditingController editingController = TextEditingController();
+
   String _filter;
 
   List<TopicViewModel> topicViewModels = new List();
@@ -29,6 +31,8 @@ class TopicListViewModel extends ChangeNotifier {
   bool get isShowFavIconSet {
     return _showFavIcon;
   }
+
+  List<String> results = List();
 
   set isShowFavIconSet(bool value) {
     _showFavIcon = value;
@@ -123,8 +127,36 @@ class TopicListViewModel extends ChangeNotifier {
   }
 
   void setFilter(String value) {
+    this.isSearchResultBoxVisible = false;
     this._filter = value;
     filteredList();
+    notifyListeners();
+  }
+
+  bool isSearchResultBoxVisible = false;
+
+  void getResults(String value) {
+    if (value.isNotEmpty) {
+      List<String> tagResults = List();
+      for (TopicViewModel topicViewModel in topicViewModels) {
+        for (String tag in topicViewModel.topic.tags) {
+          if (tag.startsWith(value) && !tagResults.contains(tag))
+            tagResults.add(tag);
+        }
+      }
+
+      this.results = tagResults;
+    } else {
+      this.results.clear();
+    }
+    isSearchResultBoxVisible = (results.length > 0);
+    notifyListeners();
+  }
+
+  void clearSearch() {
+    this.results.clear();
+    this.isSearchResultBoxVisible = false;
+    this.setFilter("");
     notifyListeners();
   }
 }

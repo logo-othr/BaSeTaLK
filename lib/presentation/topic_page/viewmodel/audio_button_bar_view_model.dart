@@ -8,9 +8,21 @@ class AudioButtonBarViewModel extends ChangeNotifier {
   final String audioName;
   AudioPlayer audioPlayer;
   Media audioMedia;
+  bool isAudioPlayerPlaying = false;
 
   AudioButtonBarViewModel(this.audioName) {
     audioPlayer = serviceLocator.get<AudioPlayer>();
+    audioPlayer.onPlayerStateChanged.listen((AudioPlayerState s) =>
+        {_changePlayingState(s == AudioPlayerState.PLAYING)});
+  }
+
+  void _changePlayingState(isPlaying) {
+    this.isAudioPlayerPlaying = isPlaying;
+    notifyListeners();
+  }
+
+  void pauseAudio() async {
+    audioPlayer.pause();
   }
 
   void playAudio() async {
