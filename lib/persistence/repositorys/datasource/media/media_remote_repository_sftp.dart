@@ -7,7 +7,7 @@ import 'package:basetalk/persistence/helper/sftp_helper.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 
 class MediaRemoteSFTPRepository implements IMediaRepository {
-  final String _remoteFolderPath = "ftp/files/";
+  final String _remoteFolderPath = "share/";
   final String _localFolderPath;
   bool busy = false;
 

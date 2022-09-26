@@ -11,7 +11,7 @@ import 'package:ssh/ssh.dart';
 
 class TopicDTORemoteSFTPRepository implements ITopicDTORepository {
   final SSHClient _sshClient;
-  final String _remotePath = "ftp/files/";
+  final String _remotePath = "share/";
   final TopicPathProvider _topicPathProvider;
 
   TopicDTORemoteSFTPRepository(this._sshClient, this._topicPathProvider);
