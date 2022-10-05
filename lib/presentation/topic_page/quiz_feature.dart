@@ -62,18 +62,22 @@ class _QuizFeatureState extends State<QuizFeature> {
       ],
     );
 
-    Widget closeButton = FlatButton(
+    Widget closeButton = ButtonTheme(
       height: 70,
       minWidth: 300,
-      child: Text(
-        "Quiz beenden",
-        style: TextStyle(fontSize: 28, color: Colors.white),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[600],
+        ),
+        child: Text(
+          "Quiz beenden",
+          style: TextStyle(fontSize: 28, color: Colors.white),
+        ),
+        onPressed: () {
+          Provider.of<TopicPageViewModel>(context, listen: false)
+              .toggleFeatureVisible();
+        },
       ),
-      color: Colors.grey[600],
-      onPressed: () {
-        Provider.of<TopicPageViewModel>(context, listen: false)
-            .toggleFeatureVisible();
-      },
     );
 
     Widget lastQuizPage = Column(
@@ -92,20 +96,24 @@ class _QuizFeatureState extends State<QuizFeature> {
     );
     questionWidgets.add(firstQuizPage);
 
-    Widget nextButton = FlatButton(
+    Widget nextButton = ButtonTheme(
       height: 70,
       minWidth: 300,
-      child: Text(
-        "Weiter",
-        style: TextStyle(fontSize: 28, color: Colors.white),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey[600]),
+        ),
+        child: Text(
+          "Weiter",
+          style: TextStyle(fontSize: 28, color: Colors.white),
+        ),
+        onPressed: () {
+          _controller.nextPage(
+              duration: Duration(milliseconds: 300), curve: Curves.linear);
+          Provider.of<QuizViewModel>(context, listen: false)
+              .setNextButtonVisibility(false);
+        },
       ),
-      color: Colors.grey[600],
-      onPressed: () {
-        _controller.nextPage(
-            duration: Duration(milliseconds: 300), curve: Curves.linear);
-        Provider.of<QuizViewModel>(context, listen: false)
-            .setNextButtonVisibility(false);
-      },
     );
 
     return AspectRatio(
@@ -216,12 +224,14 @@ class _QuizButtonState extends State<QuizButton> {
         child: Container(
           width: double.infinity,
           height: 55,
-          child: FlatButton(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: pressed ? widget.activatedColor : primary_green,
+            ),
             child: Text(
               widget.buttonText,
               style: TextStyle(fontSize: 28),
             ),
-            color: pressed ? widget.activatedColor : primary_green,
             onPressed: () {
               setState(() {
                 pressed = true;

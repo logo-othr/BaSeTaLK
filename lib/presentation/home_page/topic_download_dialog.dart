@@ -54,16 +54,16 @@ class _TopicDownloadDialogState extends State<TopicDownloadDialog> {
                     )
                 ),
                 Padding(padding: EdgeInsets.only(top: 50.0)),
-                FlatButton(
+                ElevatedButton(
                   onPressed: viewmodel.isLoadingState
                       ? null
                       : () {
-                    viewmodel.toggleLoadingState();
-                    widget.topicViewModel.downloadTopic(() {
-                      viewmodel.toggleLoadingState();
-                      Navigator.of(context).pop();
-                    });
-                  },
+                          viewmodel.toggleLoadingState();
+                          widget.topicViewModel.downloadTopic(() {
+                            viewmodel.toggleLoadingState();
+                            Navigator.of(context).pop();
+                          });
+                        },
                   child: Text(
                     'Herunterladen',
                     style: TextStyle(color: primary_green, fontSize: 18.0),

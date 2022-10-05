@@ -61,12 +61,14 @@ class _RatingPageState extends State<RatingPage> {
               SizedBox(
                 height: 100,
               ),
-              RaisedButton(
-                padding: EdgeInsets.all(10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
-                color: Colors.green,
                 child: Text(
                   "Thema beenden",
                   style: TextStyle(
@@ -76,7 +78,7 @@ class _RatingPageState extends State<RatingPage> {
                 ),
                 onPressed: rated
                     ? (() {
-                  serviceLocator.get<StatisticLogger>().logEvent(
+                        serviceLocator.get<StatisticLogger>().logEvent(
                               eventType: EventType.topicRating,
                               topicID: topicViewModel.topic.id.toString(),
                               topicName: topicViewModel.topic.name,

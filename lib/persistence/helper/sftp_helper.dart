@@ -1,6 +1,7 @@
 import 'package:basetalk/dependency_setup.dart';
 import 'package:flutter/services.dart';
-import 'package:ssh/ssh.dart';
+import 'package:ssh2/ssh2.dart';
+
 disconnectFTP(SSHClient sshclient) async {
   print("disconnecting ftp");
   print(await sshclient.disconnectSFTP());

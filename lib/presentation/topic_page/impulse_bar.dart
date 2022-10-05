@@ -66,24 +66,26 @@ class _ImpulseBarState extends State<ImpulseBar> {
           ),
           ButtonTheme(
             height: 50,
-            child: RaisedButton(
-              color: Colors.black,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+              ),
               onPressed: () {
                 impulseBarViewModel.incrementImpulseIndex();
                 impulseBarViewModel.stopAudio();
                 serviceLocator.get<StatisticLogger>().logEvent(
-                  eventType: EventType.impulseBarNext,
-                  pageNumber: Provider
-                      .of<TopicPageViewModel>(context, listen: false)
-                      .pageNumber,
-                  topicID: Provider
-                      .of<TopicPageViewModel>(context, listen: false)
-                      .topicId
-                      .toString(),
-                  topicName: Provider
-                      .of<TopicPageViewModel>(context, listen: false)
-                      .topicName,
-                );
+                      eventType: EventType.impulseBarNext,
+                      pageNumber: Provider.of<TopicPageViewModel>(context,
+                              listen: false)
+                          .pageNumber,
+                      topicID: Provider.of<TopicPageViewModel>(context,
+                              listen: false)
+                          .topicId
+                          .toString(),
+                      topicName: Provider.of<TopicPageViewModel>(context,
+                              listen: false)
+                          .topicName,
+                    );
               },
               child: Text(
                 'Weiter',

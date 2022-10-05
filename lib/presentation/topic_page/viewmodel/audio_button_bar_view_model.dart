@@ -12,8 +12,8 @@ class AudioButtonBarViewModel extends ChangeNotifier {
 
   AudioButtonBarViewModel(this.audioName) {
     audioPlayer = serviceLocator.get<AudioPlayer>();
-    audioPlayer.onPlayerStateChanged.listen((AudioPlayerState s) =>
-        {_changePlayingState(s == AudioPlayerState.PLAYING)});
+    audioPlayer.onPlayerStateChanged.listen(
+        (PlayerState s) => {_changePlayingState(s == PlayerState.PLAYING)});
   }
 
   void _changePlayingState(isPlaying) {

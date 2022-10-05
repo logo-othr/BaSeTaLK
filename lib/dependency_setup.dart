@@ -35,7 +35,7 @@ import 'package:basetalk/presentation/navigation_service.dart';
 import 'package:basetalk/statistic_logger.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get_it/get_it.dart';
-import 'package:ssh/ssh.dart';
+import 'package:ssh2/ssh2.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -48,6 +48,7 @@ Future<void> init() async {
   await topicPathProvider.init();
 
   serviceLocator.registerLazySingleton<SSHClient>(() => sshClient);
+
   serviceLocator
       .registerLazySingleton<TopicPathProvider>(() => topicPathProvider);
   serviceLocator.registerLazySingleton<TopicMapper>(() => TopicMapper());

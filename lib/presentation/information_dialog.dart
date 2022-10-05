@@ -45,12 +45,14 @@ class InformationDialog extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Spacer(flex: 5),
-                  RaisedButton(
-                    padding: EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                      padding: EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                    color: Colors.green,
                     child: Text(
                       buttonText,
                       style: TextStyle(
@@ -62,7 +64,15 @@ class InformationDialog extends StatelessWidget {
                       onActionPressed();
                     },
                   ),
-                  FlatButton(
+                  Spacer(flex: 1),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                      padding: EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -73,7 +83,7 @@ class InformationDialog extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(flex: 1),
+                  Spacer(flex: 5),
                 ],
               ),
             ],
