@@ -23,8 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  ftpclient: ^0.6.0
-  path_provider: ^2.0.1
+  ftpclient: ^0.8.0
+  path_provider: ^2.0.11
   provider: ^4.0.4
   json_annotation: ^3.0.1
   meta: ^1.1.8
