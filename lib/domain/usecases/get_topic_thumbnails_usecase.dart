@@ -9,9 +9,10 @@ class GetTopicThumbnailsUseCase extends BaseUseCase<void, List<Topic>> {
   GetTopicThumbnailsUseCase(this._mediaRepository);
 
   @override
-  Future<void> call(List<Topic> topics) async {
+  Future<List<Media>> call(List<Topic> topics) async {
     List<String> filenames = new List();
     for (Topic topic in topics) filenames.add(topic.thumbnail);
     List<Media> media = await _mediaRepository.getMediaFilesByName(filenames);
+    return media;
   }
 }

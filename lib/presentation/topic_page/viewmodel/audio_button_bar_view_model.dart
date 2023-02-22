@@ -13,7 +13,7 @@ class AudioButtonBarViewModel extends ChangeNotifier {
   AudioButtonBarViewModel(this.audioName) {
     audioPlayer = serviceLocator.get<AudioPlayer>();
     audioPlayer.onPlayerStateChanged.listen(
-        (PlayerState s) => {_changePlayingState(s == PlayerState.PLAYING)});
+        (PlayerState s) => {_changePlayingState(s == PlayerState.playing)});
   }
 
   void _changePlayingState(isPlaying) {
@@ -32,7 +32,8 @@ class AudioButtonBarViewModel extends ChangeNotifier {
       this.audioMedia = media;
     }
     print("Play audio");
-    audioPlayer.play(audioMedia.file.path, isLocal: true);
+    DeviceFileSource source = DeviceFileSource(audioMedia.file.path);
+    audioPlayer.play(source);
   }
 
   void stopAudio() {

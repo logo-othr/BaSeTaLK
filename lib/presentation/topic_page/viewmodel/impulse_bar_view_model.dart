@@ -20,7 +20,8 @@ class ImpulseBarViewModel extends ChangeNotifier {
     Media media = await mediaRepository
         .getMediaFile(impulses[_pageImpulseIndex].audioFileName);
     print("Play audio");
-    audioPlayer.play(media.file.path, isLocal: true);
+    DeviceFileSource source = DeviceFileSource(media.file.path);
+    audioPlayer.play(source);
   }
 
   void stopAudio() {
