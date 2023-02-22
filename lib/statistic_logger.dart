@@ -91,7 +91,11 @@ class StatisticLogger {
     buffer.write(delimiter);
     buffer.write(topicID);
     buffer.write(delimiter);
-    buffer.write(EnumToString.convertToString(pageNumber));
+    if (pageNumber != null) {
+      buffer.write(EnumToString.convertToString(pageNumber));
+    } else {
+      buffer.write("pageNumber is null");
+    }
     buffer.write(delimiter);
     buffer.write(nValue.toString());
     buffer.write(delimiter);
@@ -110,6 +114,4 @@ class StatisticLogger {
       print(e);
     }
   }
-
-
 }
