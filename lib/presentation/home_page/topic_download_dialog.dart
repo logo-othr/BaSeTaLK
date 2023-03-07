@@ -1,4 +1,3 @@
-import 'package:basetalk/presentation/colors.dart';
 import 'package:basetalk/presentation/home_page/viewmodel/topic_download_dialog_view_model.dart';
 import 'package:basetalk/presentation/topic_page/viewmodel/topic_view_model.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +65,7 @@ class _TopicDownloadDialogState extends State<TopicDownloadDialog> {
                         },
                   child: Text(
                     'Herunterladen',
-                    style: TextStyle(color: primary_green, fontSize: 18.0),
+                    style: TextStyle(color: Colors.white, fontSize: 18.0),
                   ),
                 )
               ],
