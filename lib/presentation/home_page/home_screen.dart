@@ -19,43 +19,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController editingController;
 
-  Widget searchBar() {
-    return TextField(
-      maxLines: 1,
-      minLines: 1,
-      style: TextStyle(fontSize: 20.0, height: 1.0, color: Colors.black),
-      onChanged: (value) {
-        Provider.of<TopicListViewModel>(context, listen: false)
-            .getResults(value);
-      },
-      controller: editingController,
-      decoration: InputDecoration(
-        suffixIcon: IconButton(
-          onPressed: () {
-            editingController.clear();
-            Provider.of<TopicListViewModel>(context, listen: false)
-                .clearSearch();
-            FocusScope.of(context).unfocus();
-          },
-          icon: Icon(Icons.clear),
-        ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 0),
-        filled: true,
-        fillColor: Colors.white,
-        labelText: "Suche",
-        hintText: "Suchbegriff",
-        prefixIcon: Icon(Icons.search),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: BorderSide(
-            color: Colors.amber,
-            style: BorderStyle.solid,
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<List<TopicViewModel>> _futureInitializedFilteredList;
 
   @override
@@ -92,80 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Stack(
                   children: [
-
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
                       child: FutureBuilder(
                           future: _futureInitializedFilteredList,
                           builder: (BuildContext context,
                               AsyncSnapshot<List<TopicViewModel>>
-                              filteredViewModels) {
-                            if (filteredViewModels.hasData) {
-                              if (Provider
-                                  .of<TopicListViewModel>(context)
-                                  .filteredTopicList
-                                  .isEmpty) {
-                                return Text(
-                                  "Beim laden der Themen ist ein Fehler aufgetreten.",
-                                  style: TextStyle(fontSize: 20),
-                                );
-                              }
-                              return ListView.builder(
-                                itemBuilder: (context, position) {
-                                  var topicViewModel =
-                                  Provider
-                                      .of<TopicListViewModel>(context)
-                                      .filteredTopicList[position];
-                                  var row = ChangeNotifierProvider<
-                                      TopicViewModel>.value(
-                                    value: topicViewModel,
-                                    child: TopicRow(),
-                                  );
-                                  return row;
-                                },
-                                itemCount:
-                                Provider
-                                    .of<TopicListViewModel>(context)
-                                    .filteredTopicList
-                                    .length,
-                              );
-                            } else {
-                              return Center(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CircularProgressIndicator(),
-                                      SizedBox(height: 50),
-                                      Text("Themen werden geladen...")
-                                    ],
-                                  ));
-                            }
+                                  filteredViewModels) {
+                            return _buildTopicRow(filteredViewModels);
                           }),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Flexible(
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  //searchBar(),
-                                  Provider
-                                      .of<TopicListViewModel>(context)
-                                      .isSearchResultBoxVisible
-                                      ? SearchResultBox()
-                                      : Container(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
+                    // _searchWidget(),
                   ],
                 ),
               )
@@ -174,5 +74,80 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildTopicRow(
+      AsyncSnapshot<List<TopicViewModel>> filteredViewModels) {
+    TopicListViewModel topicListViewModel =
+        Provider.of<TopicListViewModel>(context);
+
+    if (filteredViewModels.hasData) {
+      if (topicListViewModel.filteredTopicList.isEmpty) {
+        return _noTopicsFound();
+      }
+
+      return ListView.builder(
+        itemBuilder: (context, position) {
+          var topicViewModel = topicListViewModel.filteredTopicList[position];
+
+          ChangeNotifierProvider<TopicViewModel> topicRow =
+              ChangeNotifierProvider<TopicViewModel>.value(
+            value: topicViewModel,
+            child: TopicRow(),
+          );
+
+          return topicRow;
+        },
+        itemCount:
+            Provider.of<TopicListViewModel>(context).filteredTopicList.length,
+      );
+    } else {
+      return _loadingIndicator();
+    }
+  }
+
+  Widget _noTopicsFound() {
+    return Text(
+      "Beim laden der Themen ist ein Fehler aufgetreten.",
+      style: TextStyle(fontSize: 20),
+    );
+  }
+
+  // Topic search. Not fully implemented.
+  Widget _searchWidget() {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  //searchBar(),
+                  Provider.of<TopicListViewModel>(context)
+                          .isSearchResultBoxVisible
+                      ? SearchResultBox()
+                      : Container(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Spacer(),
+      ],
+    );
+  }
+
+  Widget _loadingIndicator() {
+    return Center(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircularProgressIndicator(),
+        SizedBox(height: 50),
+        Text("Themen werden geladen...")
+      ],
+    ));
   }
 }
