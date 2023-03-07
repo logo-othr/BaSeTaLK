@@ -21,77 +21,102 @@ class RouteService {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.SETTINGS:
-        return new _CustomRoute(
-            builder: (_) => new MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider<TopicListViewModel>.value(
-                      value: serviceLocator.get<TopicListViewModel>(),
-                    ),
-                    ChangeNotifierProvider<SettingsPageViewModel>(
-                        create: (_) => SettingsPageViewModel())
-                  ],
-                  child: SettingsScreen(),
-                ));
+        return _settingsRoute();
       case RouteName.BLITZLICHT:
         final int topicId = settings.arguments;
-        return new _CustomRoute(
-          builder: (_) => new MultiProvider(providers: [
-            ChangeNotifierProvider<TopicViewModel>.value(
-                value: serviceLocator
-                    .get<TopicListViewModel>()
-                    .getTopicViewModelById(topicId)),
-          ], child: BlitzLicht()),
-        );
+        return _blitzlichtRoute(topicId);
       case RouteName.LEGAL:
-        return new _CustomRoute(
-          builder: (_) => LegalInfoPage(),
-        );
+        return _legalRoute();
         break;
       case RouteName.PRIVACY:
-        return new _CustomRoute(
-          builder: (_) => PrivacyPage(),
-        );
+        return _privacyRoute();
         break;
       case RouteName.TOPIC:
         final TopicPageParams params = settings.arguments;
-        TopicViewModel topicViewModel = serviceLocator
-            .get<TopicListViewModel>()
-            .getTopicViewModelById(params.topicId);
-        return new _CustomRoute(
-          builder: (_) => new MultiProvider(
-            providers: [
-              ChangeNotifierProvider<TopicViewModel>.value(
-                  value: topicViewModel),
-              ChangeNotifierProvider<TopicPageViewModel>(
-                  create: (_) => TopicPageViewModel(params.pageNumber,
-                      topicViewModel.topic.id, topicViewModel.topic.name))
-            ],
-            child: new BasicTopicPage(
-              child: params.pageNumber == PageNumber.zero
-                  ? TopicFrontPage()
-                  : TopicPage(),
-            ),
-          ),
-        );
-
+        return _topicRoute(params);
       case RouteName.RATING:
         final int topicId = settings.arguments;
-        return new _CustomRoute(
-          builder: (_) => new MultiProvider(providers: [
-            ChangeNotifierProvider<TopicViewModel>.value(
-                value: serviceLocator
-                    .get<TopicListViewModel>()
-                    .getTopicViewModelById(topicId)),
-          ], child: RatingPage()),
-        );
-
+        return _ratingRoute(topicId);
       default:
-        return new _CustomRoute(
-            builder: (_) => ChangeNotifierProvider<TopicListViewModel>.value(
-                  value: serviceLocator.get<TopicListViewModel>(),
-                  child: new HomeScreen('Startseite'),
-                ));
+        return _homeRoute();
     }
+  }
+
+  static _CustomRoute _settingsRoute() {
+    return new _CustomRoute(
+        builder: (_) => new MultiProvider(
+              providers: [
+                ChangeNotifierProvider<TopicListViewModel>.value(
+                  value: serviceLocator.get<TopicListViewModel>(),
+                ),
+                ChangeNotifierProvider<SettingsPageViewModel>(
+                    create: (_) => SettingsPageViewModel())
+              ],
+              child: SettingsScreen(),
+            ));
+  }
+
+  static _CustomRoute _blitzlichtRoute(int topicId) {
+    return new _CustomRoute(
+      builder: (_) => new MultiProvider(providers: [
+        ChangeNotifierProvider<TopicViewModel>.value(
+            value: serviceLocator
+                .get<TopicListViewModel>()
+                .getTopicViewModelById(topicId)),
+      ], child: BlitzLicht()),
+    );
+  }
+
+  static _CustomRoute _legalRoute() {
+    return new _CustomRoute(
+      builder: (_) => LegalInfoPage(),
+    );
+  }
+
+  static _CustomRoute _privacyRoute() {
+    return new _CustomRoute(
+      builder: (_) => PrivacyPage(),
+    );
+  }
+
+  static _CustomRoute _topicRoute(TopicPageParams params) {
+    TopicViewModel topicViewModel = serviceLocator
+        .get<TopicListViewModel>()
+        .getTopicViewModelById(params.topicId);
+    return new _CustomRoute(
+      builder: (_) => new MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TopicViewModel>.value(value: topicViewModel),
+          ChangeNotifierProvider<TopicPageViewModel>(
+              create: (_) => TopicPageViewModel(params.pageNumber,
+                  topicViewModel.topic.id, topicViewModel.topic.name))
+        ],
+        child: new BasicTopicPage(
+          child: params.pageNumber == PageNumber.zero
+              ? TopicFrontPage()
+              : TopicPage(),
+        ),
+      ),
+    );
+  }
+
+  static _CustomRoute _ratingRoute(int topicId) {
+    return new _CustomRoute(
+      builder: (_) => new MultiProvider(providers: [
+        ChangeNotifierProvider<TopicViewModel>.value(
+            value: serviceLocator
+                .get<TopicListViewModel>()
+                .getTopicViewModelById(topicId)),
+      ], child: RatingPage()),
+    );
+  }
+
+  static _CustomRoute _homeRoute() {
+    return new _CustomRoute(
+        builder: (_) => ChangeNotifierProvider<TopicListViewModel>.value(
+              value: serviceLocator.get<TopicListViewModel>(),
+              child: new HomeScreen('Startseite'),
+            ));
   }
 }
 
