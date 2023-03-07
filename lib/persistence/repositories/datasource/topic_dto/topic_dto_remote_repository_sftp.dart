@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:basetalk/domain/exceptions/topic_parse_exception.dart';
 import 'package:basetalk/persistence/dto/topic_dto.dart';
 import 'package:basetalk/persistence/helper/sftp_helper.dart';
-import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
+import 'package:basetalk/persistence/repositories/datasource/interfaces/i_topic_dto_repository.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 import 'package:ssh2/ssh2.dart';
 

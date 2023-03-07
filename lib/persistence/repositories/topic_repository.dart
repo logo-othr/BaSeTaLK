@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:basetalk/domain/entities/topic.dart';
-import 'package:basetalk/domain/repositorys/i_topic_repository.dart';
+import 'package:basetalk/domain/repositories/i_topic_repository.dart';
 import 'package:basetalk/persistence/dto/topic_dto.dart';
 import 'package:basetalk/persistence/dto/topic_user_information_dto.dart';
 import 'package:basetalk/persistence/mapper/i_mapper.dart';
-import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_repository.dart';
-import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_user_information_dto_repository.dart';
+import 'package:basetalk/persistence/repositories/datasource/interfaces/i_topic_dto_repository.dart';
+import 'package:basetalk/persistence/repositories/datasource/interfaces/i_topic_user_information_dto_repository.dart';
 import 'package:meta/meta.dart';
 
 class TopicRepository implements ITopicRepository {

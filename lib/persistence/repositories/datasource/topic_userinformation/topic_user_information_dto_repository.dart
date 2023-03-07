@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:basetalk/persistence/dto/topic_user_information_dto.dart';
-import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_user_information_dto_repository.dart';
+import 'package:basetalk/persistence/repositories/datasource/interfaces/i_topic_user_information_dto_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TopicUserInformationDTORepository

@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/impulse.dart';
 import 'package:basetalk/domain/entities/media.dart';
-import 'package:basetalk/domain/repositorys/i_media_repository.dart';
+import 'package:basetalk/domain/repositories/i_media_repository.dart';
 import 'package:flutter/material.dart';
 
 class ImpulseBarViewModel extends ChangeNotifier {

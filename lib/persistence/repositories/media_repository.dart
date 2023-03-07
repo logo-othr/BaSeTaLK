@@ -1,5 +1,5 @@
 import 'package:basetalk/domain/entities/media.dart';
-import 'package:basetalk/domain/repositorys/i_media_repository.dart';
+import 'package:basetalk/domain/repositories/i_media_repository.dart';
 
 class MediaRepository implements IMediaRepository {
   final IMediaRepository _remoteRepository;

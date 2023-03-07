@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:basetalk/dependency_setup.dart';
 import 'package:basetalk/domain/entities/media.dart';
-import 'package:basetalk/domain/repositorys/i_media_repository.dart';
+import 'package:basetalk/domain/repositories/i_media_repository.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 
 class MediaLocalFileRepository implements IMediaRepository {

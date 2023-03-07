@@ -6,7 +6,7 @@ import 'package:basetalk/domain/entities/media.dart';
 import 'package:basetalk/domain/entities/page_content.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:basetalk/domain/entities/topic.dart';
-import 'package:basetalk/domain/repositorys/i_media_repository.dart';
+import 'package:basetalk/domain/repositories/i_media_repository.dart';
 import 'package:basetalk/domain/usecases/download_topic_data_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_favorite_usecase.dart';
 import 'package:basetalk/domain/usecases/toggle_topic_visited_usecase.dart';

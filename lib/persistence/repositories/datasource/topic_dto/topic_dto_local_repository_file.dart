@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:basetalk/domain/exceptions/topic_parse_exception.dart';
 import 'package:basetalk/persistence/dto/topic_dto.dart';
-import 'package:basetalk/persistence/repositorys/datasource/interfaces/i_topic_dto_cache_repository.dart';
+import 'package:basetalk/persistence/repositories/datasource/interfaces/i_topic_dto_cache_repository.dart';
 import 'package:basetalk/persistence/topic_path_provider.dart';
 
 class TopicDTOLocalFileRepository implements ITopicDTOCacheRepository {
