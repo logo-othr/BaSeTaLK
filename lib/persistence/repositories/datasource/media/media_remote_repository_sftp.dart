@@ -42,11 +42,4 @@ class MediaRemoteSFTPRepository implements IMediaRepository {
     return mediaFiles;
   }
 
-  @override
-  Future<List<Media>> getMediaForTopics(List<String> filenames) async {
-    await downloadFromSFTP(
-        filenames, _remoteFolderPath, _localFolderPath);
-    // ToDo: check and return media files
-  }
-
 }
