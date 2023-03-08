@@ -79,8 +79,6 @@ class StatisticLogger {
     final DateFormat formatter = DateFormat('yyyy-MM-dd h:m:s');
     final String timestamp = formatter.format(now);
 
-    //String nValueStr = (nValue == null ? "null" : nValue.toString());
-    //String bValueStr = (bValue == null ? "null" : bValue.toString());
     var buffer = new StringBuffer();
 
     buffer.write(timestamp);
