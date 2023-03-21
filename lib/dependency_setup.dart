@@ -41,7 +41,7 @@ final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
   // ToDo: Cleanup
-  var sshClient = await setUpSFTP();
+  var sshClient = await _setUpSFTP();
   var topicPathProvider = new TopicPathProvider();
 
   // ToDo: provide path but check path existence later  or move in async singleton
@@ -130,8 +130,8 @@ Future<void> init() async {
       .registerLazySingleton<StatisticLogger>(() => StatisticLogger());
 }
 
-Future<SSHClient> setUpSFTP() async {
-  String jsonString = await loadSFTPAuth();
+Future<SSHClient> _setUpSFTP() async {
+  String jsonString = await _loadSFTPAuth();
   var map = jsonDecode(jsonString);
   SFTPAuth sftpAuth = SFTPAuth.fromJson(map);
   var sshClient = new SSHClient(
@@ -143,6 +143,6 @@ Future<SSHClient> setUpSFTP() async {
   return sshClient;
 }
 
-Future<String> loadSFTPAuth() async {
+Future<String> _loadSFTPAuth() async {
   return await rootBundle.loadString('assets/sftp_auth.json');
 }
