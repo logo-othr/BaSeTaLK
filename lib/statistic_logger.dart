@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:basetalk/app_logger.dart';
 import 'package:basetalk/domain/entities/page_number.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:intl/intl.dart';
@@ -106,10 +107,9 @@ class StatisticLogger {
       final file = await _setupStatisticFile();
 
       file.writeAsStringSync(line, mode: FileMode.append);
-      print(line);
+      logger.i("Adding '$line' to the statistic log file");
     } catch (e) {
-      // ToDo: exception handling
-      print(e);
+      logger.e("Error: An error occurred when opening the file.");
     }
   }
 }
