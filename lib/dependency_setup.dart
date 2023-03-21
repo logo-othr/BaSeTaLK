@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:basetalk/app_logger.dart';
 import 'package:basetalk/domain/repositories/i_media_repository.dart';
 import 'package:basetalk/domain/repositories/i_quiz_repository.dart';
 import 'package:basetalk/domain/repositories/i_topic_repository.dart';
@@ -40,11 +41,9 @@ import 'package:ssh2/ssh2.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> init() async {
-  // ToDo: Cleanup
   var sshClient = await _setUpSFTP();
-  var topicPathProvider = new TopicPathProvider();
 
-  // ToDo: provide path but check path existence later  or move in async singleton
+  var topicPathProvider = new TopicPathProvider();
   await topicPathProvider.init();
 
   serviceLocator.registerLazySingleton<SSHClient>(() => sshClient);
@@ -69,28 +68,27 @@ Future<void> init() async {
     () => TopicRepository(
       topicDTORepository: serviceLocator.get<ITopicDTORepository>(),
       topicUserInformationDTORepository:
-      serviceLocator.get<ITopicUserInformationDTORepository>(),
+          serviceLocator.get<ITopicUserInformationDTORepository>(),
       topicMapper: serviceLocator.get<TopicMapper>(),
     ),
   );
 
   serviceLocator.registerLazySingleton<ITopicUserInformationDTORepository>(
-        () => TopicUserInformationDTORepository(),
+    () => TopicUserInformationDTORepository(),
   );
 
-  IMediaRepository mediaRemoteRepository = MediaRemoteSFTPRepository(
-      topicPathProvider.topicMediaRootPath);
+  IMediaRepository mediaRemoteRepository =
+      MediaRemoteSFTPRepository(topicPathProvider.topicMediaRootPath);
   IMediaRepository mediaLocalRepository = MediaLocalFileRepository();
 
   serviceLocator.registerLazySingleton<IMediaRepository>(
-        () => MediaRepository(mediaRemoteRepository, mediaLocalRepository),
+    () => MediaRepository(mediaRemoteRepository, mediaLocalRepository),
   );
 
   serviceLocator.registerLazySingleton<AudioPlayer>(() => AudioPlayer());
 
   serviceLocator.registerLazySingleton<TopicListViewModel>(
-        () =>
-        TopicListViewModel(
+    () => TopicListViewModel(
         serviceLocator(),
         serviceLocator(),
         serviceLocator(),
@@ -131,16 +129,21 @@ Future<void> init() async {
 }
 
 Future<SSHClient> _setUpSFTP() async {
-  String jsonString = await _loadSFTPAuth();
-  var map = jsonDecode(jsonString);
-  SFTPAuth sftpAuth = SFTPAuth.fromJson(map);
-  var sshClient = new SSHClient(
-    host: sftpAuth.host,
-    port: int.parse(sftpAuth.port),
-    username: sftpAuth.username,
-    passwordOrKey: sftpAuth.passwordOrKey,
-  );
-  return sshClient;
+  try {
+    String jsonString = await _loadSFTPAuth();
+    var map = jsonDecode(jsonString);
+    SFTPAuth sftpAuth = SFTPAuth.fromJson(map);
+    var sshClient = new SSHClient(
+      host: sftpAuth.host,
+      port: int.parse(sftpAuth.port),
+      username: sftpAuth.username,
+      passwordOrKey: sftpAuth.passwordOrKey,
+    );
+    return sshClient;
+  } catch (e) {
+    logger.e('Error setting up SFTP-Client: $e');
+    return null;
+  }
 }
 
 Future<String> _loadSFTPAuth() async {
