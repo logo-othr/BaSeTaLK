@@ -8,7 +8,7 @@ class Media {
 
   Media(this.file);
 
-  String get filename => file.name;
+  String get filename => file.filename;
 
   String get extension => p.extension(file.path);
 }
