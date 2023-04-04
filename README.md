@@ -30,15 +30,42 @@ BaSeTaLK verfolgt die vier folgenden wesentlichen Ziele:
 
 - Steigerung der Kommunikation und Lebensqualität und des psychologischen Wohlbefinden von Menschen im Alter
 
-- Entwicklung und Evaluation einer an die Bedarfe älterer Menschen angepassten Software (App) zur Stimulation biographischer Gespräche
+- Entwicklung und Evaluation einer an die Bedarfe älterer Menschen angepassten Software (App) zur
+  Stimulation biographischer Gespräche
 
-- Erkenntnisgewinn zum Umgang von Menschen im Alter mit neuen Medien, insbesondere dem Tablet und den Möglichkeiten digitaler Inklusion
+- Erkenntnisgewinn zum Umgang von Menschen im Alter mit neuen Medien, insbesondere dem Tablet und
+  den Möglichkeiten digitaler Inklusion
 
 ### Kurzbeschreibung der Funktionalität
 
-Die BaSeTaLK-App dient als Materialsammlung und Leitfaden, die in Settings zur Biographiearbeit Einsatz finden kann. Die Hauptbedienung erfolgt dabei durch moderierende Personen, die über die App multimodale Impulse abrufen können. Diese Impulse liefern Aufhänger und Anregungen, um einen Einstieg in ein Gespräch über das eigene Leben im Austausch mit anderen zu finden, sowie das Gespräch in Gang zu halten und zu strukturieren.
+Die BaSeTaLK-App dient als Materialsammlung und Leitfaden, die in Settings zur Biographiearbeit
+Einsatz finden kann. Die Hauptbedienung erfolgt dabei durch moderierende Personen, die über die App
+multimodale Impulse abrufen können. Diese Impulse liefern Aufhänger und Anregungen, um einen
+Einstieg in ein Gespräch über das eigene Leben im Austausch mit anderen zu finden, sowie das
+Gespräch in Gang zu halten und zu strukturieren.
 
-Die App ist dabei so aufbereitet, dass mit ihr eine virtuelle Reise zu Orten in der Natur und kulturellen Orten (z. B. Wald, Berge, Kino, Café) gemacht werden. Hierzu stehen insgesamt 15 Orte zur Verfügung. Sie werden über Fotos repräsentiert, die einzelne Standorte am jeweiligen Ort darstellen. Es können neben biographischen Fragen Audio-Features und Quiz abgerufen werden.
+Die App ist dabei so aufbereitet, dass mit ihr eine virtuelle Reise zu Orten in der Natur und
+kulturellen Orten (z. B. Wald, Berge, Kino, Café) gemacht werden. Hierzu stehen insgesamt 15 Orte
+zur Verfügung. Sie werden über Fotos repräsentiert, die einzelne Standorte am jeweiligen Ort
+darstellen. Es können neben biographischen Fragen Audio-Features und Quiz abgerufen werden.
+
+Die Orte sind auf einer Startseite aufgelistet. In einem Überblick dieser Auflistung ist auch ein
+Indikator zur Gesprächstiefe sichtbar. In drei Stufen (1 = leicht, 2 = mittel, 3 = schwer) ist die
+potentielle Gesprächstiefe beurteilt. Um in fortlaufenden Treffen die Übersicht zu bewahren, welche
+Orte mit einer Gesprächsgruppe schon aufgesucht wurden, lässt sich ein Thema über die
+Besucht-Checkbox abhaken. Zudem gibt es einen Favoriten-Button. Dieser kann z. B. genutzt werden, um
+ein Thema für eine nächste Stunde zu priorisieren. Es rutscht in der Liste dann an die oberste
+Stelle.
+
+Sobald man mit einem Anklicken eines Themas den Ort betritt, wird man anfangs an ein Blitzlicht
+erinnert, zu dem man der Frage nachgehen kann, wie das eigene Wohlbefinden an dem Tag eingeschätzt
+wird. Hier werden die Wortbeiträge urteilsfrei im Raum stehen gelassen. Über einen Weiter-Button
+gelangt man auf eine Startseite eines Themas, die das erste Bild zu dem Ort repräsentiert. Dieses
+ist das erste von insgesamt vier Bildern. Auf den Bildern zwei bis vier sind weitere Funktionen
+abrufbar: Hier gibt es den Sprechblase-Button, über den sich Moderationsfragen abrufen lassen. Pro
+Bild sind drei bis vier biographische Moderationsfragen hinterlegt. Neben dem Sprechblase-Button
+gibt es den Geschenk-Button. Hier lassen sich auf dem zweiten Bild besondere Features abrufen (
+Audio-Features, Quiz).
 
 ## Voraussetzungen
 
