@@ -29,8 +29,8 @@ Bedingungen dieser Lizenzbedingungen erwirbt der Lizenznehmer von dem
 Lizenzgeber weltweite, vergütungsfreie, nicht-unterlizenzierbare,
 nicht-übertragbare, nicht-ausschließliche, unwiderrufliche
 Nutzungsrechte auf die Werke, wenn die in Ziffer 2 (a) Satz 2 dieser
-Lizenzbedingungen genannten Voraussetzungen kumulativ vorliegen. [Ziffer
-2 (a) Satz 2]{.underline}: Die Werke werden ganz oder in Teilen, analog
+Lizenzbedingungen genannten Voraussetzungen kumulativ vorliegen. <u>Ziffer
+2 (a) Satz 2</u> Die Werke werden ganz oder in Teilen, analog
 oder digital, ausschließlich in Verbindung mit der OSS mit oder ohne
 Änderung ihres Quellcodes in nichtkommerziellen sowie kommerziellen
 Webanwendungen, Apps, Programmen und Forschungsprojekten genutzt und
