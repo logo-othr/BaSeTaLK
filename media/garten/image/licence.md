@@ -106,7 +106,7 @@ Umgehung wirksamer technischer Schutzmaßnahmen erforderlich sind.
 \(c\) Die Werke dürfen nicht in einer Weise verwendet werden, die es
 anderen Personen gestattet, die Werke als gesonderte Datei (also nur die
 Foto-, Text-, Audio- und Videodateien selbst, separat von den in Ziffer
-[2 (a) Satz 2]{.underline} genannten Webanwendungen, Apps, Programmen
+<u>2 (a) Satz 2</u> genannten Webanwendungen, Apps, Programmen
 und Forschungsprojekten) herunterzuladen, zu extrahieren oder
 weiterzugeben. So dürfen beispielsweise die Fotos nicht in
 Stock-Foto-Sammlungen verwendet werden.
