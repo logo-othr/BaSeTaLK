@@ -1,0 +1,137 @@
+[
+  {
+    "id": 7,
+    "name": "Garten",
+    "description": "Wachsen und Gedeihen | Erfahrung aus Projekten | Ruheoase",
+    "conversationDepth": 2,
+    "tags": [
+      "Wachsen",
+      "Projekte",
+      "Entspannung"
+    ],
+    "frontPageImageName": "070_oth.jpg",
+    "frontPageInformationContent": {
+      "heading": "Mögliche Fragen für die Gesprächsmoderation:",
+      "content": "- Ist das Bild aus Ihrer Sicht typisch für den Ort? \n- Welche Assoziationen haben Sie zu dem Bild? \n- Was verbinden Sie mit dem Ort? \n- Waren Sie schon einmal an genau diesem oder einem ähnlichen Ort? Wann? Was haben Sie dort gemacht? Mit wem waren Sie dort?"
+    },
+    "pageContents": [
+      {
+        "id": "071",
+        "topicId": 0,
+        "pageNumber": "one",
+        "pageFeature": {
+          "id": "071f",
+          "featureType": "AUDIOIMAGE",
+          "featureFileName": [
+            "071f_oth.jpg",
+            "071f.mp3"
+          ]
+        },
+        "pageImpluses": [
+          {
+            "id": "071q0",
+            "text": "THEMA 1 - WACHSEN UND GEDEIHEN",
+            "audio": "071.mp3"
+          },
+          {
+            "id": "071q1",
+            "text": "Wem oder was haben Sie beim Wachsen zugesehen?",
+            "audio": "071q1.mp3"
+          },
+          {
+            "id": "071q2",
+            "text": "Woran sind Sie gewachsen?",
+            "audio": "071q2.mp3"
+          },
+          {
+            "id": "071q3",
+            "text": "Was waren wichtige Entwicklungen in Ihrem Leben? Was mussten Sie dafür tun?",
+            "audio": "071q3.mp3"
+          }
+        ],
+        "informationContent": {
+          "heading": "Mögliche Fragen für die Gesprächsmoderation:",
+          "content": "- Ist das Bild aus Ihrer Sicht typisch für den Ort? \n- Welche Assoziationen haben Sie zu dem Bild? \n- Was verbinden Sie mit dem Ort? \n- Waren Sie schon einmal an genau diesem oder einem ähnlichen Ort? Wann? Was haben Sie dort gemacht? Mit wem waren Sie dort?"
+        },
+        "backgroundImage": "071_oth.jpg"
+      },
+      {
+        "id": "072",
+        "topicId": 0,
+        "pageNumber": "two",
+        "pageFeature": null,
+        "pageImpluses": [
+          {
+            "id": "072q0",
+            "text": "THEMA 2 - ERFAHRUNG AUS PROJEKTEN",
+            "audio": "072.mp3"
+          },
+          {
+            "id": "072q1",
+            "text": "Wie viel Zeit haben Sie in die Pflege Ihres Gartens oder Balkons gesteckt?",
+            "audio": "072q1.mp3"
+          },
+          {
+            "id": "072q2",
+            "text": "Welche Projekte in Ihrem Leben haben regelmäßige Pflege benötigt?",
+            "audio": "072q2.mp3"
+          },
+          {
+            "id": "072q3",
+            "text": "Was hilft Ihnen dabei, langfristige Projekte zu Ende zu bringen?",
+            "audio": "072q3.mp3"
+          },
+          {
+            "id": "072q4",
+            "text": "Inwiefern helfen Ihnen Erfahrungen aus Projekten noch heute? ",
+            "audio": "072q4.mp3"
+          }
+        ],
+        "informationContent": {
+          "heading": "Mögliche Fragen für die Gesprächsmoderation:",
+          "content": "- Ist das Bild aus Ihrer Sicht typisch für den Ort? \n- Welche Assoziationen haben Sie zu dem Bild? \n- Was verbinden Sie mit dem Ort? \n- Waren Sie schon einmal an genau diesem oder einem ähnlichen Ort? Wann? Was haben Sie dort gemacht? Mit wem waren Sie dort?"
+        },
+        "backgroundImage": "072_oth.jpg"
+      },
+      {
+        "id": "073",
+        "topicId": 0,
+        "pageNumber": "three",
+        "pageFeature": null,
+        "pageImpluses": [
+          {
+            "id": "073q0",
+            "text": "THEMA 3 - RUHEOASE",
+            "audio": "073.mp3"
+          },
+          {
+            "id": "073q1",
+            "text": "Welches Bild haben Sie im Kopf, wenn Sie an Ruhe und Entspannung denken?",
+            "audio": "073q1.mp3"
+          },
+          {
+            "id": "073q2",
+            "text": "Wo können Sie besonders gut entspannen?",
+            "audio": "073q2.mp3"
+          },
+          {
+            "id": "073q3",
+            "text": "Wer oder was hilft Ihnen zur Ruhe zu kommen?",
+            "audio": "073q3.mp3"
+          },
+          {
+            "id": "073q4",
+            "text": "Wie werden Sie den heutigen Tag entspannt ausklingen lassen?",
+            "audio": "073q4.mp3"
+          }
+        ],
+        "informationContent": {
+          "heading": "Mögliche Fragen für die Gesprächsmoderation:",
+          "content": "- Ist das Bild aus Ihrer Sicht typisch für den Ort? \n- Welche Assoziationen haben Sie zu dem Bild? \n- Was verbinden Sie mit dem Ort? \n- Waren Sie schon einmal an genau diesem oder einem ähnlichen Ort? Wann? Was haben Sie dort gemacht? Mit wem waren Sie dort?"
+        },
+        "backgroundImage": "073_oth.jpg"
+      }
+    ],
+    "thumbnail": "070t_oth.jpg"
+  }
+]
