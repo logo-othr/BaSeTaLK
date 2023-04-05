@@ -1,4 +1,12 @@
 
+> **Warning**
+> WICHTIG! Die Dateien im Ordner "media" haben individuelle Lizenzen und unterliegen NICHT der MIT-Lizenz!
+
+
+
+> **Warning**
+> IMPORTANT! The files in the "media" folder have individual licences and are NOT subject to the MIT licence!
+
 
 # BaSeTaLK
 
