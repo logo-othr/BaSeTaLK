@@ -84,7 +84,8 @@ Audio-Features, Quiz).
 
 ## Installation
 
-Um den Quellcode auf Ihrem System zu kompilieren, werden Dart und Flutter benötigt. Flutter kann unter Verwendung der offiziellen Anleitung installiert werden. 
+Um den Quellcode auf Ihrem System zu kompilieren, werden Dart und Flutter benötigt. Flutter kann
+unter Verwendung der offiziellen Anleitung installiert werden.
 
 Das Projekt kann wie folgt abgerufen und gestartet werden:
 
@@ -94,15 +95,34 @@ Das Projekt kann wie folgt abgerufen und gestartet werden:
 4. `$ flutter pub run build_runner build --delete-conflicting-outputs`
 5. `$ flutter run`
 
+Wie in dieser Readme beschrieben muss vorher ein FTP-Server mit den Themen-Dateien eingerichtet
+werden.
+Die Zugangsdaten zum FTP-Server müssen in die Datei sftp_auth.json unter 'assets' in folgender Form
+geschrieben werden:
 
+{
+"host": "hostadresse",
+"port": "port",
+"username": "nutzername",
+"passwordOrKey": "passwort"
+}
 
 ## Benutzung
 
 ### Installation
 
-Die App ist für das iPad Pro 12“ optimiert und ist in der aktuellen Version nicht für Smartphones geeignet. Aufgrund der gewählten Programmiersprache und Framework Dart und Flutter ist die Kompatibilität zu Android-Tablets sehr hoch. Im Einzelfall muss dies jedoch getestet werden. Die App kann über die üblichen Wege (Testflight, Google Playstore, Apple App Store, APK) auf Geräten installiert werden.
+Die App ist für das iPad Pro 12“ optimiert und ist in der aktuellen Version nicht für Smartphones
+geeignet. Aufgrund der gewählten Programmiersprache und Framework Dart und Flutter ist die
+Kompatibilität zu Android-Tablets sehr hoch. Im Einzelfall muss dies jedoch getestet werden. Die App
+kann über die üblichen Wege (Testflight, Google Playstore, Apple App Store, APK) auf Geräten
+installiert werden.
 
-Die App benötigt beim Start Internetzugriff, damit die Themenliste (Thema = Ort) geladen werden kann. Die Themenliste in JSON-Form enthält die in der App angezeigten Themen zusammen mit allen Fragen der jeweiligen Themen. Die einzelnen Medien, also Audio-Dateien, Quiz-JSON-Dateien und Bilder können dann pro Thema heruntergeladen werden. Wurden die Medien für ein Thema heruntergeladen, ist dieses offline verfügbar. Lediglich beim Start der App wird immer die aktuelle Themenliste heruntergeladen.
+Die App benötigt beim Start Internetzugriff, damit die Themenliste (Thema = Ort) geladen werden
+kann. Die Themenliste in JSON-Form enthält die in der App angezeigten Themen zusammen mit allen
+Fragen der jeweiligen Themen. Die einzelnen Medien, also Audio-Dateien, Quiz-JSON-Dateien und Bilder
+können dann pro Thema heruntergeladen werden. Wurden die Medien für ein Thema heruntergeladen, ist
+dieses offline verfügbar. Lediglich beim Start der App wird immer die aktuelle Themenliste
+heruntergeladen.
 
 Die Nutzung der App ist ohne ein Nutzerkonto möglich.
 
