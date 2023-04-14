@@ -253,6 +253,7 @@ Seybothstr. 2
 Tel.: 06131 – 289 44 540  
 Fax: 06131 – 289 44 8 540  
 E-Mail: [sabine.corsten@kh-mz.de](mailto:sabine.corsten@kh-mz.de)
+
 Katholische Hochschule Mainz (KH)  
 Saarstr. 3  
 55122 Mainz
@@ -261,6 +262,7 @@ Saarstr. 3
 Tel.: +49 941 943-1087  
 Fax: +49 941 943-1468  
 E-Mail: [norina.lauer@oth-regensburg.de](mailto:norina.lauer@oth-regensburg.de)
+
 Ostbayerische Technische Hochschule Regensburg (OTH)  
 Seybothstr. 2  
 93053 Regensburg
