@@ -92,8 +92,11 @@ Das Projekt kann wie folgt abgerufen und gestartet werden:
 1. `$ git clone https://github.com/logo-othr/BaSeTaLK.git`
 2. `$ cd BaSeTaLK`
 3. `$ flutter pub get`
-4. `$ flutter pub run build_runner build --delete-conflicting-outputs`
-5. `$ flutter run`
+4. `$ flutter run`
+
+Die *.g.dart Dateien können mit diesem Befehl neu generiert werden. Die Kompatibilität von Build-Runner/json_serializable zu den aktuellen Package-Versionen wurde nicht getestet.
+
+`$ flutter pub run build_runner build --delete-conflicting-outputs`
 
 Wie in dieser Readme beschrieben muss vorher ein FTP-Server mit den Themen-Dateien eingerichtet
 werden.
@@ -111,8 +114,8 @@ geschrieben werden:
 
 ### Installation
 
-Die App ist für das iPad Pro 12“ optimiert und ist in der aktuellen Version nicht für Smartphones
-geeignet. Aufgrund der gewählten Programmiersprache und Framework Dart und Flutter ist die
+Die App ist für das iPad Pro 12“ 4. Generation optimiert und ist in der aktuellen Version nicht für Smartphones
+geeignet. Aufgrund der gewählten Programmiersprache und Framework (Dart und Flutter) ist die
 Kompatibilität zu Android-Tablets sehr hoch. Im Einzelfall muss dies jedoch getestet werden. Die App
 kann über die üblichen Wege (Testflight, Google Playstore, Apple App Store, APK) auf Geräten
 installiert werden.
