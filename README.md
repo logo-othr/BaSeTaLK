@@ -92,8 +92,11 @@ Das Projekt kann wie folgt abgerufen und gestartet werden:
 1. `$ git clone https://github.com/logo-othr/BaSeTaLK.git`
 2. `$ cd BaSeTaLK`
 3. `$ flutter pub get`
-4. `$ flutter pub run build_runner build --delete-conflicting-outputs`
-5. `$ flutter run`
+4. `$ flutter run`
+
+Die *.g.dart Dateien können mit diesem Befehl neu generiert werden. Die Kompatibilität von Build-Runner/json_serializable zu den aktuellen Package-Versionen wurde nicht getestet.
+
+`$ flutter pub run build_runner build --delete-conflicting-outputs`
 
 Wie in dieser Readme beschrieben muss vorher ein FTP-Server mit den Themen-Dateien eingerichtet
 werden.
@@ -111,8 +114,8 @@ geschrieben werden:
 
 ### Installation
 
-Die App ist für das iPad Pro 12“ optimiert und ist in der aktuellen Version nicht für Smartphones
-geeignet. Aufgrund der gewählten Programmiersprache und Framework Dart und Flutter ist die
+Die App ist für das iPad Pro 12“ 4. Generation optimiert und ist in der aktuellen Version nicht für Smartphones
+geeignet. Aufgrund der gewählten Programmiersprache und Framework (Dart und Flutter) ist die
 Kompatibilität zu Android-Tablets sehr hoch. Im Einzelfall muss dies jedoch getestet werden. Die App
 kann über die üblichen Wege (Testflight, Google Playstore, Apple App Store, APK) auf Geräten
 installiert werden.
@@ -249,7 +252,7 @@ Seybothstr. 2
 - **Frau Prof.in Dr. Sabine Corsten**
 Tel.: 06131 – 289 44 540  
 Fax: 06131 – 289 44 8 540  
-E-Mail: [sabine.corsten@kh-mz.de](mailto:sabine.corsten@kh-mz.de)
+E-Mail: [sabine.corsten@kh-mz.de](mailto:sabine.corsten@kh-mz.de)<br>
 Katholische Hochschule Mainz (KH)  
 Saarstr. 3  
 55122 Mainz
@@ -257,7 +260,7 @@ Saarstr. 3
 - **Frau Prof.in Dr. Norina Lauer**
 Tel.: +49 941 943-1087  
 Fax: +49 941 943-1468  
-E-Mail: [norina.lauer@oth-regensburg.de](mailto:norina.lauer@oth-regensburg.de)
+E-Mail: [norina.lauer@oth-regensburg.de](mailto:norina.lauer@oth-regensburg.de)<br>
 Ostbayerische Technische Hochschule Regensburg (OTH)  
 Seybothstr. 2  
 93053 Regensburg
