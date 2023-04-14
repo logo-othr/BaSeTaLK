@@ -116,7 +116,6 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   Widget imageFeature() {
-    // ToDo: Move filename list access to ImageFeatureViewModel or TopicViewModel
     return Provider(
         create: (_) => ImageFeatureViewModel(topicViewModel
             .getPageFeature(topicPageViewModel.pageNumber)
@@ -186,7 +185,6 @@ class _TopicPageState extends State<TopicPage> {
     PageFeature pageFeature =
     topicViewModel.getPageFeature(topicPageViewModel.pageNumber);
     if (pageFeature == null) return Container();
-    // ToDo: Move filename list access to AudioButtonBarViewModel or TopicViewModel
     if (pageFeature.type == FeatureType.AUDIO ||
         pageFeature.type == FeatureType.AUDIOIMAGE)
       child = ChangeNotifierProvider(

@@ -32,7 +32,6 @@ class _BasicTopicPageState extends State<BasicTopicPage> {
     return FileImage(backgroundMedia.file);
   }
 
-// ToDo: precache images
 
   TopicViewModel topicViewModel;
   TopicPageViewModel topicPageViewModel;

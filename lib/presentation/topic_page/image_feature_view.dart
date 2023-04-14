@@ -7,7 +7,6 @@ class ImageFeatureView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ImageProvider background = AssetImage("assets/img/placeholder.png");
-    // ToDo: Don't call the method directly because the build method can be called up to 60 fps
     return FutureBuilder(
         future: Provider.of<ImageFeatureViewModel>(context, listen: false)
             .getImage(),

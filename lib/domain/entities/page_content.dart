@@ -8,7 +8,7 @@ class PageContent {
   int topicId;
   PageNumber pageNumber;
   PageFeature pageFeature;
-  List<Impulse> pageImpluses;
+  List<Impulse> pageImpluses; // ToDo: fix typo
   InformationContent informationContent;
   String backgroundImage;
 

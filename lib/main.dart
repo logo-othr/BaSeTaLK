@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: serviceLocator<NavigationService>().navigatorKey,
       onGenerateRoute: RouteService.generateRoute,
       theme: new ThemeData(
-        primarySwatch: primary_green, // You
+        primarySwatch: primary_green,
       ),
     );
   }

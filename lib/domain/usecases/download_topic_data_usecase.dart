@@ -16,7 +16,6 @@ class DownloadTopicDataUseCase
   Future<void> call(DownloadTopicDataUseCaseParams params) async {
     List<String> filenames = params.topic.getMediaFileNames();
     await _mediaRepository.getMediaFilesByName(filenames);
-    //ToDo: Check if all files are downloaded
     params.topic.isDownloaded = true;
     await _topicRepository.saveTopic(params.topic);
     params.callback();
