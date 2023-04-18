@@ -230,6 +230,12 @@ Für die Lizenzierung weiterer Themen wenden Sie sich bitte an uns unter denen i
 - [json_serializable](https://pub.dev/packages/json_serializable) ([BSD-3-Clause](https://pub.dev/packages/json_serializable/license))
 
 
+## Material Design Icons
+Die App nutzt Material Design Icons über Flutter und als Datei (assets/icons). Die in assets/icons enthaltene Lizenz gilt für die im Ordner enthaltenen Icons. 
+- [Material Design Icons](https://github.com/google/material-design-icons) ([https://github.com/google/material-design-icons#license](https://github.com/google/material-design-icons#license))
+
+
+
 
 ## Kontakt
 
